@@ -128,8 +128,6 @@ Sub main(string Options)
 		/if (!${Plugin[MQ2BardSwap].Name.Length}) /plugin MQ2BardSwap load
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /echo Turning On BardSwap Ability...	
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /bardswap
-		
-		/stick set autopause off
 	}
 
 	|:/if (${EQBCStatus.Equal["on"]}) /call JoinEQBC	
