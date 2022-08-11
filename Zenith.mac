@@ -162,15 +162,15 @@ Sub main(string Options)
 	|:----------------------------------------------------------------------
 	/varset SectionName EQBCSettings
 	
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "Force Bot to join EQBC when Booting." |: Ini Comments Line
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCStatus "Force Bot to join EQBC when Booting." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCStatus string EQBCStatus(On/Off) "on"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "This is the Sercver Address the BOT will Connect to." |: Ini Comments Line
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCServer "This is the Sercver Address the BOT will Connect to." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCServer string EQBCServer "127.0.0.1"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "This is the Server Port used to Connect to server." |: Ini Comments Line
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCPort "This is the Server Port used to Connect to server." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCPort string EQBCPort "2112"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	
