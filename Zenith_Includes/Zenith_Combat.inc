@@ -34,7 +34,7 @@ Sub CombatMain
 							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${MeleeRange}
 							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${MeleeRange}
 						} else {
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick off
+							/squelch /nomodkey /docommand /stick off
 						}
 					}
 				}
@@ -53,7 +53,7 @@ Sub CombatMain
 							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${MeleeRange}
 							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${MeleeRange}
 						} else {
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick off
+							/squelch /nomodkey /docommand /stick off
 						}
 					}
 				}
