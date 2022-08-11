@@ -241,13 +241,16 @@ Sub main(string Options)
 		/call BotTracker
 		
 		|: Fix Desync Issue Automatically [YouPlayer], [LOGIN]
-		/if (!${Bool[${Select[${Me.CleanName},${EQBC.Names.Replace[ ,,]}]}]} && ${Desync} == 0) {
-			/call ChatOut 17 "Master [[+r+]${Me.CleanName}[+w+]] got [+r+]Desync from EQBC[+w+]. [+y+]Trying to Fix it now..." "0"
-			/delay 2
-			/bccmd force
-			/varset Desync 10s
+		/if (${Plugin[MQ2EQBC].Name.Length}) {	
+			/if (${EQBC.Connected} && !${Bool[${Select[${Me.CleanName},${EQBC.Names.Replace[ ,,]}]}]} && ${Desync} == 0) {
+				/call ChatOut 17 "Master [[+r+]${Me.CleanName}[+w+]] got [+r+]Desync from EQBC[+w+]. [+y+]Trying to Fix it now..." "0"
+				/delay 2
+				/bccmd force
+				/varset Desync 10s
+			}
+		} else {
+			/plugin MQ2EQBC load
 		}
-	
 		/varset Exit_Time ${Time.Time12.Replace[:, ]}
 		|:/echo Complete Loop RunTime: [${Math.Calc[${Exit_Time}-${Entry_Time}].Int}s]
 	/goto :MainLoop
