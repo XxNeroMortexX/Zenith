@@ -252,6 +252,7 @@ Sub main(string Options)
 			/plugin MQ2EQBC load
 			/varset Desync 10s
 		}
+		
 		/varset Exit_Time ${Time.Time12.Replace[:, ]}
 		|:/echo Complete Loop RunTime: [${Math.Calc[${Exit_Time}-${Entry_Time}].Int}s]
 	/goto :MainLoop
