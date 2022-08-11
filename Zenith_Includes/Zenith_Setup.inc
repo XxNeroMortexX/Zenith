@@ -229,11 +229,6 @@ Sub Init_Core_Ini
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments ChatInChannel "If ChatIn= is set to ChatIn=channel you can Set this to /#[1-100] example /1 and thats the Channel the bots will Talk in." |: Ini Comments Line
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ChatInChannel string ChatInChannel "BOT [ChatInChannel]"
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	/varcalc i ${i}+1
-
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments checkname "Toggle(On/Off) if set to true, bot will only respond to commands if the command is preceeded with Bots Name first." |: Ini Comments Line
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" checkname off return "I will respond to all commands." "I will only respond to commands that are addressed to me."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
