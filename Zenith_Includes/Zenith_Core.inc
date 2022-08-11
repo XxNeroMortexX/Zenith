@@ -897,6 +897,8 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 			/declare Toggle-${VarName}-DefaultValue string outer
 		}
 		/varset Toggle-${VarName}-DefaultValue ${DefaultValue}
+	/echo ${Toggle-${VarName}} != ${Bool[${Toggle-${VarName}-DefaultValue}]})
+
 	}
 	|: IF it's a shortcut, set the varname-DefaultValue variable :|
 	/if (${VarType.Equal[shortcut]}) {
@@ -919,7 +921,6 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 		}
 		/varset array-${VarName}-DefaultValue ${DefaultValue}
 	}
-/echo ${Toggle-${VarName}} != ${Bool[${Toggle-${VarName}-DefaultValue}]})
 
 	|: If it's a shortcut, then set the shortcut var and add to the list of shortcuts
 	/Call Debug_Spew "is a ShortCut|Event: [${If[${VarType.Equal[shortcuts]} || ${VarType.Equal[event]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
