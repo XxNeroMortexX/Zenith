@@ -503,7 +503,7 @@ Sub Init_Combat_Ini
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autobehind off return "I won't position myself behind the mob." "I will position myself behind the mob."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
-	
+	/echo ${Toggle-autobehind-DefaultValue}
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autoengage "The bot will use (MQ2MoveUtils) to stick to assist target." |: Ini Comments Line
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autoengage on return "I will not Auto Engage when attack is on." "I will Auto Engage when attack is on."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
