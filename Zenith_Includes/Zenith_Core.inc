@@ -647,7 +647,7 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 		/Call Debug_Spew "Call [LoadSetting]: [${Name}] [toggle] [${Name}(On/Off)] [${TogDefault}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ${Name} toggle ${Name}(On/Off) ${TogDefault}
 	}
-
+/echo ${Name}: ${Toggle-${Name}-DefaultValue}
 	|: Loop to check if Toggle added to Cmds-SectionName Variable.
 	/if (!${Defined[GenStr]}) /declare GenStr string local |${cmds-${SectionName}}|
 	/if (!${GenStr.Find[|${Name}|]} && ${Bool[${Toggle-${Name}-CallSub}]}) {
