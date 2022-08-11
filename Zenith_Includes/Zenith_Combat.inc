@@ -1,6 +1,6 @@
 Sub CombatMain
 |:/echo MAIN COMBAT
-	
+	/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
 	|:Check For ESC Key Press
 	/doevents EscKey
 	
@@ -1192,7 +1192,6 @@ Sub MeleeAbility
 		|: Reset to Default Tant Setting
 		/if (${Toggle-taunt} != ${Bool[${Toggle-taunt-DefaultValue}]}) /varset Toggle-taunt ${Bool[${Toggle-taunt-DefaultValue}]}
 		|: Reset to Default Autobehind Setting
-		/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
 		|:/if (${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
 		|: Reset to Default Autodistance Setting
 		/if (${Toggle-autodistance} != ${Bool[${Toggle-autodistance-DefaultValue}]}) /varset Toggle-autodistance ${Bool[${Toggle-autodistance-DefaultValue}]}
