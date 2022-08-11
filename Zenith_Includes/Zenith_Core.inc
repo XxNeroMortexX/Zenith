@@ -873,7 +873,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 			}
 		
 	}
-/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
+
 	|: IF it's a string, set the varname-DefaultValue variable
 	/Call Debug_Spew "Set -DefaultValue: [${VarType.Equal[string]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[string]}) {
@@ -919,7 +919,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 		}
 		/varset array-${VarName}-DefaultValue ${DefaultValue}
 	}
-
+/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
 
 	|: If it's a shortcut, then set the shortcut var and add to the list of shortcuts
 	/Call Debug_Spew "is a ShortCut|Event: [${If[${VarType.Equal[shortcuts]} || ${VarType.Equal[event]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
