@@ -898,7 +898,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 		}
 		/echo 1|${VarName}:${DefaultValue}
 		/varset Toggle-${VarName}-DefaultValue ${DefaultValue}
-	/echo ${VarName}:${DefaultValue}
+	/echo ${VarName}:${DefaultValue} [${Toggle-${VarName}-DefaultValue}]
 
 	}
 	|: IF it's a shortcut, set the varname-DefaultValue variable :|
