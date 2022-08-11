@@ -692,7 +692,6 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 		/if (${TrueString.Find[${newValue.Arg[1]}]}) {
 			/varset Toggle-${Name} 1
 			/varset Toggle-${Name}-DefaultValue 1
-			/echo ${Name}: ${Toggle-${Name}} :: ${Toggle-${Name}-DefaultValue}
 		} else /if (${FalseString.Find[${newValue.Arg[1]}]}) {
 			/varset Toggle-${Name} 0
 			/varset Toggle-${Name}-DefaultValue 0
