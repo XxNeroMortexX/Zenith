@@ -219,7 +219,7 @@ Sub Init_Core_Ini
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments ChatIn "Changes what channel the bot will use for replying to it's master. Options: EQBC|GUILD|GROUP|SAY|RAID|TELL|IRC|CHANNEL" |: Ini Comments Line
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments ChatIn "Changes what channel the bot will use for replying to it's master. Options: EQBC|GUILD|GROUP|SAY|RAID|TELL|IRC|CHANNEL|/ChannelName" |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ChatIn string ChatIn EQBC
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
