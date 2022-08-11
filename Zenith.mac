@@ -247,14 +247,13 @@ Sub main(string Options)
 				/delay 2
 				/bccmd force
 				/varset Desync 10s
+			} else /if (!${EQBC.Connected} && ${Desync} == 0) {		
+				/bccmd quit
+				/delay 5
+				/bccmd connect ${EQBCServer} ${EQBCPort}
+				/delay 15 ${EQBC.Connected}
+				/varset Desync 10s
 			}
-		} else /if (!${EQBC.Connected} && ${Desync} == 0) {
-			/plugin MQ2EQBC load			
-			/bccmd quit
-			/delay 5
-			/bccmd connect ${EQBCServer} ${EQBCPort}
-			/delay 15 ${EQBC.Connected}
-			/varset Desync 10s
 		}
 		
 		/varset Exit_Time ${Time.Time12.Replace[:, ]}
