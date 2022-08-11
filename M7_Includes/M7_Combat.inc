@@ -1114,7 +1114,7 @@ Sub MeleeAbility
 			/if (${Toggle-autodistance}) /varset Toggle-autodistance false
 			
 			|:SelfBuff with Stun Proc
-			/if (${Int[${Me.Buff[Sylvan Call].ID}]} == 0 && ${Me.Gem[Sylvan Call]}) /casting "Sylvan Call" -targetid|${Me.ID}"
+			/if (${Int[${Me.Buff[Sylvan Call].ID}]} == 0 && ${Me.Gem[Sylvan Call]}) /casting "Sylvan Call"
 			
 			
 		} else /if (${Me.Class.Name.Equal[Shadow Knight]}) {
