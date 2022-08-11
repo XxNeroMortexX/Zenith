@@ -156,8 +156,6 @@ Sub AutoCombatDistance
 		/varset ArcheryRange 34
 		/if (${Stick.Active}) /stick off
 	}
-	
-	
 }
 /return
 
