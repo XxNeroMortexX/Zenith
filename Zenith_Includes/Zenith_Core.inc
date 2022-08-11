@@ -641,6 +641,7 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 		/if (!${Defined[Toggle-${Name}-DefaultValue]}) {
 			/declare Toggle-${Name}-DefaultValue string outer
 		}
+		/echo Toggle-${Name}-DefaultValue ${Toggle-${Name}}
 		/varset Toggle-${Name}-DefaultValue ${Toggle-${Name}}
 		
 	} else {
