@@ -352,3 +352,28 @@ Sub BotTracker
 	}
 	
 /return
+
+Sub JoinEQBC
+
+	/if (!${Plugin[MQ2EQBC].Name.Length}) /echo Loading MQ2EQBC Plugin...
+	/if (!${Plugin[MQ2EQBC].Name.Length}) /plugin MQ2EQBC load
+	/if (${Plugin[MQ2IRC].Name.Length}) /echo UnLoading MQ2IRC Plugin...
+	/if (${Plugin[MQ2IRC].Name.Length}) /plugin MQ2IRC unload
+
+	/if (!${Plugin[MQ2NetBots].Name.Length}) /echo Loading MQ2NetBots Plugin...
+	/if (!${Plugin[MQ2NetBots].Name.Length}) /plugin MQ2NetBots load
+	
+	/delay 5 ${NetBots}
+	
+	/if (${Plugin[MQ2NetBots].Name.Length}) /netbots on grab=on send=on ext=on
+ 
+	/echo The EQBC Status is turned on.
+
+	/if (!${EQBC.Connected}) {
+		/bccmd quit
+		/delay 5
+		/bccmd connect ${EQBCServer} ${EQBCPort}
+		/delay 15 ${EQBC.Connected}
+	}
+
+/return
