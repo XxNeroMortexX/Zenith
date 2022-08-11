@@ -919,7 +919,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 		}
 		/varset array-${VarName}-DefaultValue ${DefaultValue}
 	}
-/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
+/echo ${Toggle-VarName} != ${Bool[${Toggle-VarName-DefaultValue}]})
 
 	|: If it's a shortcut, then set the shortcut var and add to the list of shortcuts
 	/Call Debug_Spew "is a ShortCut|Event: [${If[${VarType.Equal[shortcuts]} || ${VarType.Equal[event]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
