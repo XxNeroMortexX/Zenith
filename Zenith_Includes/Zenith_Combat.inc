@@ -1,6 +1,6 @@
 Sub CombatMain
 |:/echo MAIN COMBAT
-	/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
+	
 	|:Check For ESC Key Press
 	/doevents EscKey
 	
