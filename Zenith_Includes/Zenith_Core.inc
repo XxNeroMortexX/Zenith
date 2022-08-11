@@ -691,8 +691,10 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 		/Call Debug_Spew "Toggle: [${Name}] FalseString: [${FalseString.Find[${newValue.Arg[1]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${TrueString.Find[${newValue.Arg[1]}]}) {
 			/varset Toggle-${Name} 1
+			/varset Toggle-${Name}-DefaultValue 1
 		} else /if (${FalseString.Find[${newValue.Arg[1]}]}) {
 			/varset Toggle-${Name} 0
+			/varset Toggle-${Name}-DefaultValue 0
 		}
 	}
 
