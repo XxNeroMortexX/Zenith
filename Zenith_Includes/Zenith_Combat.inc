@@ -1188,7 +1188,7 @@ Sub MeleeAbility
 			|:Make sure Tank Close
 			/if (${MeleeRange} > 7) /varset MeleeRange 7
 		}
-	} else {
+	} else /if (${Defined[Toggle-aggro]}) {
 			|: Reset to Default Tant Setting
 			/if (${Toggle-taunt} != ${Bool[${Toggle-taunt-DefaultValue}]}) /varset Toggle-taunt ${Bool[${Toggle-taunt-DefaultValue}]}
 			|: Reset to Default Autobehind Setting
