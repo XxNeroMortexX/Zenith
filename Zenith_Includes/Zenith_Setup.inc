@@ -360,7 +360,7 @@ Sub Init_Core_Ini(int i)
 	
 	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-/return
+/return ${i}
 
 Sub Init_Wait4Rez_Ini
 
