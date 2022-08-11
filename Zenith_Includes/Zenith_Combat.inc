@@ -142,20 +142,17 @@ Sub AutoCombatDistance
 |: MaxRange		The max distance from this spawn for it to hit you
 |: MaxRangeTo	The Max distance from this spawn for you to hit it
 /if (${Toggle-melee} && ${Toggle-autoengage}) {
-	/if (${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
-		/varset MeleeRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}
+	/if (${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}) {
+		/varset MeleeRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}
 		/if (${Stick.Active}) /stick off
 	}
 }
 
 /if (${Toggle-archery} && ${Toggle-autoengage}) {
-	/if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}].Int} <= 30 && ${ArcheryRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
-		/varset ArcheryRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}
+	/if (${ArcheryRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}) {
+		/varset ArcheryRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}
 		/if (${Stick.Active}) /stick off
-	} else /if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}].Int} > 55 && ${ArcheryRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
-		/varset ArcheryRange 50
-		/if (${Stick.Active}) /stick off
-	}
+	} 
 	/if (${ArcheryRange} < 34 && ${ArcheryRange} != 34) {
 		/varset ArcheryRange 34
 		/if (${Stick.Active}) /stick off
