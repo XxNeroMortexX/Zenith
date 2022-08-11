@@ -565,13 +565,13 @@ Sub ChatOut(string Section, string ChatText, int Delay)
 			/docommand /timed ${Delay} /rsay [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
 		} else /if (${ChatIn.Lower.Equal[say]}) {
 			/docommand /timed ${Delay} /say [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
-		} else /if (${ChatIn.Lower.Equal[channel]}) {
-			/docommand /timed ${Delay} ${ChatInChannel} [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
 		} else /if (${ChatIn.Lower.Equal[guild]}) {
 			/docommand /timed ${Delay} /guildsay  [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
 		} else /if (${ChatIn.Lower.Equal[eqbc]}) {
 			/docommand /timed ${Delay} /bc [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
-		}
+		} else /if (${ChatIn.Left[1].Equal[/]}) {
+			/docommand /timed ${Delay} ${ChatIn} [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
+		} 
 	}
 
 	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
