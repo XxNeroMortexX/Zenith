@@ -152,6 +152,9 @@ Sub main(string Options)
 		/varset SectionName ${SectionsList.Arg[${GenFor}]}
 		/call Init_${SectionsList.Arg[${GenFor}]}_Ini ${i}
 		
+		|: Return Blank Line Space Amount.
+		/varset i ${Macro.Return}
+		
 	/next GenFor
 	
 	|:----------------------------------------------------------------------
