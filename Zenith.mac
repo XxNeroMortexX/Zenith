@@ -168,6 +168,59 @@ Sub main(string Options)
 	|:Clear SectionName Variable.
 	/varset SectionName
 	
+	|:----------------------------------------------------------------------
+	|: Force genbot to check if plugin's are loaded.
+	|:----------------------------------------------------------------------
+	/echo Loading Required Plugins for Genbot... Please wait..
+	/if (!${Plugin[MQ2MoveUtils].Name.Length}) /echo Loading MQ2MoveUtils Plugin...
+	/if (!${Plugin[MQ2MoveUtils].Name.Length}) /plugin MQ2MoveUtils load
+
+	/if (!${Plugin[MQ2Exchange].Name.Length}) /echo Loading MQ2Exchange Plugin...
+	/if (!${Plugin[MQ2Exchange].Name.Length}) /plugin MQ2Exchange load
+
+	/if (!${Plugin[MQ2Cast].Name.Length}) /echo Loading MQ2Cast Plugin...
+	/if (!${Plugin[MQ2Cast].Name.Length}) /plugin MQ2Cast load
+
+	/if (!${Plugin[MQ2Turbo].Name.Length}) /echo Loading MQ2Turbo Plugin...
+	/if (!${Plugin[MQ2Turbo].Name.Length}) /plugin MQ2Turbo load
+
+
+	/if (!${Plugin[MQ2Twist].Name.Length}) /echo Loading MQ2Twist Plugin...
+	/if (!${Plugin[MQ2Twist].Name.Length}) /plugin MQ2Twist load
+
+	/if (${Me.Class.Name.Equal[Bard]}) {
+		/if (!${Plugin[MQ2BardSwap].Name.Length}) /echo Loading MQ2BardSwap Plugin...
+		/if (!${Plugin[MQ2BardSwap].Name.Length}) /plugin MQ2BardSwap load
+		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /echo Turning On BardSwap Ability...	
+	}
+
+	/if (${IRCStatus.Equal["on"]} && ${EQBCStatus.Equal["off"]}) /call JoinIRC
+	/if (${EQBCStatus.Equal["on"]} && ${IRCStatus.Equal["off"]}) /call JoinEQBC	
+	/if (${IRCStatus.Equal["on"]} && ${EQBCStatus.Equal["on"]}) {
+		/echo Please Only Turn on one Chat Status.  Either IRC or EQBC
+		/endmacro
+	}
+
+	/squelch /alias /gb /echo Genbot
+
+	|: Special Vet AAs	
+	/alias /Resist /echo Genbot alt Infusion of the Faithful
+	/alias /Armor /echo Genbot alt Armor of Experience
+	/alias /DPS /echo Genbot alt Intensity of the Resolute
+	/alias /Recover /echo Genbot alt Staunch Recovery
+	/alias /Merc /echo Genbot alt Steadfast Servant
+
+	/alias /intensity /echo Genbot alt Intensity of the Resolute
+	/alias /infusion /echo Genbot alt Infusion of the Faithful
+	/alias /lesson /echo Genbot alt Lesson of the Devoted
+	/alias /mgb /echo Genbot alt Mass Group Buff
+	/alias /throne /echo Genbot alt Throne of Heroes
+	/alias /rCure /echo Genbot alt Radiant Cure
+
+	|: REmove These Later.
+	/alias /GL /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/guildsay GL,]}
+	/alias /Leaders /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/shout ,]}
+
 	
 
 
