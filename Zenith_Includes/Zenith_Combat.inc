@@ -142,15 +142,8 @@ Sub AutoCombatDistance
 |: MaxRange		The max distance from this spawn for it to hit you
 |: MaxRangeTo	The Max distance from this spawn for you to hit it
 /if (${Toggle-melee} && ${Toggle-autoengage}) {
-	/if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}].Int} <= 30 && ${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
+	/if (${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
 		/varset MeleeRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}
-		/if (${Stick.Active}) /stick off
-	} else /if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}].Int} > 30 && ${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
-		/varset MeleeRange 25
-		/if (${Stick.Active}) /stick off
-	}
-	/if (${MeleeRange} < 10 && ${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
-		/varset MeleeRange 12
 		/if (${Stick.Active}) /stick off
 	}
 }
