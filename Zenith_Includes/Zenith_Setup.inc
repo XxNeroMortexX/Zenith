@@ -42,7 +42,7 @@ Sub Init_Setup_Ini
 -------------------------------------------------------------------------
 |: /call AddCommand "Command one" "Command two" "Command Three"
 **|
-Sub Init_Core_Ini
+Sub Init_Core_Ini(int i)
 	
 	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
@@ -174,7 +174,6 @@ Sub Init_Core_Ini
 	/declare loopcorpse2 int outer 1
 	/declare badcorpseid int outer 0
 	
-	/declare i int local 1
 	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**HEADER**|" "=" "[Options to Control Specific Bots]" "1" |: Ini Blank Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments ClassTypes[Melees/Priests/Casters/Hybirds/Hybrids/PetClass/Group#] "These Setting are for when Call out Specific Bots only." |: Ini Comments Line
