@@ -609,6 +609,7 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 	
 	/if (!${Defined[Toggle-${Name}]}) {
 		/declare Toggle-${Name} bool outer
+		/declare Toggle-${Name}-DefaultValue bool outer
 		/declare Toggle-${Name}-OffText string outer
 		/declare Toggle-${Name}-OnText string outer
 		/declare Toggle-${Name}-ToggleType string outer
