@@ -638,10 +638,10 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 		
 		|: IF it's a string, set the varname-DefaultValue variable
 		/Call Debug_Spew "Set -DefaultValue: [${Toggle-${Name}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/if (!${Defined[Toggle-${VarName}-DefaultValue]}) {
-			/declare Toggle-${VarName}-DefaultValue string outer
+		/if (!${Defined[Toggle-${Name}-DefaultValue]}) {
+			/declare Toggle-${Name}-DefaultValue string outer
 		}
-		/varset ${VarName}-DefaultValue ${Toggle-${Name}}
+		/varset Toggle-${Name}-DefaultValue ${Toggle-${Name}}
 		
 	} else {
 		/Call Debug_Spew "Call [LoadSetting]: [${Name}] [toggle] [${Name}(On/Off)] [${TogDefault}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
