@@ -892,12 +892,12 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	}	
 	|: IF it's a toggle, set the varname-DefaultValue variable :|
 	/if (${VarType.Equal[toggle]}) {
-	
+	/echo ${VarName}:${DefaultValue} :: ${Toggle-${VarName}} != ${Toggle-${VarName}-DefaultValue}
 		/if (!${Defined[Toggle-${VarName}-DefaultValue]}) {
 			/declare Toggle-${VarName}-DefaultValue string outer
 		}
 		/varset Toggle-${VarName}-DefaultValue ${DefaultValue}
-	/echo ${VarName}:${DefaultValue} :: ${Toggle-${VarName}} != ${Toggle-${VarName}-DefaultValue}
+	
 
 	}
 	|: IF it's a shortcut, set the varname-DefaultValue variable :|
