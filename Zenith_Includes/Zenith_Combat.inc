@@ -139,7 +139,8 @@ Sub CombatMain
 /return
 
 Sub AutoCombatDistance
-|: Need to FIX
+|: MaxRange		The max distance from this spawn for it to hit you
+|: MaxRangeTo	The Max distance from this spawn for you to hit it
 /if (${Toggle-melee} && ${Toggle-autoengage}) {
 	/if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}].Int} <= 30 && ${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}) {
 		/varset MeleeRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.7].Int}
