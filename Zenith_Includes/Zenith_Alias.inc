@@ -1,4 +1,4 @@
-Sub alias
+Sub Alias_Setup
 
 	/squelch /alias /gb /echo Genbot
 
