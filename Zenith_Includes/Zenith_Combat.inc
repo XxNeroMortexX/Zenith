@@ -1189,7 +1189,6 @@ Sub MeleeAbility
 			/if (${MeleeRange} > 7) /varset MeleeRange 7
 		}
 	} else {
-/return		
 		|: Reset to Default Tant Setting
 			/if (${Toggle-taunt} != ${Bool[${Toggle-taunt-DefaultValue}]}) /varset Toggle-taunt ${Bool[${Toggle-taunt-DefaultValue}]}
 			|: Reset to Default Autobehind Setting
