@@ -1196,7 +1196,7 @@ Sub MeleeAbility
 		|: Reset to Default Autodistance Setting
 		/if (${Toggle-autodistance} != ${Bool[${Toggle-autodistance-DefaultValue}]}) /varset Toggle-autodistance ${Bool[${Toggle-autodistance-DefaultValue}]}
 		|: Reset to Default MeleeRange Setting
-		/if (${MeleeRange-DefaultValue} != ${MeleeRange-DefaultValue}) /varset MeleeRange ${MeleeRange-DefaultValue}
+		/if (${MeleeRange} != ${MeleeRange-DefaultValue}) /varset MeleeRange ${MeleeRange-DefaultValue}
 	}
 	|: ---
 
