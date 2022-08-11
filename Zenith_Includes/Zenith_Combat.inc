@@ -23,11 +23,11 @@ Sub CombatMain
 			
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (!${Toggle-autobehind}) {
-						|:/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
+						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/echo stick moveback uw ${MeleeRange}
 							/squelch /nomodkey /docommand /stick moveback uw ${MeleeRange}
 							/if (${Toggle-aggro}) /stick snaproll face uw ${MeleeRange}
-						|:}
+						}
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${MeleeRange}
@@ -39,10 +39,10 @@ Sub CombatMain
 				|:Check if genbot's Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (!${Toggle-autobehind}) {
-						|:/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
+						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/squelch /nomodkey /docommand /stick uw ${MeleeRange}
 							/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${MeleeRange}
-						|:}
+						}
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${MeleeRange}
