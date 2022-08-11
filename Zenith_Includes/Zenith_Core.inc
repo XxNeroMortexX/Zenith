@@ -697,7 +697,7 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 			/varset Toggle-${Name}-DefaultValue 0
 		}
 	}
-/echo ${Name}: ${Toggle-${Name}}
+/echo ${Name}: ${Toggle-${Name}} :: ${Toggle-${Name}-DefaultValue}
 	|: If we're still initializing, don't output the setting. :|
 	/if (${SectionName.Length}) /return
 
