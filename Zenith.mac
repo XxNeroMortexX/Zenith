@@ -130,8 +130,6 @@ Sub main(string Options)
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /bardswap
 	}
 
-	/if (${EQBCStatus.Upper.Equal[ON]}) /call JoinEQBC	
-
 	
 	|:----------------------------------------------------------------------
 	|:Call the Initialize Sub of each include file
@@ -167,33 +165,8 @@ Sub main(string Options)
 	|:Clear SectionName Variable.
 	/varset SectionName
 	
-	|:----------------------------------------------------------------------
-	|: Force genbot to check if plugin's are loaded.
-	|:----------------------------------------------------------------------
-	/echo Loading Required Plugins for Genbot... Please wait..
-	/if (!${Plugin[MQ2MoveUtils].Name.Length}) /echo Loading MQ2MoveUtils Plugin...
-	/if (!${Plugin[MQ2MoveUtils].Name.Length}) /plugin MQ2MoveUtils load
-
-	/if (!${Plugin[MQ2Exchange].Name.Length}) /echo Loading MQ2Exchange Plugin...
-	/if (!${Plugin[MQ2Exchange].Name.Length}) /plugin MQ2Exchange load
-
-	/if (!${Plugin[MQ2Cast].Name.Length}) /echo Loading MQ2Cast Plugin...
-	/if (!${Plugin[MQ2Cast].Name.Length}) /plugin MQ2Cast load
-
-	/if (!${Plugin[MQ2Turbo].Name.Length}) /echo Loading MQ2Turbo Plugin...
-	/if (!${Plugin[MQ2Turbo].Name.Length}) /plugin MQ2Turbo load
-
-
-	/if (!${Plugin[MQ2Twist].Name.Length}) /echo Loading MQ2Twist Plugin...
-	/if (!${Plugin[MQ2Twist].Name.Length}) /plugin MQ2Twist load
-
-	/if (${Me.Class.Name.Equal[Bard]}) {
-		/if (!${Plugin[MQ2BardSwap].Name.Length}) /echo Loading MQ2BardSwap Plugin...
-		/if (!${Plugin[MQ2BardSwap].Name.Length}) /plugin MQ2BardSwap load
-		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /echo Turning On BardSwap Ability...	
-	}
-
-	/if (${EQBCStatus.Equal["on"]}) /call JoinEQBC	
+	|: Join Local EQBC Server.
+	/if (${EQBCStatus.Upper.Equal[ON]}) /call JoinEQBC	
 	
 	|: Setup Zenith Aliases 
 	/call Alias_Setup
