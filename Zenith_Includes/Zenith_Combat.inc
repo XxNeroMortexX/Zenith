@@ -1190,11 +1190,11 @@ Sub MeleeAbility
 		}
 	} else {
 		|: Reset to Default Tant Setting
-		/if (${Toggle-taunt} != ${Bool[${Toggle-taunt-DefaultValue}]}) /varset Toggle-taunt ${Bool[${Toggle-taunt-DefaultValue}]}
+		/if (${Toggle-taunt.NotEqual[${Toggle-taunt-DefaultValue}]}) /varset Toggle-taunt ${Toggle-autobehind-DefaultValue}
 		|: Reset to Default Autobehind Setting
 		/if (${Toggle-autobehind.NotEqual[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Toggle-autobehind-DefaultValue}
 		|: Reset to Default Autodistance Setting
-		/if (${Toggle-autodistance} != ${Bool[${Toggle-autodistance-DefaultValue}]}) /varset Toggle-autodistance ${Bool[${Toggle-autodistance-DefaultValue}]}
+		/if (${Toggle-autodistance.NotEqual[${Toggle-autodistance-DefaultValue}]}) /varset Toggle-autodistance ${Toggle-autobehind-DefaultValue}
 		|: Reset to Default MeleeRange Setting
 		/if (${MeleeRange} != ${MeleeRange-DefaultValue}) /varset MeleeRange ${MeleeRange-DefaultValue}
 	}
