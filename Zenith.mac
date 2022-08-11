@@ -130,7 +130,7 @@ Sub main(string Options)
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /bardswap
 	}
 
-	|:/if (${EQBCStatus.Equal["on"]}) /call JoinEQBC	
+	/if (${EQBCStatus.Upper.Equal[ON]}) /call JoinEQBC	
 
 	
 	|:----------------------------------------------------------------------
