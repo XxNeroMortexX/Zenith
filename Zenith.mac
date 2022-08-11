@@ -239,7 +239,7 @@ Sub main(string Options)
 		/call DialogWindows		
 
 		/call BotTracker
-		
+	
 		|: Fix Desync Issue Automatically [YouPlayer], [LOGIN]
 		/if (${Plugin[MQ2EQBC].Name.Length}) {	
 			/if (${EQBC.Connected} && !${Bool[${Select[${Me.CleanName},${EQBC.Names.Replace[ ,,]}]}]} && ${Desync} == 0) {
@@ -248,8 +248,12 @@ Sub main(string Options)
 				/bccmd force
 				/varset Desync 10s
 			}
-		} else /if (${Desync} == 0) {
-			/plugin MQ2EQBC load
+		} else /if (!${EQBC.Connected} && ${Desync} == 0) {
+			/plugin MQ2EQBC load			
+			/bccmd quit
+			/delay 5
+			/bccmd connect ${EQBCServer} ${EQBCPort}
+			/delay 15 ${EQBC.Connected}
 			/varset Desync 10s
 		}
 		
