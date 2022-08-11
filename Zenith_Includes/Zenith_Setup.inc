@@ -162,6 +162,7 @@ Sub Init_Core_Ini
 	/declare DelayTimer timer outer 0
 	/declare idleTimer timer outer 0
 	/declare BuffidleTimer timer outer 0
+	/declare Desync timer outer 0
 	/if (!${Defined[DialogMsgTimer]}) /declare DialogMsgTimer timer outer 0
 
 	|: Bard Current Twisting List. This is Used to Pause/Unpause Twist for Swarms
