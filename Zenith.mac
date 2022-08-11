@@ -274,12 +274,6 @@ Sub main(string Options)
 				/delay 2
 				/bccmd force
 				/varset Desync 10s
-			} else /if (!${EQBC.Connected} && ${Desync} == 0) {		
-				/bccmd quit
-				/delay 5
-				/bccmd connect ${EQBCServer} ${EQBCPort}
-				/delay 15 ${EQBC.Connected}
-				/varset Desync 10s
 			}
 		}
 		
@@ -345,9 +339,9 @@ Sub BotTracker
 			
 			/doevents
 			
-			/if (!${Defined[SpamTimer_${EQBC.Names.Arg[${x}, ]}]} && ${Bool[${EQBC.Names.Arg[${x}]}]}) /declare SpamTimer_${EQBC.Names.Arg[${x}, ]} timer outer 0
-			
 			/if (!${Bool[${EQBC.Names.Arg[${x}]}]}) /continue
+			
+			/if (!${Defined[SpamTimer_${EQBC.Names.Arg[${x}, ]}]} && ${Bool[${EQBC.Names.Arg[${x}]}]}) /declare SpamTimer_${EQBC.Names.Arg[${x}, ]} timer outer 0
 			
 			/if (${SpamTimer_${EQBC.Names.Arg[${x}, ]}} == 0) {
 			
