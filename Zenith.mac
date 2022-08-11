@@ -170,9 +170,9 @@ Sub main(string Options)
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCPort string EQBCPort "2112"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	
-	|: Unused INI Variables Marked for DELETION
+	|: EQBCSettings Unused INI Variables Marked for DELETION
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe EQBCGenbotMaster "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
-	
+	|: --
 	
 	|:Clear SectionName Variable.
 	/varset SectionName
