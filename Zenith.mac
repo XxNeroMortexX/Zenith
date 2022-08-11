@@ -135,8 +135,9 @@ Sub main(string Options)
 	|:Call the Initialize Sub of each include file
 	|:----------------------------------------------------------------------
 	/if (!${Defined[GenFor]}) /declare GenFor int local
-	/declare SectionName string outer
-
+	/if (!${Defined[SectionName]}) /declare SectionName string outer
+	/if (!${Defined[i]}) /declare i int local 1
+	
 	|: INI Sections
 	/declare SectionsList string outer Core Shortcuts Combat
 	|:Core Settings Wait4Rez BoxingSetup Combat AutoCombat Spell CHRotation Cures Debuffs ClassSpec Pets Healer cParams SpawnTracker NinjaLoot Shortcuts SmoothMoves
@@ -149,7 +150,7 @@ Sub main(string Options)
 		
 		|:Load Settings based on each Section.
 		/varset SectionName ${SectionsList.Arg[${GenFor}]}
-		/call Init_${SectionsList.Arg[${GenFor}]}_Ini
+		/call Init_${SectionsList.Arg[${GenFor}]}_Ini ${i}
 		
 	/next GenFor
 	
