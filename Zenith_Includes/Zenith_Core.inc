@@ -873,7 +873,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 			}
 		
 	}
-
+/echo ${Toggle-autobehind} != ${Bool[${Toggle-autobehind-DefaultValue}]}) /varset Toggle-autobehind ${Bool[${Toggle-autobehind-DefaultValue}]}
 	|: IF it's a string, set the varname-DefaultValue variable
 	/Call Debug_Spew "Set -DefaultValue: [${VarType.Equal[string]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[string]}) {
