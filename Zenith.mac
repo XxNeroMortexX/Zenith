@@ -54,6 +54,7 @@ Macro Include Files
 #include Morte/Zenith_Includes/Zenith_Combat.inc
 #include Morte/Zenith_Includes/Zenith_Basic.inc
 #include Morte/Zenith_Includes/Zenith_Events.inc
+#include Morte/Zenith_Includes/Zenith_Aliases.inc
 
 |:#include Morte/Zenith_main.inc
 |:#include Morte/Zenith_settings_messages.inc
