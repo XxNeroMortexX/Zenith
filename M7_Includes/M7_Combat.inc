@@ -1088,6 +1088,7 @@ Sub MeleeAbility
 					/delay 2
 					
 					/if (!${Me.SpellReady[${HateSpells.Arg[${i},|]}]}) /goto :NextSpell
+					/if (${Me.PctAggro} >= 100) /break
 					
 					:Wait4Casting
 					/if (${Me.Casting.ID}) {
