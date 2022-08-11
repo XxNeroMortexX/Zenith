@@ -178,8 +178,9 @@ Sub main(string Options)
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe EQBCGenbotMaster "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
 	|: --
 	
-	|:Clear SectionName Variable.
+	|:Clear SectionName/Line Count Variable.
 	/varset SectionName
+	/varset i
 	
 	|: Join Local EQBC Server.
 	/if (${EQBCStatus.Upper.Equal[ON]}) /call JoinEQBC	
