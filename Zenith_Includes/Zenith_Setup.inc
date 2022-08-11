@@ -230,7 +230,7 @@ Sub Init_Core_Ini
 	/varcalc i ${i}+1
 
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments ChatInChannel "If ChatIn= is set to ChatIn=channel you can Set this to /#[1-100] example /1 and thats the Channel the bots will Talk in." |: Ini Comments Line
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ChatInChannel string ChatInChannel "BOT [ChatInChannel] Unset Setting."
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ChatInChannel string ChatInChannel "BOT [ChatInChannel]"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 
