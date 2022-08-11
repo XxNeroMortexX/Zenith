@@ -245,6 +245,7 @@ Sub main(string Options)
 			/call ChatOut 17 "Master [[+r+]${Me.CleanName}[+w+]] got [+r+]Desync from EQBC[+w+]. [+y+]Trying to Fix it now..." "0"
 			/delay 2
 			/bccmd force
+			/varset Desync 10s
 		}
 	
 		/varset Exit_Time ${Time.Time12.Replace[:, ]}
