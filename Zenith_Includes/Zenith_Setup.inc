@@ -194,7 +194,7 @@ Sub Init_Core_Ini
 	/varcalc i ${i}+1
 	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments Masters "List of character names allowed to command your bot. Also allow to add another Bots ini file here E.G; bot_Mortefreddo_Enchancter.ini Seperated by |" |: Ini Comments Line
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" Masters string Masters "List BOT Names Allow to Control this BOT."
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" Masters string Masters "bot_Masters.ini"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 	

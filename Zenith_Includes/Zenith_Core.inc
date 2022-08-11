@@ -1,5 +1,5 @@
 |** 
-	M7_Core Subroutine Line Index 
+	Zenith_Core Subroutine Line Index 
 
 	|: Line:19 	 SUB - [ShortCut]
 	|: Line:60 	 SUB - [AddCommands]
@@ -33,7 +33,7 @@
 
 #chat tell
 
-#event SelfEcho   	 	 "[MQ2] M7 #1#"
+#event SelfEcho   	 	 "[MQ2] Zenith #1#"
 
 |: MQ2EQBC Chat Channel
 #event EQBCSAY      	 "<#1#> #2#"
@@ -41,7 +41,7 @@
 
 |**
 -------------------------------------------------------------------------
-	M7 BOT Debug Spew To [Echo,INI] to help debug the macro.
+	Zenith BOT Debug Spew To [Echo,INI] to help debug the macro.
 -------------------------------------------------------------------------
 **|
 
@@ -94,7 +94,7 @@ Sub Debug_Spew(string Debug_Msg, string Debug_Section, string MacroParams, strin
 
 |**
 -------------------------------------------------------------------------
-	INITIALIZATION M7 BOT CONTROL SUBROUTINES
+	INITIALIZATION Zenith BOT CONTROL SUBROUTINES
 -------------------------------------------------------------------------
 **|
 	
@@ -734,7 +734,10 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, string VarType, string KeyName, string DefaultValue)
 
 	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-
+	
+	|: Create bot_Masters.ini IF Not Exist.
+	/if (!${Bool[${Ini[${Masters_INI},CORE,Masters]}]}) /ini ${Masters_INI} "CORE" "Masters" "List all of your BOTS Here Seperated by |"
+	
 	|: Set RealSection Loaclly to SectionName for Subrountine Processing.
 	/Call Debug_Spew "Declare RealSection: [${SectionName.Upper}] VarType: [${VarType}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Defined[RealSection]}) /declare RealSection string local ${SectionName.Upper}
