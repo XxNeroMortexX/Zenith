@@ -1112,6 +1112,8 @@ Sub MeleeAbility
 			/if (${Toggle-autobehind}) /varset Toggle-autobehind false
 			|:Make sure autodistance off
 			/if (${Toggle-autodistance}) /varset Toggle-autodistance false
+			|:Make sure Tank Close
+			/if (${MeleeRange} > 7) /varset MeleeRange 7
 			
 			|:SelfBuff with Stun Proc
 			/if (${Int[${Me.Buff[Sylvan Call].ID}]} == 0 && ${Me.Gem[Sylvan Call]}) /casting "Sylvan Call"
