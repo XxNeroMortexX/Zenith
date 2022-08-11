@@ -897,7 +897,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 			/declare Toggle-${VarName}-DefaultValue string outer
 		}
 		/varset Toggle-${VarName}-DefaultValue ${DefaultValue}
-	/echo ${VarName}:${DefaultValue} :: ${Toggle-${VarName}} != ${Bool[${Toggle-${VarName}-DefaultValue}]})
+	/echo ${VarName}:${DefaultValue} :: ${Toggle-${VarName}} != ${Toggle-${VarName}-DefaultValue}
 
 	}
 	|: IF it's a shortcut, set the varname-DefaultValue variable :|
