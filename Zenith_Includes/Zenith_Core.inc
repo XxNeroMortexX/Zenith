@@ -896,7 +896,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 		/if (!${Defined[Toggle-${VarName}-DefaultValue]}) {
 			/declare Toggle-${VarName}-DefaultValue string outer
 		}
-		/echo ${VarName}:${DefaultValue}
+		/echo 1|${VarName}:${DefaultValue}
 		/varset Toggle-${VarName}-DefaultValue ${DefaultValue}
 	/echo ${VarName}:${DefaultValue}
 
