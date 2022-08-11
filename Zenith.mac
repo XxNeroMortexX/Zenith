@@ -194,12 +194,7 @@ Sub main(string Options)
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /echo Turning On BardSwap Ability...	
 	}
 
-	/if (${IRCStatus.Equal["on"]} && ${EQBCStatus.Equal["off"]}) /call JoinIRC
-	/if (${EQBCStatus.Equal["on"]} && ${IRCStatus.Equal["off"]}) /call JoinEQBC	
-	/if (${IRCStatus.Equal["on"]} && ${EQBCStatus.Equal["on"]}) {
-		/echo Please Only Turn on one Chat Status.  Either IRC or EQBC
-		/endmacro
-	}
+	/if (${EQBCStatus.Equal["on"]}) /call JoinEQBC	
 
 	/squelch /alias /gb /echo Genbot
 
