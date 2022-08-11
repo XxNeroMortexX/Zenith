@@ -153,7 +153,7 @@ Sub AutoCombatDistance
 		/varset ArcheryRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}
 		/if (${Stick.Active}) /stick off
 	} 
-	/if (${ArcheryRange} < 34 && ${ArcheryRange} != 34) {
+	/if (${ArcheryRange} < 34) {
 		/varset ArcheryRange 34
 		/if (${Stick.Active}) /stick off
 	}
