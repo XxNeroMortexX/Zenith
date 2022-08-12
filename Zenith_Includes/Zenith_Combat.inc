@@ -72,7 +72,7 @@ Sub CombatMain
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick moveback snaproll face uw ${ArcheryRange}
+								/squelch /nomodkey /docommand /stick moveback snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
 							} else {
 								/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 							}
@@ -80,7 +80,7 @@ Sub CombatMain
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick moveback snaproll rear uw ${ArcheryRange}
+								/squelch /nomodkey /docommand /stick moveback snaproll rear uw ${Math.Calc[${ArcheryRange}+2]}
 							} else {
 								/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 							}
@@ -97,7 +97,7 @@ Sub CombatMain
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick snaproll face uw ${ArcheryRange}
+								/squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
 							} else {
 								/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 							}
@@ -105,7 +105,7 @@ Sub CombatMain
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick snaproll rear uw ${ArcheryRange}
+								/squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+2]}
 							} else {
 								/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 							}
