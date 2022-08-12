@@ -230,7 +230,7 @@ Sub Init_Core_Ini(int i)
 	/varcalc i ${i}+1
 
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments checkname "Toggle(On/Off) if set to true, bot will only respond to commands if the command is preceeded with Bots Name first." |: Ini Comments Line
-	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" checkname off return "I will respond to all commands." "I will only respond to commands that are addressed to me." checkname
+	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" checkname off return "I will respond to all commands." "I will only respond to commands that are addressed to me."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 
