@@ -959,7 +959,7 @@ Sub MeleeAbility
 
 					|:Turn off Attack
 					/if (${Stick.Active}) /stick off
-					|:/if (${Me.Combat} && ${Toggle-melee}) /attack off
+					/if (${Me.Combat} && ${Toggle-melee}) /attack off
 
 					/if (!${Bool[${Me.ActiveDisc.ID}]}) { 
 						/if (${Me.Invis}) {
@@ -1019,7 +1019,7 @@ Sub MeleeAbility
 	
 		/if (${Toggle-pickpockets} && ${Me.AbilityReady[Pick Pockets]}) {
 			
-			/if (${Me.Combat} && ${Toggle-melee}) /attack off
+			|:/if (${Me.Combat} && ${Toggle-melee}) /attack off
 			/if (${Me.AutoFire} && ${Toggle-archery}) /autofire off
 			/if (${Me.Casting.ID}) /interrupt
 
