@@ -30,7 +30,7 @@ Sub Event_EscKey
 
 |: Me on mount then Dismount.
 /if (${Me.Mount.ID}) /dismount
-
+/echo 2
 /squelch /target clear
 
 |:Make Sure Combat not Turned on.
