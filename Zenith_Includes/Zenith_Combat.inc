@@ -18,9 +18,10 @@ Sub CombatMain
 			|:Make sure Auto Distance is Setup Correct
 			/if (!${Toggle-aggro} && ${Toggle-autodistance}) /call AutoCombatDistance
 			
-			|:Check if genbot's Distance to close for set MeleeRange.
+			
 			/if (${Toggle-melee}) {
 				
+				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress BACK HOLD
@@ -40,7 +41,7 @@ Sub CombatMain
 					}
 				}
 
-				|:Check if genbot's Distance to far for set MeleeRange.
+				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress FORWARD HOLD
