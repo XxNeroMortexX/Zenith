@@ -38,9 +38,9 @@ Sub CombatMain
 
 				|:Check if genbot's Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
+					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /stick off
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							 /if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
 							 |:/nomodkey /docommand /moveto id ${CombatTargetID} mdist ${Math.Calc[${MeleeRange}+2]}
 							 /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+2]}
 							/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+2]}
