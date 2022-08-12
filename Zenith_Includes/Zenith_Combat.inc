@@ -24,7 +24,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							 |:/if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) 
+							 /if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
 							 /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+3]}
 							/if (${Toggle-aggro}) /stick snaproll face uw ${Math.Calc[${MeleeRange}+3]}
 						}
@@ -40,7 +40,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							 |:/if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) 
+							 /if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
 							 |:/nomodkey /docommand /moveto id ${CombatTargetID} mdist ${Math.Calc[${MeleeRange}+3]}
 							 /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+3]}
 							/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+3]}
