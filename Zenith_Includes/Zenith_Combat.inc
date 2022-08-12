@@ -972,7 +972,7 @@ Sub MeleeAbility
 						
 						|:Target and Getbehind.
 						/if (${Target.ID} != ${CombatTargetID}) /Target id ${CombatTargetID}
-						/if (!${Stick.Behind}) /stick snaproll rear uw ${MeleeRange} id ${CombatTargetID}
+						/if (!${Stick.Behind}) /stick snaproll rear uw ${Math.Calc[${MeleeRange}+2]} id ${CombatTargetID}
 					
 						/delay 4s
 						
