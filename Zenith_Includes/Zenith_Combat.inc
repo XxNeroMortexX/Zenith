@@ -22,6 +22,7 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
+				/echo ${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /keypress BACK
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /keypress BACK
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
@@ -38,6 +39,7 @@ Sub CombatMain
 
 				|:Check if genbot's Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
+					/echo ${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /keypress FORWARD
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /keypress FORWARD
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
