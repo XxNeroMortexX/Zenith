@@ -8,7 +8,6 @@ Sub CombatMain
 	/call CheckFollowing
 	
 	|: Turn Attack off 15 10th's of a Seconds if im CombatTargetID's Target.
-	/echo ${Me.TargetOfTarget.Name.Equal[${Me.CleanName}]} && ${Toggle-raidevade}
 	/if (${Me.TargetOfTarget.Name.Equal[${Me.CleanName}]} && ${Toggle-raidevade}) /call RaidEvade 15
 	
 	|:Check if set to on for auto positioning
