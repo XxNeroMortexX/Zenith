@@ -1217,9 +1217,9 @@ Sub Event_TooClose
 |- Adjust Melee distance if too far away msg   	-|
 |------------------------------------------------|
 #EVENT TooFar "Your target is too far away, get closer!"
-SUB EVENT_TooFar
+Sub EVENT_TooFar
 	/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
 		/doevents flush TooFar
 		/if (${Toggle-autoengage}) /varcalc MeleeRange ${MeleeRange} - 1
 	}
-/RETURN
+/return
