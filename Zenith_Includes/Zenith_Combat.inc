@@ -41,7 +41,7 @@ Sub CombatMain
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /stick off
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							 /if (${MoveUtils.Command.Equal[MOVETO]}) /nomodkey /docommand /moveto id ${CombatTargetID} mdist ${Math.Calc[${MeleeRange}+2]}
+							 /if (${MoveUtils.Command.NotEqual[MOVETO]}) /nomodkey /docommand /moveto id ${CombatTargetID} mdist ${Math.Calc[${MeleeRange}+2]}
 							 |:/nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+2]}
 							/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+2]}
 						}
