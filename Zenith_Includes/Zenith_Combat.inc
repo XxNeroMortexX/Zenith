@@ -424,7 +424,7 @@ Sub RaidEvade(string EvadeDelay)
 	|: Set Temp Variable with CombatTargetID
 	/varset tmpCombatTargetID ${CombatTargetID}
 	/call ChatOut 3 "I grabbed argo from [${Spawn[id ${tmpCombatTargetID}].CleanName}], turning off attack temporary." "0"
-	
+	/echo 2
 	|: Clear Current CombatTargetID & Turn Attack|Archery OFF
 	/varset CombatTargetID 0
 	/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
