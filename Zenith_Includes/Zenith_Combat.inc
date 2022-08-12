@@ -35,8 +35,8 @@ Sub CombatMain
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${MeleeRange}
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${MeleeRange}
+							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
+							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+2]}
 						}
 					}
 				}
@@ -56,8 +56,8 @@ Sub CombatMain
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${MeleeRange}
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${MeleeRange}
+							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+2]}
+							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+2]}
 						}
 					}
 				}
