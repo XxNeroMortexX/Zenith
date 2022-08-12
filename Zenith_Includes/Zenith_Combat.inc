@@ -22,8 +22,7 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
-				/echo ${MoveUtils.Command} :: ${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}
-					/if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
+					/if (!${Me.Moving}) /stick off
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 						/echo ${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}
