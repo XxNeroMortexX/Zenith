@@ -22,10 +22,10 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
+					/if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 						/echo ${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}
-							 /if (${MoveUtils.Command.Equal[NONE]} && !${Me.Moving}) /stick off
 							 /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+3]}
 							/if (${Toggle-aggro}) /stick snaproll face uw ${Math.Calc[${MeleeRange}+3]}
 						}
