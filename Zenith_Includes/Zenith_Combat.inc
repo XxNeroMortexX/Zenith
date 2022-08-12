@@ -230,7 +230,6 @@ Sub Combatcheck(string CombatID)
 	/if (!${Bool[${CombatTargetID}]} || !${Bool[${CombatTargetID}]} && ${Bool[${Target.ID}]}) {
 		/if (${Select[${Spawn[${CombatTargetID}].State},DEAD,UNKNOWN,NULL]} && ${Select[${Spawn[${CombatTargetID}].Type},Untargetable,Mount,Corpse,Chest,Trigger,Trap,Timer,Item,Mercenary,Aura,Object,Banner,Campfire,Flyer,NULL]}) {
 			/if (${Toggle-autotargetclear}) /squelch /nomodkey /docommand /Target clear
-			/echo 4
 		}
 		/if (${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}) {
 			
@@ -434,7 +433,7 @@ Sub RaidEvade(string EvadeDelay)
 	|: Disable Sticking to Current Target & Clear Target.
 	/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 	/if (${Target.ID}) /squelch /nomodkey /docommand /Target clear
-	/echo 3
+	
 	|: Flush all Current Events.
 	/doevents flush
 	

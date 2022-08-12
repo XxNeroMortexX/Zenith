@@ -318,7 +318,7 @@ Sub Command_stop
 	|: Me on mount then Dismount.
 	/if (${Me.Mount.ID}) /squelch /nomodkey /docommand /dismount
 	/Call Debug_Spew "Mounted: [${Bool[${Me.Mount.ID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-	/ECHO 1
+	
 	/squelch /nomodkey /docommand /target clear
 	/Call Debug_Spew "Cleared Target: [${If[${Target.ID} == NULL,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
