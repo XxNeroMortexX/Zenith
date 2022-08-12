@@ -267,9 +267,8 @@ Sub Combatcheck(string CombatID)
 	|: Turn Attack OFF IF Melee & Archery OFF
 	/Call Debug_Spew "Turn Melee/Archery OFF: [${If[${Me.Combat} && !${Toggle-melee},TRUE,FALSE]}/${If[${Me.AutoFire} && !${Toggle-archery},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${CombatTargetID}]}) {
-	/echo ${Me.Combat} && !${Toggle-melee}
-		/if (${Me.Combat} && !${Toggle-melee}) /attack off
-		/if (${Me.AutoFire} && !${Toggle-archery}) /autofire off
+		|:/if (${Me.Combat} && !${Toggle-melee}) /attack off
+		|:/if (${Me.AutoFire} && !${Toggle-archery}) /autofire off
 	}
 
 	|: Target CombatTargetID
