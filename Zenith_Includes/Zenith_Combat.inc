@@ -1018,7 +1018,7 @@ Sub MeleeAbility
 	/if (${Select[${Me.Class.ShortName.Upper},ROG]}) {
 	
 		/if (${Toggle-pickpockets} && ${Me.AbilityReady[Pick Pockets]}) {
-			
+			/echo here?
 			|:/if (${Me.Combat} && ${Toggle-melee}) /attack off
 			/if (${Me.AutoFire} && ${Toggle-archery}) /autofire off
 			/if (${Me.Casting.ID}) /interrupt
