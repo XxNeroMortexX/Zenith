@@ -1822,7 +1822,7 @@ Sub Command_disc(string DiscName)
 /return
 
 Sub Toggle_aggro
-/echo Set Aggro
+/echo Set Aggro [${Toggle-aggro}]
 |: Reset to Default Tant Setting
 		/if (${Toggle-taunt} != ${Toggle-taunt-DefaultValue}) /varset Toggle-taunt ${Toggle-autobehind-DefaultValue}
 		|: Reset to Default Autobehind Setting
