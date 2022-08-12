@@ -456,7 +456,7 @@ Sub ExecCommand(string Commands)
 		
 		|: Call Command_ SUB if Toggle has one.
 		/if (${Bool[${Toggle-${CurrCommand}-CallSub}]}) {
-			/Call Debug_Spew "Call [Toggle_${CurrCommand.Lower}]: With Params: [${CommandParam}] IF: [${CurrCommand}] is in ${SectionsList.Arg[${GenFor}]} Commands: [${Bool[${GenStr.Find[|${CurrCommand}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/Call Debug_Spew "Call [Toggle_${CurrCommand.Lower}]: With Params: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call Toggle_${CurrCommand.Lower} ${CommandParam}
 			/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/return
