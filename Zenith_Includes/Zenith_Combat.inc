@@ -267,6 +267,7 @@ Sub Combatcheck(string CombatID)
 	|: Turn Attack OFF IF Melee & Archery OFF
 	/Call Debug_Spew "Turn Melee/Archery OFF: [${If[${Me.Combat} && !${Toggle-melee},TRUE,FALSE]}/${If[${Me.AutoFire} && !${Toggle-archery},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${CombatTargetID}]}) {
+	/echo 2
 		/if (${Me.Combat} && !${Toggle-melee}) /attack off
 		/if (${Me.AutoFire} && !${Toggle-archery}) /autofire off
 	}
@@ -427,6 +428,7 @@ Sub RaidEvade(string EvadeDelay)
 	
 	|: Clear Current CombatTargetID & Turn Attack|Archery OFF
 	/varset CombatTargetID 0
+	/echo 3
 	/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
 	/if (${Me.AutoFire} && ${Toggle-archery}) /squelch /nomodkey /docommand /autofire off
 	
@@ -705,7 +707,7 @@ Sub Event_EnrageOn
 		|: Set EnrageVar TO CombatTargetID && Clear CombatTargetID
 		/varset EnrageVar ${CombatTargetID}
 		/varset CombatTargetID 0
-		
+		/echo 4
 		|: Turn OFF Stick,Attack,Archery && Back Off Pets!
 		/if (${Stick.Active}) /stick off
 		/if (${Me.Combat} && ${Toggle-melee}) /attack off
@@ -956,7 +958,7 @@ Sub MeleeAbility
 				}
 				
 				/if (${Me.AbilityReady[Hide]} && ${Me.AbilityReady[Sneak]} && ${Me.AbilityReady[Backstab]} && ${Me.CombatAbilityReady[${RogueStrike}]} && ${Target.Distance} <= ${MeleeRange}) {
-
+/echo 5
 					|:Turn off Attack
 					/if (${Stick.Active}) /stick off
 					/if (${Me.Combat} && ${Toggle-melee}) /attack off
@@ -1018,7 +1020,7 @@ Sub MeleeAbility
 	/if (${Select[${Me.Class.ShortName.Upper},ROG]}) {
 	
 		/if (${Toggle-pickpockets} && ${Me.AbilityReady[Pick Pockets]}) {
-			
+			/echo 6
 			/if (${Me.Combat} && ${Toggle-melee}) /attack off
 			/if (${Me.AutoFire} && ${Toggle-archery}) /autofire off
 			/if (${Me.Casting.ID}) /interrupt
