@@ -240,7 +240,7 @@ Sub Combatcheck(string CombatID)
 			/varset EnrageVar 0
 			/varset DebuffList
 			/varset interruptFlag TRUE
-			
+			/echo 1
 			|: Turn Stick, Combat, Archery, Casting OFF.
 			/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 			/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
