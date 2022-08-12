@@ -653,7 +653,7 @@ Sub Init_Combat_Ini
 	|: BER,MNK,ROG,WAR,CLR,DRU,SHM,ENC,MAG,NEC,WIZ,BRD,BST,PAL,RNG,SHD
 	/if (${Select[${Me.Class.ShortName.Upper},BRD,BST,MNK,SHD,WAR]}) {
 		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments aggro "This will have Bot Automatically do everything the Bot can to get and hold aggro" |: Ini Comments Line
-		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" aggro off return "I will not do anything to grab aggro." "I will do everything I can to get aggro."
+		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" aggro off return "I will not do anything to grab aggro." "I will do everything I can to get aggro." aggro
 		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 		/varcalc i ${i}+1
 	} else {
