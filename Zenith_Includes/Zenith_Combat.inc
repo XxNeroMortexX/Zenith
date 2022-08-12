@@ -267,6 +267,7 @@ Sub Combatcheck(string CombatID)
 	|: Turn Attack OFF IF Melee & Archery OFF
 	/Call Debug_Spew "Turn Melee/Archery OFF: [${If[${Me.Combat} && !${Toggle-melee},TRUE,FALSE]}/${If[${Me.AutoFire} && !${Toggle-archery},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${CombatTargetID}]}) {
+	/echo 2
 		/if (${Me.Combat} && !${Toggle-melee}) /attack off
 		/if (${Me.AutoFire} && !${Toggle-archery}) /autofire off
 	}
@@ -424,7 +425,7 @@ Sub RaidEvade(string EvadeDelay)
 	|: Set Temp Variable with CombatTargetID
 	/varset tmpCombatTargetID ${CombatTargetID}
 	/call ChatOut 3 "I grabbed argo from [${Spawn[id ${tmpCombatTargetID}].CleanName}], turning off attack temporary." "0"
-	/echo 2
+	
 	|: Clear Current CombatTargetID & Turn Attack|Archery OFF
 	/varset CombatTargetID 0
 	/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
