@@ -3,6 +3,7 @@
 |: 
 |:-----------------------------------------------------------------------
 Sub Toggle_checkname(Param0, Param1, Param2, Param3)
+/echo Toggle Set First Then Subroutine is called.
 /echo My Params are: ${Param0} ${Param1} ${Param2} ${Param3}
 /return
 
