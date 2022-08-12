@@ -24,7 +24,6 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (!${Toggle-autobehind}) {
 						|:/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/stick off
 							/squelch /nomodkey /docommand /stick moveback uw ${MeleeRange}
 							/if (${Toggle-aggro}) /stick snaproll face uw ${MeleeRange}
 						|:}
