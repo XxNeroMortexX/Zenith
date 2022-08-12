@@ -427,7 +427,7 @@ Sub RaidEvade(string EvadeDelay)
 	
 	|: Clear Current CombatTargetID & Turn Attack|Archery OFF
 	/varset CombatTargetID 0
-	|:/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
+	/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
 	/if (${Me.AutoFire} && ${Toggle-archery}) /squelch /nomodkey /docommand /autofire off
 	
 	|: Disable Sticking to Current Target & Clear Target.
@@ -708,7 +708,7 @@ Sub Event_EnrageOn
 		
 		|: Turn OFF Stick,Attack,Archery && Back Off Pets!
 		/if (${Stick.Active}) /stick off
-		/if (${Me.Combat} && ${Toggle-melee}) /attack off
+		|:/if (${Me.Combat} && ${Toggle-melee}) /attack off
 		/if (${Me.AutoFire} && ${Toggle-archery}) /autofire off
 		/if (${Toggle-petona} && ${Me.Pet.ID} && ${Bool[${Me.Pet.Following}]}) /pet back off
 		
