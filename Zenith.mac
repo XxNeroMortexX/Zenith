@@ -51,6 +51,7 @@ Macro Include Files
 #include Morte/Zenith_Includes/Zenith_Setup.inc
 #include Morte/Zenith_Includes/Zenith_Core.inc
 #include Morte/Zenith_Includes/Zenith_Commands.inc
+#include Morte/Zenith_Includes/Zenith_Toggles.inc
 #include Morte/Zenith_Includes/Zenith_Combat.inc
 #include Morte/Zenith_Includes/Zenith_Basic.inc
 #include Morte/Zenith_Includes/Zenith_Events.inc
