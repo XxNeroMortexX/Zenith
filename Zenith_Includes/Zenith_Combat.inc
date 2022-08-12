@@ -25,7 +25,7 @@ Sub CombatMain
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress BACK HOLD
 						/delay 2
-						/keypress BACK
+						|:/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
