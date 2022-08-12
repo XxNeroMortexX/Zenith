@@ -22,7 +22,7 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
-					/if (!${Me.Moving}) /stick off
+					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) /stick off
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							 /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
