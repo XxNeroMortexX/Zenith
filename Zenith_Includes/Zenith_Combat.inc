@@ -1206,19 +1206,19 @@ Sub MeleeAbility
 |------------------------------------------------|
 #Event TooClose "Your target is too close to use a ranged weapon!!"
 Sub Event_TooClose
-	/if (${CombatTargetID}) {
+	/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
 		/doevents flush TooClose
 		|:Check if set to on for auto positioning
 		/if (${Toggle-autoengage}) /varcalc ArcheryRange ${ArcheryRange} + 1
 	}
 /return
-
+						
 |------------------------------------------------|
 |- Adjust Melee distance if too far away msg   	-|
 |------------------------------------------------|
 #EVENT TooFar "Your target is too far away, get closer!"
 SUB EVENT_TooFar
-	/if (${CombatTargetID}) {
+	/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
 		/doevents flush TooFar
 		/if (${Toggle-autoengage}) /varcalc MeleeRange ${MeleeRange} - 1
 	}
