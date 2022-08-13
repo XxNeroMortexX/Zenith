@@ -73,7 +73,11 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress BACK HOLD
-						/delay 2
+						:WaitTillFurther
+						/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
+							/delay 1
+							/goto :WaitTillFurther
+						}
 						/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
