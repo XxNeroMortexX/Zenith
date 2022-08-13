@@ -27,6 +27,7 @@ Sub CombatMain
 						/keypress BACK HOLD
 						/delay 1
 						/keypress BACK
+						/stick off
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
@@ -47,6 +48,7 @@ Sub CombatMain
 						/keypress FORWARD HOLD
 						/delay 1
 						/keypress FORWARD
+						/stick off
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
