@@ -240,7 +240,7 @@ Sub main(string Options)
 	
 		/doevents
 		
-		|:/call Combatcheck
+		/call Combatcheck
 		/Call Debug_Spew "CombatTargetID [${CombatTargetID}] Status: [${If[${CombatTargetID} != 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 		/if (${Bool[${CombatTargetID}]}) {
