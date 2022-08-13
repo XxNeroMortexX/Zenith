@@ -25,7 +25,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress BACK Hold
-						/delay 3
+						/delay 5
 						/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
@@ -45,7 +45,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress FORWARD Hold
-						/delay 3
+						/delay 5
 						/keypress FORWARD
 					}
 					/if (!${Toggle-autobehind}) {
