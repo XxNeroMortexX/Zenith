@@ -46,7 +46,7 @@ Sub CombatMain
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 						/keypress FORWARD HOLD
 						:WaitTillCloser
-						/if (${Math.Calc[${Target.Distance}].Int} != ${MeleeRange}) {
+						/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 							/delay 1
 							/goto :WaitTillCloser
 						}
