@@ -30,7 +30,7 @@ Sub CombatMain
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
+							/if (${MoveUtils.Command.NotEqual[STICK]}) /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
 							/if (${Toggle-aggro}) /stick snaproll face uw ${Math.Calc[${MeleeRange}+2]}
 						}
 					} else /if (${Toggle-autobehind}) {
