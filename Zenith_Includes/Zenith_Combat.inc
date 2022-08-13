@@ -49,8 +49,8 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (!${Me.Moving}) {
 						/keypress FORWARD HOLD
-						/delay 1
 						:WaitTillCloser
+						/delay 1
 						/if (${Math.Calc[${Target.Distance}].Int} >= ${MeleeRange}) {
 							/goto :WaitTillCloser
 						}
