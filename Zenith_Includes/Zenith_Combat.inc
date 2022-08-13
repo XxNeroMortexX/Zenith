@@ -25,7 +25,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (!${Me.Moving}) {
 						
-						/if (${MoveUtils.Command.Equal[STICK]}) /stick off
+						|:/if (${MoveUtils.Command.Equal[STICK]}) /stick off
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
@@ -44,7 +44,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (!${Me.Moving}) {
 					
-						/if (${MoveUtils.Command.Equal[STICK]}) /stick off
+						|:/if (${MoveUtils.Command.Equal[STICK]}) /stick off
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
