@@ -26,10 +26,10 @@ Sub CombatMain
 					/if (!${Me.Moving}) {
 						/keypress BACK HOLD
 						:WaitTillFurther
-						/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
-							/delay 1
+						/if (${Math.Calc[${Target.Distance}].Int} <= ${MeleeRange}) {
 							/goto :WaitTillFurther
 						}
+						/delay 1
 						/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
@@ -50,10 +50,10 @@ Sub CombatMain
 					/if (!${Me.Moving}) {
 						/keypress FORWARD HOLD
 						:WaitTillCloser
-						/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
-							/delay 1
+						/if (${Math.Calc[${Target.Distance}].Int} >= ${MeleeRange}) {
 							/goto :WaitTillCloser
 						}
+						/delay 1
 						/keypress FORWARD
 					}
 					/if (!${Toggle-autobehind}) {
