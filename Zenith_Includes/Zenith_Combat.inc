@@ -26,7 +26,7 @@ Sub CombatMain
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 					/echo back
 						/keypress BACK Hold
-						/delay 25
+						/delay 1s
 						/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
@@ -47,7 +47,7 @@ Sub CombatMain
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
 					/echo FOrward
 						/keypress FORWARD Hold
-						/delay 25
+						/delay 1s
 						/keypress FORWARD
 					}
 					/if (!${Toggle-autobehind}) {
