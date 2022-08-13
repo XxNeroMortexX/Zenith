@@ -116,7 +116,7 @@ Sub CombatMain
 	}
 	|:Need to FIX
 	|:Check if genbot has to use abilities automaticaly
-	/call MeleeAbility
+	|:/call MeleeAbility
 
 	|:auto click potion at a certian percentage.
 	|:/call AutoPotionUse
