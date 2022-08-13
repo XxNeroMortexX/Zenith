@@ -25,7 +25,11 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (!${Me.Moving}) {
 						/keypress BACK HOLD
-						/delay 1
+						:WaitTillFurther
+						/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
+							/delay 1
+							/goto :WaitTillFurther
+						}
 						/keypress BACK
 					}
 					/if (!${Toggle-autobehind}) {
