@@ -26,6 +26,7 @@ Sub CombatMain
 					/if (!${Me.Moving}) {
 						
 						:WaitTillFurther
+						/delay 1
 						/if (${Math.Calc[${Target.Distance}].Int} <= ${MeleeRange}) {
 							/keypress BACK HOLD
 							/delay 1
