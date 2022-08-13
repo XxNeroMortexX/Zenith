@@ -24,7 +24,7 @@ Sub CombatMain
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
-						|:/keypress BACK
+						/keypress BACK HOLD
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
@@ -42,7 +42,7 @@ Sub CombatMain
 				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
 					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
-						|:/keypress FORWARD
+						/keypress FORWARD HOLD
 					}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
