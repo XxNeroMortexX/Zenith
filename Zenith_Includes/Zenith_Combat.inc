@@ -82,7 +82,7 @@ Sub CombatMain
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${ArcheryRange}/4].Int},1,7]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${ArcheryRange}/4].Int},1,15]}
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
@@ -107,7 +107,7 @@ Sub CombatMain
 				|:Check if genbot's Distance to far for set ArcheryRange.		
 				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${ArcheryRange}/4)+(${ArcheryRange})].Int},1,7]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${ArcheryRange}/4)+(${ArcheryRange})].Int},1,15]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
