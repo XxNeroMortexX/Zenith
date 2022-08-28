@@ -56,11 +56,10 @@ Sub CombatMain
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
-					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
-						/keypress BACK HOLD
-						/delay 1
-						/keypress BACK
-					}
+					/keypress back hold
+					/delay 1
+					/keypress back
+					
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
