@@ -27,8 +27,8 @@ Sub CombatMain
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/echo ${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${MeleeRange}/4].Int}
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${MeleeRange}/4].Int},1,3]}
+					/echo ${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${MeleeRange}/4].Int}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${MeleeRange}/4].Int},1,3]}
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
@@ -45,8 +45,8 @@ Sub CombatMain
 				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/echo ${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}/4].Int}
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}/4].Int},3,1]}
+					/echo ${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[${MeleeRange}/4].Int}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[${MeleeRange}/4].Int},3,1]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
