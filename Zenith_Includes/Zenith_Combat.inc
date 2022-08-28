@@ -43,7 +43,7 @@ Sub CombatMain
 				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[${MeleeRange}*2].Int},3,1]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${MeleeRange}/4)+(${MeleeRange})].Int},3,1]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
@@ -64,9 +64,11 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
-				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
+				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
+					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${MeleeRange}/4].Int},3,1]}
 					/keypress back hold
-					/delay 1
+					/delay ${MoveDelay}
 					/keypress back
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
@@ -81,10 +83,12 @@ Sub CombatMain
 				}
 			
 				|:Check if genbot's Distance to far for set ArcheryRange.		
-				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange}) {
-						/keypress forward hold
-						/delay 1
-						/keypress forward
+				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange} && !${Me.Moving}) {
+					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${MeleeRange}/4)+(${MeleeRange})].Int},3,1]}
+					/keypress forward hold
+					/delay ${MoveDelay}
+					/keypress forward
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
