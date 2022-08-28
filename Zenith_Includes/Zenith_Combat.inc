@@ -21,6 +21,8 @@ Sub CombatMain
 			
 			/if (${Toggle-melee}) {
 				
+				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
+				
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/keypress back hold
