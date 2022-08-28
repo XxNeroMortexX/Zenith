@@ -73,11 +73,9 @@ Sub CombatMain
 			
 				|:Check if genbot's Distance to far for set ArcheryRange.		
 				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange}) {
-					/if (${MoveUtils.Command.Equal[STICK]} && !${Me.Moving}) {
-						/keypress FORWARD HOLD
+						/keypress forward hold
 						/delay 2
-						/keypress FORWARD
-					}
+						/keypress forward
 					/if (!${Toggle-autobehind}) {
 						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
 							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
