@@ -86,6 +86,7 @@ Sub CombatMain
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
+					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/if (${Stick.Behind}) /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
@@ -110,6 +111,7 @@ Sub CombatMain
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
+					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
