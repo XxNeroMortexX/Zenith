@@ -22,7 +22,11 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				|: Fix for Stick Bouncing
-				/if (${Math.Calc[${Target.Distance}].Int} < 1 || !${Stick.Behind}) /stick off
+				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
+				/if (!${Stick.Behind}) {
+					/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+					/delay 5
+				}
 				
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
