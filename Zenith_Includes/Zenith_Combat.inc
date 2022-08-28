@@ -36,6 +36,7 @@ Sub CombatMain
 					} else /if (${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 						/if (!${Stick.Behind} && !${Stick.Active}) {
+							/stick off
 							/squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
 							/delay 2
 						}
@@ -55,6 +56,7 @@ Sub CombatMain
 					} else /if (${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 						/if (!${Stick.Behind} && !${Stick.Active}) {
+							/stick off
 							/squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
 							/delay 2
 						}
