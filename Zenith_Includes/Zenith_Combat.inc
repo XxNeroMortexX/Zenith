@@ -114,12 +114,14 @@ Sub CombatMain
 					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+						/echo 1
 							/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 							/if (!${Stick.Behind} && !${Stick.Active}) {
+							/echo 2
 								/stick off
 								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+4].Int}
 								/delay 5
