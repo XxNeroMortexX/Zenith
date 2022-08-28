@@ -71,6 +71,7 @@ Sub CombatMain
 			}
 
 			/if (${Toggle-archery}) {
+			
 				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				/if (!${Stick.Behind} && ${Toggle-autobehind}) {
