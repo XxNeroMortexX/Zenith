@@ -3,18 +3,22 @@ Sub Alias_Setup
 	/squelch /alias /gb /echo Genbot
 
 	|: Special Vet AAs	
-	/alias /Resist /echo Genbot alt Infusion of the Faithful
-	/alias /Armor /echo Genbot alt Armor of Experience
-	/alias /DPS /echo Genbot alt Intensity of the Resolute
-	/alias /Recover /echo Genbot alt Staunch Recovery
-	/alias /Merc /echo Genbot alt Steadfast Servant
+	/alias /Resist /Casting "Infusion of the Faithful"
+	/alias /Armor /Casting "Armor of Experience"
+	/alias /DPS /Casting "Intensity of the Resolute"
+	/alias /Recover /Casting "Staunch Recovery"
+	/alias /Merc /Casting "Steadfast Servant"
 
-	/alias /intensity /echo Genbot alt Intensity of the Resolute
-	/alias /infusion /echo Genbot alt Infusion of the Faithful
-	/alias /lesson /echo Genbot alt Lesson of the Devoted
-	/alias /mgb /echo Genbot alt Mass Group Buff
-	/alias /throne /echo Genbot alt Throne of Heroes
-	/alias /rCure /echo Genbot alt Radiant Cure
+	/alias /infusion /Casting "Infusion of the Faithful"
+	/alias /intensity /Casting "Intensity of the Resolute"
+	/alias /Staunch /Casting "Staunch Recovery"
+	
+	/alias /lesson /Casting "Lesson of the Devoted"
+	/alias /throne /Casting "Throne of Heroes"
+	
+	|: AAs
+	/alias /mgb /Casting "Mass Group Buff"
+	/alias /RC /casting "Radiant Cure"
 
 	|: REmove These Later.
 	/alias /GL /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/guildsay GL,]}

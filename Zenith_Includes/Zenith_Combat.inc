@@ -22,39 +22,32 @@ Sub CombatMain
 			/if (${Toggle-melee}) {
 				
 				|:Check if Distance to close for set MeleeRange.
-				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
-					/if (!${Me.Moving}) {
-						/if (${MoveUtils.Command.Equal[STICK]}) /stick off
-					}
+				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
+					/keypress back hold
+					/delay 1
+					/keypress back
 					/if (!${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${MoveUtils.Command.NotEqual[STICK]}) /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
-							/if (${Toggle-aggro}) /stick snaproll face uw ${Math.Calc[${MeleeRange}+2]}
-						}
+						/squelch /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+4].Int}
 					} else /if (${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+2]}
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+2]}
-						}
+						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick moveback uw ${Math.Calc[${MeleeRange}+4].Int}
+						/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
 					}
+					/delay 2
 				}
 
 				|:Check if Distance to far for set MeleeRange.
-				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
-					/if (!${Me.Moving}) {
-						/if (${MoveUtils.Command.Equal[STICK]}) /stick off
-					}
+				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
+					/keypress forward hold
+					/delay 1
+					/keypress forward
 					/if (!${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${MoveUtils.Command.NotEqual[STICK]}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+2]}
-							/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+2]}
-						}
+						/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+						/if (${Toggle-aggro}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+4].Int}
 					} else /if (${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+2]}
-							/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+2]}
-						}
+						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+						/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
 					}
+					/delay 2
 				}
 				
 			}
@@ -140,6 +133,7 @@ Sub CombatMain
 Sub AutoCombatDistance
 |: MaxRange		The max distance from this spawn for it to hit you
 |: MaxRangeTo	The Max distance from this spawn for you to hit it
+
 /if (${Toggle-melee} && ${Toggle-autoengage}) {
 	/if (${MeleeRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}) {
 		/varset MeleeRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}
@@ -1134,10 +1128,13 @@ Sub MeleeAbility
 				/if (!${Defined[i]}) /declare i int local
 				/for i 1 to ${HateSpells.Count[|]}
 				
-					/if (${CombatTargetID} == ${Target.ID} && ${Me.SpellReady[${HateSpells.Arg[${i},|]}]}) /casting "${HateSpells.Arg[${i},|]}" -targetid|${CombatTargetID}
-					/delay 2
+					/if (${CombatTargetID} == ${Target.ID} && ${Me.SpellReady[${HateSpells.Arg[${i},|]}]}) {
+						/casting "${HateSpells.Arg[${i},|]}" -targetid|${CombatTargetID}
+						/delay 2
+					} else /if (!${Me.SpellReady[${HateSpells.Arg[${i},|]}]}) {
+						/goto :NextSpell
+					}
 					
-					/if (!${Me.SpellReady[${HateSpells.Arg[${i},|]}]}) /goto :NextSpell
 					/if (${Me.PctAggro} >= 100) /break
 					
 					:Wait4Casting
@@ -1197,11 +1194,11 @@ Sub MeleeAbility
 |------------------------------------------------|
 #Event TooClose "Your target is too close to use a ranged weapon!!"
 Sub Event_TooClose
-	/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
-		/doevents flush TooClose
-		|:Check if set to on for auto positioning
-		/if (${Toggle-autoengage}) /varcalc ArcheryRange ${ArcheryRange} + 1
-	}
+	|:/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
+	|:	/doevents flush TooClose
+	|:	|:Check if set to on for auto positioning
+	|:	/if (${Toggle-autoengage}) /varcalc ArcheryRange ${ArcheryRange} + 1
+	|:}
 /return
 						
 |------------------------------------------------|
@@ -1209,8 +1206,8 @@ Sub Event_TooClose
 |------------------------------------------------|
 #EVENT TooFar "Your target is too far away, get closer!"
 Sub EVENT_TooFar
-	/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
-		/doevents flush TooFar
-		/if (${Toggle-autoengage}) /varcalc MeleeRange ${MeleeRange} - 1
-	}
+	|:/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
+	|:	/doevents flush TooFar
+	|:	/if (${Toggle-autoengage}) /varcalc MeleeRange ${MeleeRange} - 1
+	|:}
 /return
