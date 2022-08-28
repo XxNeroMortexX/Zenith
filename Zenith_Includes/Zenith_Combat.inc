@@ -46,7 +46,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
 					/echo ${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}/4].Int}
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}/4].Int},1,3]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}/4].Int},3,1]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
