@@ -88,11 +88,16 @@ Sub CombatMain
 					/keypress back
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/squelch /nomodkey /docommand /stick moveback snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
-						} 
+							/if (${Stick.Behind}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+						}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/squelch /nomodkey /docommand /stick moveback snaproll rear uw ${Math.Calc[${ArcheryRange}+2]}
+							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/if (!${Stick.Behind} && !${Stick.Active}) {
+								/stick off
+								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+								/delay 5
+							}
 						}
 					}
 					/delay 1
