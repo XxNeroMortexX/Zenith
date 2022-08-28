@@ -38,7 +38,7 @@ Sub CombatMain
 						/if (!${Stick.Behind} && !${Stick.Active}) {
 							/stick off
 							/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
-							/delay 2
+							/delay 5
 						}
 					}
 					/delay 1
@@ -58,7 +58,7 @@ Sub CombatMain
 						/if (!${Stick.Behind} && !${Stick.Active}) {
 							/stick off
 							/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
-							/delay 2
+							/delay 5
 						}
 					}
 					/delay 1
