@@ -23,7 +23,7 @@ Sub CombatMain
 				
 				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
-				/if (!${Stick.Behind}) {
+				/if (!${Stick.Behind} && ${Toggle-autobehind}) {
 					/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
 					/delay 5
 				}
@@ -74,7 +74,7 @@ Sub CombatMain
 				/echo ArcheryRange ${ArcheryRange}
 				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
-				/if (!${Stick.Behind}) {
+				/if (!${Stick.Behind} && ${Toggle-autobehind}) {
 					/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+4].Int}
 					/delay 5
 				}
