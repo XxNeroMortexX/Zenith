@@ -59,18 +59,13 @@ Sub CombatMain
 					/keypress back hold
 					/delay 1
 					/keypress back
-					
 					/if (!${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick moveback snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
-							} 
-						}
+						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+							/squelch /nomodkey /docommand /stick moveback snaproll face uw ${Math.Calc[${ArcheryRange}+2]}
+						} 
 					} else /if (${Toggle-autobehind}) {
-						/if (!${Stick.Active} || ${Stick.Status.NotEqual[ON]}) {
-							/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-								/squelch /nomodkey /docommand /stick moveback snaproll rear uw ${Math.Calc[${ArcheryRange}+2]}
-							}
+						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+							/squelch /nomodkey /docommand /stick moveback snaproll rear uw ${Math.Calc[${ArcheryRange}+2]}
 						}
 					}
 					
