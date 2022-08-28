@@ -31,7 +31,6 @@ Sub CombatMain
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
-					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 					} else /if (${Toggle-autobehind}) {
@@ -48,7 +47,6 @@ Sub CombatMain
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
-					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 					} else /if (${Toggle-autobehind}) {
