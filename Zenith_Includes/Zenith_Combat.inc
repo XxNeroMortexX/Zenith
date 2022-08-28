@@ -27,8 +27,8 @@ Sub CombatMain
 					/delay 1
 					/keypress back
 					/if (!${Toggle-autobehind}) {
-						/squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
-						|:/squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${ArcheryRange}+4]}
+						|:/squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+						/squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${ArcheryRange}+4]}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 						/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
