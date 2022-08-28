@@ -31,7 +31,7 @@ Sub CombatMain
 					/keypress back
 					/if (!${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /nomodkey /docommand /stick uw Math.Calc[${MeleeRange}+4].Int}
-						/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll face uw ${Math.Calc[${MeleeRange}+4].Int}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
 						/if (!${Stick.Behind}) /squelch /nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
