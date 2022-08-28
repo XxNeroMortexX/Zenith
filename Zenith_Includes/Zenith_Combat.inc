@@ -71,7 +71,7 @@ Sub CombatMain
 			}
 
 			/if (${Toggle-archery}) {
-				
+				/echo ArcheryRange ${ArcheryRange}
 				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				/if (!${Stick.Behind}) {
