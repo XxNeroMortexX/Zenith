@@ -27,7 +27,7 @@ Sub CombatMain
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > 3,1,3]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > ${MeleeRange},1,3]}
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
@@ -44,7 +44,7 @@ Sub CombatMain
 				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > 3,1,3]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} > ${MeleeRange},1,3]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
