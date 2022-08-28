@@ -75,27 +75,27 @@ Sub CombatMain
 				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				/if (!${Stick.Behind}) {
-					/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+					/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+4].Int}
 					/delay 5
 				}
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${MeleeRange}/4].Int},3,1]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${ArcheryRange}/4].Int},3,1]}
 					/keypress back hold
 					/delay ${MoveDelay}
 					/keypress back
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/if (${Stick.Behind}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/if (${Stick.Behind}) /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 							/if (!${Stick.Behind} && !${Stick.Active}) {
 								/stick off
-								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+4].Int}
 								/delay 5
 							}
 						}
@@ -106,20 +106,20 @@ Sub CombatMain
 				|:Check if genbot's Distance to far for set ArcheryRange.		
 				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange} && !${Me.Moving}) {
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${MeleeRange}/4)+(${MeleeRange})].Int},3,1]}
+					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${ArcheryRange}/4)+(${ArcheryRange})].Int},3,1]}
 					/keypress forward hold
 					/delay ${MoveDelay}
 					/keypress forward
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/if (!${Toggle-aggro}) /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/if (${Stick.Behind}) /squelch /nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 							/if (!${Stick.Behind} && !${Stick.Active}) {
 								/stick off
-								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${MeleeRange}+4].Int}
+								/nomodkey /docommand /stick snaproll rear uw ${Math.Calc[${ArcheryRange}+4].Int}
 								/delay 5
 							}
 						}
