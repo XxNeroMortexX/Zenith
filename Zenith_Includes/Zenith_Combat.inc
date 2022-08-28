@@ -21,6 +21,7 @@ Sub CombatMain
 			
 			/if (${Toggle-melee}) {
 				
+				|: Fix for Stick Bouncing
 				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				
 				|:Check if Distance to close for set MeleeRange.
@@ -56,6 +57,9 @@ Sub CombatMain
 			}
 
 			/if (${Toggle-archery}) {
+				
+				|: Fix for Stick Bouncing
+				/if (${Math.Calc[${Target.Distance}].Int} < 1) /stick off
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
