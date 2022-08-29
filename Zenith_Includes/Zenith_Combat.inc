@@ -83,12 +83,14 @@ Sub CombatMain
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
-					/keypress back hold
-					:ArcheryToClose
-					/if (${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${ArcheryRange}-1].Int}) {
-						/goto :ArcheryToClose
+					/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+						/keypress back hold
+						:ArcheryToClose
+						/if (${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${ArcheryRange}-1].Int}) {
+							/goto :ArcheryToClose
+						}
+						/keypress back
 					}
-					/keypress back
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
@@ -108,12 +110,14 @@ Sub CombatMain
 			
 				|:Check if genbot's Distance to far for set ArcheryRange.		
 				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange} && !${Me.Moving}) {
-					/keypress forward hold
-					:ArcheryToFar
-					/if (${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${ArcheryRange}+1].Int}) {
-						/goto :ArcheryToFar
+					/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+						/keypress forward hold
+						:ArcheryToFar
+						/if (${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${ArcheryRange}+1].Int}) {
+							/goto :ArcheryToFar
+						}
+						/keypress forward
 					}
-					/keypress forward
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
