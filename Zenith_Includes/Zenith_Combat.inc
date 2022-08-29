@@ -1231,6 +1231,10 @@ Sub MeleeAbility
 |------------------------------------------------|
 #Event TooClose "Your target is too close to use a ranged weapon!!"
 Sub Event_TooClose
+	/if (${CombatTargetID} && ${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+	
+	}
+	
 	|:/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
 	|:	/doevents flush TooClose
 	|:	|:Check if set to on for auto positioning
