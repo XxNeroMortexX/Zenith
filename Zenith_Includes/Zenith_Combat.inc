@@ -89,7 +89,7 @@ Sub CombatMain
 					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
-							/nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
+							/nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
 						}
 					} else /if (${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
