@@ -84,7 +84,10 @@ Sub CombatMain
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
 					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${ArcheryRange}/4].Int},1,5]}
 					/keypress back hold
-					/delay ${MoveDelay}
+					:MoveLoop
+					/if (${Math.Calc[${Target.Distance}].Int} != ${ArcheryRange} || ${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
+						/goto :MoveLoop
+					}
 					/keypress back
 					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
