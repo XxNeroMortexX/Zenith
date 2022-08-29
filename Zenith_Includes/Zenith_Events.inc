@@ -3,11 +3,11 @@ Sub Event_EscKey
 
 |: Enable user Triggered Interrupt.
 /varset interruptFlag TRUE
-/echo ${CombatTargetID}
+
 |: Reset CombatTargetID to nothing.
 /varset CombatTargetID 0
 /delay 5 ${CombatTargetID} == 0
-/echo ${CombatTargetID}
+
 |:Stop Twitch
 /varset TwitchStop 1
 
