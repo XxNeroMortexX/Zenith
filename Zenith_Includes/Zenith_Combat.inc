@@ -51,8 +51,6 @@ Sub CombatMain
 
 				|:Check if Distance to far for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
-					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${MeleeRange}/4)+(${MeleeRange})].Int},3,1]}
 					/keypress forward hold
 					:MeleeToFar
 					/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
