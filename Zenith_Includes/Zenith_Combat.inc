@@ -32,7 +32,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/keypress back hold
 					:MeleeToClose
-					/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
+					/if (${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${MeleeRange}+1].Int}) {
 						/goto :MeleeToClose
 					}
 					/keypress back
@@ -53,7 +53,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange} && !${Me.Moving}) {
 					/keypress forward hold
 					:MeleeToFar
-					/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
+					/if (${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${MeleeRange}+1].Int}) {
 						/goto :MeleeToFar
 					}
 					/keypress forward
@@ -110,7 +110,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange} && !${Me.Moving}) {
 					/keypress forward hold
 					:ArcheryToFar
-					/if (${Math.Calc[${Target.Distance}].Int} > ${ArcheryRange}) {
+					/if (${Math.Calc[${Target.Distance}].Int} > ${Math.Calc[${ArcheryRange}+1].Int}) {
 						/goto :ArcheryToFar
 					}
 					/keypress forward
