@@ -54,7 +54,10 @@ Sub CombatMain
 					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
 					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} >= ${Math.Calc[(${MeleeRange}/4)+(${MeleeRange})].Int},3,1]}
 					/keypress forward hold
-					/delay ${MoveDelay}
+					:MeleeToFar
+					/if (${Math.Calc[${Target.Distance}].Int} > ${MeleeRange}) {
+						/goto :MeleeToFar
+					}
 					/keypress forward
 					/if (!${Toggle-autobehind}) {
 						/nomodkey /docommand /stick uw ${Math.Calc[${MeleeRange}+4].Int}
