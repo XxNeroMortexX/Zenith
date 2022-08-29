@@ -1236,6 +1236,7 @@ Sub Event_TooClose
 			/varset Toggle-melee TRUE
 			/varset Toggle-archery FALSE
 		}
+		/call ChatOut 4 "I am [${Target.CleanName}'s] Main Focus Turning Archery off." "0"
 	}
 	
 	|:/if (${CombatTargetID} && ${MoveUtils.Command.NotEqual[NONE]} && !${Me.Moving}) {
