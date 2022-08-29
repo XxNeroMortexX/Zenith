@@ -81,15 +81,12 @@ Sub CombatMain
 				
 				|:Check if genbot's Distance to close for set ArcheryRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
-					/if (!${Defined[MoveDelay]}) /declare MoveDelay string local
-					/varset MoveDelay ${If[${Math.Calc[${Target.Distance}].Int} <= ${Math.Calc[${ArcheryRange}/4].Int},1,5]}
 					/keypress back hold
 					:MoveLoop
 					/if (${Math.Calc[${Target.Distance}].Int} != ${ArcheryRange} || ${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
 						/goto :MoveLoop
 					}
 					/keypress back
-					/echo ${MoveDelay}
 					/if (!${Toggle-autobehind}) {
 						/if (${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
 							/nomodkey /docommand /stick uw ${Math.Calc[${ArcheryRange}+4].Int}
