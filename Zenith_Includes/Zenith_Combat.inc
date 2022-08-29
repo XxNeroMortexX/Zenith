@@ -1231,7 +1231,7 @@ Sub MeleeAbility
 |------------------------------------------------|
 #Event TooClose "Your target is too close to use a ranged weapon!!"
 Sub Event_TooClose
-	/if (${CombatTargetID} && ${Me.TargetOfTarget.Name.NotEqual[${Me.CleanName}]}) {
+	/if (${CombatTargetID} && ${Me.TargetOfTarget.Name.Equal[${Me.CleanName}]}) {
 		/if (${Toggle-archery}) {
 			/varset Toggle-melee TRUE
 			/varset Toggle-archery FALSE
