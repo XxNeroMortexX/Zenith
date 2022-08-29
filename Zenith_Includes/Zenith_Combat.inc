@@ -31,9 +31,9 @@ Sub CombatMain
 				|:Check if Distance to close for set MeleeRange.
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/keypress back hold
-					:MeleeMoveLoop
+					:MeleeToClose
 					/if (${Math.Calc[${Target.Distance}].Int} != ${ArcheryRange} || ${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
-						/goto :MeleeMoveLoop
+						/goto :MeleeToClose
 					}
 					/keypress back
 					/if (!${Toggle-autobehind}) {
