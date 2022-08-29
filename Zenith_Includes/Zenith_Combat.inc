@@ -85,7 +85,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange} && !${Me.Moving}) {
 					/keypress back hold
 					:ArcheryToClose
-					/if (${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${ArcheryRange}+1].Int}) {
+					/if (${Math.Calc[${Target.Distance}].Int} < ${Math.Calc[${ArcheryRange}-1].Int}) {
 						/goto :ArcheryToClose
 					}
 					/keypress back
