@@ -32,7 +32,7 @@ Sub CombatMain
 				/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange} && !${Me.Moving}) {
 					/keypress back hold
 					:MeleeToClose
-					/if (${Math.Calc[${Target.Distance}].Int} != ${ArcheryRange} || ${Math.Calc[${Target.Distance}].Int} < ${ArcheryRange}) {
+					/if (${Math.Calc[${Target.Distance}].Int} < ${MeleeRange}) {
 						/goto :MeleeToClose
 					}
 					/keypress back
