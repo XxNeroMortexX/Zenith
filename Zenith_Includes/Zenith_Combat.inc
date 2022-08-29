@@ -265,6 +265,7 @@ Sub Combatcheck(string CombatID)
 			|: Turn Stick, Combat, Archery, Casting OFF.
 			/if (${Stick.Active}) /squelch /nomodkey /docommand /stick off
 			/if (${Me.Combat} && ${Toggle-melee}) /squelch /nomodkey /docommand /attack off
+			/if (${Me.Combat} && ${Toggle-archery}) /squelch /nomodkey /docommand /attack off
 			/if (${Me.AutoFire} && ${Toggle-archery}) /squelch /nomodkey /docommand /autofire off
 			/if (${Me.Casting.ID} && ${Toggle-debuffs} || ${Me.Casting.ID} && ${Toggle-autochainnuke}) /squelch /nomodkey /docommand /interrupt
 			/Call Debug_Spew "Stick Status: [${Stick.Active}] Combat Status: [${Me.Combat} && ${Toggle-melee}] Archery Status: [${Me.AutoFire} && ${Toggle-archery}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
