@@ -35,6 +35,7 @@ Sub Event_EscKey
 
 |:Make Sure Combat not Turned on.
 /if (${Me.Combat} && ${Toggle-melee}) /attack off
+/if (${Me.Combat} && ${Toggle-archery}) /attack off
 /if (${Me.AutoFire} && ${Toggle-archery}) /autofire off
 
 /if (${Toggle-guard}) /varset Toggle-guard FALSE
