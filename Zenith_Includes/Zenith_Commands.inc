@@ -588,9 +588,8 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 	|: IF Target given use as MoveTo Target.
 	} else /if (${MoveToTargetID.Upper.Equal[LOC]}) {
 
-		/if (!${Defined[yLoc]}) /declare yLoc string local
-		/if (!${Defined[xLoc]}) /declare xLoc string local
-		/if (!${Defined[zLoc]}) /declare zLoc string local
+		/if (!${Defined[yLoc]}) /declare yLoc int local ${MoveToDistance}
+
 	
 	|: IF Target given use as MoveTo Target.
 	} else /if (${MoveToTargetID.Length} > 0) {
