@@ -533,7 +533,7 @@ Sub Command_follow(string fTarget, int FollowDistance)
 |:-----------------------------------------------------------------------
 |: 
 |:-----------------------------------------------------------------------
-Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc)
+Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc, int MoveToLocDistance)
 	
 	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Version: [1.00]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
@@ -589,7 +589,7 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 	} else /if (${MoveToTargetID.Upper.Equal[LOC]}) {
 
 		/if (!${Defined[yLoc]}) /declare yLoc int local ${MoveToDistance}
-
+		/if (!${Bool[${MoveToLocDistance}]}) /varset MoveToLocDistance 10
 	
 	|: IF Target given use as MoveTo Target.
 	} else /if (${MoveToTargetID.Length} > 0) {
@@ -603,7 +603,11 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 	
 	/if (${MoveToTargetID.Upper.Equal[LOC]}) {
 		/call ChatOut 3 "I am now Moving To ${MoveToTargetID} Y: [${yLoc}] X: [${xLoc}] Z: [${zLoc}]" "0"
+		
+		/squelch /nomodkey /docommand /moveto loc ${yLoc} ${xLoc} ${zLoc} dist ${MoveToLocDistance}
+		
 	} else {
+	
 		/Call Debug_Spew "MoveToTargetID: [${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}) {
 			/call ChatOut 3 "I am now Moving To [${Spawn[${MoveToTargetID}].CleanName}]. Dist [${MoveToDistance}]" "0"
@@ -611,23 +615,24 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 			/call ChatOut 3 "Unable to Move To [${FollowTargetID} - ${Spawn[${MoveToTargetID}].CleanName}]." "0"
 			/return
 		}
-	}
-	
-	|: 1 = Moveutils, 2 = Nav, 3 = AdvPath
-	/Call Debug_Spew "movetomode: [${movetomode}] Style: [${If[${movetomode} == 1,MQ2MoveUtils,${If[${movetomode} == 2,MQ2Nav,${If[${movetomode} == 3,MQ2AdvPath,Error Unknown Mode: [${movetomode}]]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-	/if (${movetomode} == 1) {
-		/squelch /nomodkey /docommand /moveto loc ${Spawn[${MoveToTargetID}].Y} ${Spawn[${MoveToTargetID}].X} dist ${MoveToDistance}
-	} else /if (${movetomode} == 2) {
-		/squelch /nomodkey /docommand /nav id ${Spawn[${MoveToTargetID}].ID}
-	} else /if (${movetomode} == 3) {
-		/squelch /nomodkey /docommand /afollow spawn ${Spawn[${MoveToTargetID}].ID} nodoor
 		
-		:CheckAdvPath	
-		/if (${AdvPath.Idle} < 2 && ${AdvPath.Status} == 1) {
-			/delay 1s
-			/if (${Me.Moving}) /goto :CheckAdvPath
+		|: 1 = Moveutils, 2 = Nav, 3 = AdvPath
+		/Call Debug_Spew "movetomode: [${movetomode}] Style: [${If[${movetomode} == 1,MQ2MoveUtils,${If[${movetomode} == 2,MQ2Nav,${If[${movetomode} == 3,MQ2AdvPath,Error Unknown Mode: [${movetomode}]]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${movetomode} == 1) {
+			/squelch /nomodkey /docommand /moveto loc ${Spawn[${MoveToTargetID}].Y} ${Spawn[${MoveToTargetID}].X} dist ${MoveToDistance}
+		} else /if (${movetomode} == 2) {
+			/squelch /nomodkey /docommand /nav id ${Spawn[${MoveToTargetID}].ID}
+		} else /if (${movetomode} == 3) {
+			/squelch /nomodkey /docommand /afollow spawn ${Spawn[${MoveToTargetID}].ID} nodoor
+			
+			:CheckAdvPath	
+			/if (${AdvPath.Idle} < 2 && ${AdvPath.Status} == 1) {
+				/delay 1s
+				/if (${Me.Moving}) /goto :CheckAdvPath
+			}
+			/squelch /nomodkey /docommand /afollow off
 		}
-		/squelch /nomodkey /docommand /afollow off
+		
 	}
 	
 	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
