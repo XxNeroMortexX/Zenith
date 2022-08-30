@@ -602,12 +602,15 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 	/if (!${Bool[${MoveToDistance}]}) /varset MoveToDistance 10
 	
 	/if (${MoveToTargetID.Upper.Equal[LOC]}) {
-	/Call Debug_Spew "MoveToTargetID: [${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-	/if (${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}) {
-		/call ChatOut 3 "I am now Moving To [${Spawn[${MoveToTargetID}].CleanName}]. Dist [${MoveToDistance}]" "0"
+		/call ChatOut 3 "I am now Moving To ${MoveToTargetID} Y: [${yLoc}] X: [${xLoc}] Z: [${zLoc}]" "0"
 	} else {
-		/call ChatOut 3 "Unable to Move To [${FollowTargetID} - ${Spawn[${MoveToTargetID}].CleanName}]." "0"
-		/return
+		/Call Debug_Spew "MoveToTargetID: [${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}) {
+			/call ChatOut 3 "I am now Moving To [${Spawn[${MoveToTargetID}].CleanName}]. Dist [${MoveToDistance}]" "0"
+		} else {
+			/call ChatOut 3 "Unable to Move To [${FollowTargetID} - ${Spawn[${MoveToTargetID}].CleanName}]." "0"
+			/return
+		}
 	}
 	
 	|: 1 = Moveutils, 2 = Nav, 3 = AdvPath
