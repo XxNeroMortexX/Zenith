@@ -176,6 +176,7 @@ Sub AutoCombatDistance
 	}
 }
 
+
 /if (${Toggle-archery} && ${Toggle-autoengage}) {
 	/if (${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int} > 34 && ${ArcheryRange} != ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}) {
 		/varset ArcheryRange ${Math.Calc[${Spawn[id ${CombatTargetID}].MaxRangeTo}*.9].Int}
