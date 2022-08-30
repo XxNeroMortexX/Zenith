@@ -533,7 +533,7 @@ Sub Command_follow(string fTarget, int FollowDistance)
 |:-----------------------------------------------------------------------
 |: 
 |:-----------------------------------------------------------------------
-Sub Command_moveto(string MoveToTargetID, int MoveToDistance)
+Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc)
 	
 	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Version: [1.00]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
