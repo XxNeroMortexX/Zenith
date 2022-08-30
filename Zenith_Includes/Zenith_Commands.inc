@@ -585,7 +585,7 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 
 		/varset MoveToTargetID ${Spawn[${Sender}].ID}
 	
-	|: IF Target given use as MoveTo Target.
+	|: IF Find LOC in [MoveToTargetID] use [MoveToDistance] as yLoc
 	} else /if (${MoveToTargetID.Upper.Equal[LOC]}) {
 
 		/if (!${Defined[yLoc]}) /declare yLoc int local ${MoveToDistance}
@@ -601,6 +601,7 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance, int xLoc, int zLoc
 	/Call Debug_Spew "Set Default Distance: [${If[!${Bool[${MoveToDistance}]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Bool[${MoveToDistance}]}) /varset MoveToDistance 10
 	
+	/if (${MoveToTargetID.Upper.Equal[LOC]}) {
 	/Call Debug_Spew "MoveToTargetID: [${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Spawn[${MoveToTargetID}].ID} && ${Bool[${MoveToTargetID}]}) {
 		/call ChatOut 3 "I am now Moving To [${Spawn[${MoveToTargetID}].CleanName}]. Dist [${MoveToDistance}]" "0"
