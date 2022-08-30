@@ -586,6 +586,13 @@ Sub Command_moveto(string MoveToTargetID, int MoveToDistance)
 		/varset MoveToTargetID ${Spawn[${Sender}].ID}
 	
 	|: IF Target given use as MoveTo Target.
+	} else /if (${MoveToTargetID.Upper.Equal[LOC]}) {
+
+		/if (!${Defined[yLoc]}) /declare yLoc string local
+		/if (!${Defined[xLoc]}) /declare xLoc string local
+		/if (!${Defined[zLoc]}) /declare zLoc string local
+	
+	|: IF Target given use as MoveTo Target.
 	} else /if (${MoveToTargetID.Length} > 0) {
 
 		/varset MoveToTargetID ${Spawn[${MoveToTargetID}].ID}
