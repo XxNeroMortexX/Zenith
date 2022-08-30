@@ -1,0 +1,4 @@
+error: pathspec '.' did not match any file(s) known to git
+error: pathspec ';' did not match any file(s) known to git
+error: pathspec 'ec=$?' did not match any file(s) known to git
+Did you forget to 'git add'?
