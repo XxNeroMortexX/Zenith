@@ -23,5 +23,7 @@ Sub Alias_Setup
 	|: REmove These Later.
 	/alias /GL /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/guildsay GL,]}
 	/alias /Leaders /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/shout ,]}
+	/alias /Leadersgu /squelch /nomodkey /docommand ${If[${Select[${Group.Leader},${Me.CleanName}]},/guildsay ,]}
+
 
 /return

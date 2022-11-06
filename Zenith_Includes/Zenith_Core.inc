@@ -31,7 +31,8 @@
 #chat shout
 #chat group**|
 
-#chat tell
+|: #chat group
+|: #chat tell
 
 #event SelfEcho   	 	 "[MQ2] Zenith #1#"
 
@@ -106,7 +107,7 @@ Sub Debug_Spew(string Debug_Msg, string Debug_Section, string MacroParams, strin
 |:-----------------------------------------------------------------------
 Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Params: @{MacroParams}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Params: @{MacroParams}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Correct ChatSender if Space Found.
 	/if (${ChatSender.Left[1].Compare[ ]} < 0) {
@@ -126,7 +127,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 	|: Fix Mysterious Comma in ChatText.
 	/if (${ChatText.Left[1].Equal[']}) {
 	
-		/Call Debug_Spew "Remove: ['] from: [${ChatText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Remove: ['] from: [${ChatText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/varset ChatText ${ChatText.Right[-1]}
 	
 	}
@@ -135,7 +136,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 	/if (${ChatText.Find[000]}) {
 		|:/varset ChatText ${ChatText.Right[-45]}
 		|:/varset ChatText ${ChatText.Right[${Math.Calc[${ChatText.Length} - (57+5)]}].Left[-1]}
-		/Call Debug_Spew "Remove Item Link Code. [${ChatText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Remove Item Link Code. [${ChatText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/varset ChatText ${ChatText.Right[${Math.Calc[${ChatText.Length} - (57)]}].Left[-1]}
 	}
 	
@@ -145,50 +146,50 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		/if (!${Defined[ParamLoop]}) /declare ParamLoop int local
 		/for ParamLoop 1 to ${Math.Calc[${PublicCommands.Count[|]}+1]}
 			/if (${ChatText.Find[${PublicCommands.Arg[${ParamLoop}]}]} || ${Toggle-dopublic} || ${Sender.Find[Morte]} || ${Select[${Sender.Left[5]},Morte,Morta,Demon,Spiri,Scura,Coopb]}) {
-				/Call Debug_Spew "Check: [${Sender}] on Master List: [${If[${Toggle-dopublic},DoPublic,${If[${ChatText.Find[${PublicCommands.Arg[${ParamLoop}]}]},PublicCommands,SKIP]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Check: [${Sender}] on Master List: [${If[${Toggle-dopublic},DoPublic,${If[${ChatText.Find[${PublicCommands.Arg[${ParamLoop}]}]},PublicCommands,SKIP]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 				/goto :SkipMasters			
 			}
 		/next ParamLoop
 	}
 	
 	|: Check Command Sender is Allowed to Command Bot, If not Cancel Given Command.
-	/Call Debug_Spew "Check: [${Sender}] on Master List: [${Bool[${Select[${Sender},${Masters.Replace[|,,]},${EQBC.Names.Replace[ ,,]},${Me.Name}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Check: [${Sender}] on Master List: [${Bool[${Select[${Sender},${Masters.Replace[|,,]},${EQBC.Names.Replace[ ,,]},${Me.Name}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Bool[${Select[${Sender},${Masters.Replace[|,,]},${EQBC.Names.Replace[ ,,]},${Me.Name}]}]}) {
-		/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/return
 	}
 	
 	:SkipMasters
 	|: IF Bot [Paused] only Listen to Pause Toggle On/Off Command.
-	/Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Toggle-pause} && !${Bool[${ChatText.Find[pause]}]}) {
-		/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/return
 	}
 	
 	|: IF ChatText Find [[ChatOut]-] Then Return its just a Message not a Command.
-	/Call Debug_Spew "ChatText Find ([ChatOut]-): [${Bool[${ChatText.Find[[ChatOut]-]}]} || ${Bool[${ChatText.Arg[1].Equal[[ChatOut]-]}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "ChatText Find ([ChatOut]-): [${Bool[${ChatText.Find[[ChatOut]-]}]} || ${Bool[${ChatText.Arg[1].Equal[[ChatOut]-]}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${ChatText.Find[[ChatOut]-]}]} || ${Bool[${ChatText.Arg[1].Equal[[ChatOut]-]}]}) {
-		/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/return
 	}
 	
 	|: Allow Anyone with BOT Password to take Temporary Control of Bot.
-	/Call Debug_Spew "Take Control: [${Bool[${ChatText.Find[${ControlPass}]}]}], call [AddTempMaster]: Temp Access: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Take Control: [${Bool[${ChatText.Find[${ControlPass}]}]}], call [AddTempMaster]: Temp Access: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${ChatText.Find[${ControlPass}]}]}) /call AddTempMaster ${Sender}
 	
 	|: Relay Tells when Bot Receives a Message.
-	/Call Debug_Spew "Call [ChatOut]: ChatType: [${ChatType}] Relaytells: [${Toggle-relaytells}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ChatOut]: ChatType: [${ChatType}] Relaytells: [${Toggle-relaytells}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Toggle-relaytells} && ${ChatType.Equal[tell]}) {
 			/call ChatOut CORE "[+y+][${Time.Time12}] [+r+]${ChatSender} [+w+]Told me: [+y+]${ChatText}" "0"
 	}
 	
 	|: Check IF Bot Listening in Channel Sending Command.
-	/Call Debug_Spew "Current Channel: [${ChatType.Upper}] ListenInChannels: [${Bool[${Select[${ChatType.Upper},${ListenInChannels.Upper}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Current Channel: [${ChatType.Upper}] ListenInChannels: [${Bool[${Select[${ChatType.Upper},${ListenInChannels.Upper}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${Select[${ChatType.Upper},${ListenInChannels.Upper}]}]}) {
 		
 		|: Remove Bots Name from Command, Continue Command Given.
-		/Call Debug_Spew "Find My Name/Surname: [${ChatText.Arg[1].Lower.Equal[${Me.CleanName.Lower}]} || ${ChatText.Arg[1].Lower.Equal[${Me.Surname}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find My Name/Surname: [${ChatText.Arg[1].Lower.Equal[${Me.CleanName.Lower}]} || ${ChatText.Arg[1].Lower.Equal[${Me.Surname}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${ChatText.Arg[1].Lower.Equal[${Me.CleanName.Lower}]} || ${ChatText.Arg[1].Lower.Equal[${Me.Surname}]}) {
 		
 			/if (!${Defined[NameLength]}) /declare NameLength int local ${ChatText.Arg[1].Length}
@@ -198,11 +199,11 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		} else {
 			
 			|: Cancel Bot Command Because Bot Name not Given, CheckName is Enabled.
-			/Call Debug_Spew "Check Names: [${Toggle-checkname}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Check Names: [${Toggle-checkname}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (${Toggle-checkname}) /return
 			
 			|: Check List of Command Bot will Ignore.
-			/Call Debug_Spew "IgnGroupList Status: [${Bool[${IgnGroupList.NotEqual[${IgnGroupList-DefaultValue}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "IgnGroupList Status: [${Bool[${IgnGroupList.NotEqual[${IgnGroupList-DefaultValue}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (${Bool[${IgnGroupList.NotEqual[${IgnGroupList-DefaultValue}]}]}) {
 				/if (!${Defined[GenString]}) /declare GenString string local
 				/varset GenString |${IgnGroupList}|
@@ -225,7 +226,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 					/if (${ChatText.Arg[${ParamLoop},].Lower.Equal[${Me.Class.ShortName.Lower}]}) /varset ChatText ${ChatText.Lower.Replace[${Me.Class.ShortName.Lower} ,]}
 					/if (${ChatText.Arg[${ParamLoop},].Lower.Equal[${Me.Class.Name.Lower}]}) /varset ChatText ${ChatText.Lower.Replace[${Me.Class.Name.Lower} ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "Class Check: [${Bool[${Select[${Me.Class.ShortName.Lower},${mClassTypes.Lower},${pClassTypes.Lower},${cClassTypes.Lower},${hClassTypes.Lower}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Class Check: [${Bool[${Select[${Me.Class.ShortName.Lower},${mClassTypes.Lower},${pClassTypes.Lower},${cClassTypes.Lower},${hClassTypes.Lower}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				}
 			}
@@ -237,19 +238,19 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 					|:Melees
 					/varset ChatText ${ChatText.Lower.Replace[melees ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "SubClass Melee Check: [${Select[${Me.Class.ShortName.Lower},${mClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "SubClass Melee Check: [${Select[${Me.Class.ShortName.Lower},${mClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				} else /if (${ChatText.Arg[${ParamLoop},].Lower.Equal[priests]} && ${Select[${Me.Class.ShortName.Lower},${pClassTypes.Lower}]}) {
 					|:Priests
 					/varset ChatText ${ChatText.Lower.Replace[priests ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "SubClass priests Check: [${Select[${Me.Class.ShortName.Lower},${pClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "SubClass priests Check: [${Select[${Me.Class.ShortName.Lower},${pClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				} else /if (${ChatText.Arg[${ParamLoop},].Lower.Equal[casters]} && ${Select[${Me.Class.ShortName.Lower},${cClassTypes.Lower}]}) {
 					|:Casters
 					/varset ChatText ${ChatText.Lower.Replace[casters ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "SubClass casters Check: [${Select[${Me.Class.ShortName.Lower},${cClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "SubClass casters Check: [${Select[${Me.Class.ShortName.Lower},${cClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				} else /if ((${ChatText.Arg[${ParamLoop},].Lower.Equal[hybirds]} || ${ChatText.Arg[${ParamLoop},].Lower.Equal[hybrids]}) && ${Select[${Me.Class.ShortName.Lower},${hClassTypes.Lower}]}) {
 					|:Hybirds | Hybrids
@@ -259,13 +260,13 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 						/varset ChatText ${ChatText.Lower.Replace[hybrids ,]}
 					}
 					/varset FindBot 1
-					/Call Debug_Spew "SubClass hybirds/Hybrids Check: [${Select[${Me.Class.ShortName.Lower},${hClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "SubClass hybirds/Hybrids Check: [${Select[${Me.Class.ShortName.Lower},${hClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				} else /if (${ChatText.Arg[${ParamLoop},].Lower.Equal[petclass]} && ${Select[${Me.Class.ShortName.Lower},${PetClassTypes.Lower}]}) {
 					|:Pet Classes
 					/varset ChatText ${ChatText.Lower.Replace[petclass ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "SubClass petclass Check: [${Select[${Me.Class.ShortName.Lower},${PetClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "SubClass petclass Check: [${Select[${Me.Class.ShortName.Lower},${PetClassTypes.Lower}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				}
 
@@ -277,7 +278,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 				/if (${Bool[${Select[${Group.Leader},${Me.CleanName}]}]}) {
 					/varset ChatText ${ChatText.Lower.Replace[leaders ,]}
 					/varset FindBot 1
-					/Call Debug_Spew "Group Leader Check: [${Bool[${Select[${Group.Leader},${Me.CleanName}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Group Leader Check: [${Bool[${Select[${Group.Leader},${Me.CleanName}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					
 				}
 			}
@@ -295,7 +296,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 							/if (${Bool[${NetBots[${NetBots.Client[${GenFor}]}].Leader}]}) {
 								/if (!${GroupLeaderOrder.Find[${NetBots[${NetBots.Client[${GenFor}]}].Leader}]}) {
 									/varset GroupLeaderOrder ${GroupLeaderOrder} ${NetBots[${NetBots.Client[${GenFor}]}].Leader}
-									/Call Debug_Spew "Find Bot Leaders: [${GroupLeaderOrder}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+									/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find Bot Leaders: [${GroupLeaderOrder}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 								}
 							}
 						}
@@ -306,11 +307,11 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 			}
 			
 			|: Group Leaders
-			/Call Debug_Spew "Grouped: [${Me.Grouped}] In Group${GroupNum}: [${Bool[${Select[${Group.Leader},${GroupLeaderOrder.Arg[${GroupNum}].Replace[ ,,]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Grouped: [${Me.Grouped}] In Group${GroupNum}: [${Bool[${Select[${Group.Leader},${GroupLeaderOrder.Arg[${GroupNum}].Replace[ ,,]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (${Me.Grouped} && ${Bool[${Select[${Group.Leader},${GroupLeaderOrder.Arg[${GroupNum}].Replace[ ,,]}]}]}) {
 				/varset ChatText ${ChatText.Lower.Replace[group${GroupNum} ,]}
 				/varset FindBot 1
-				/Call Debug_Spew "Group${GroupNum} Check: [${Bool[${Select[${Group.Leader},${GroupLeaderOrder.Arg[${GroupNum}].Replace[ ,,]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Group${GroupNum} Check: [${Bool[${Select[${Group.Leader},${GroupLeaderOrder.Arg[${GroupNum}].Replace[ ,,]}]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 				
 			}
 		
@@ -322,7 +323,7 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		
 			/if (${Select[${ChatText.Arg[2].Lower},${mClassTypes.Lower},${pClassTypes.Lower},${cClassTypes.Lower},${hClassTypes.Lower}]} || ${Select[${ChatText.Arg[2].Lower},melees,priests,casters,hybirds,hybrids,petclass,leaders,group1,group2,group3,group4,group5,group6,group7,group8,group9]} || ${Bool[${FindBot}]}) {
 				
-				/Call Debug_Spew "Remove: [${ChatText.Arg[1]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Remove: [${ChatText.Arg[1]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 				/varset ChatText ${ChatText.Right[-${Math.Calc[${ChatText.Arg[1].Length}+1]}]}
 				/goto :CheckSpecBot
 			}
@@ -337,12 +338,12 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 		/if (${Bool[${ChatText.Find[//]}]}) /varset ChatText ${ChatText.Replace[//,/]}
 		
 		|: After all checks pass now, Execute Command to make Bot do.
-		/Call Debug_Spew "Call [ExecCommand]: ["${ChatText}"]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ExecCommand]: ["${ChatText}"]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call ExecCommand "${ChatText}"	
 
 	}
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return
 
@@ -351,16 +352,16 @@ Sub Event_Chat(string ChatType,string ChatSender,string ChatText)
 |:-----------------------------------------------------------------------
 Sub ExecCommand(string Commands)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Params: ${Macro.Params}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Params: ${Macro.Params}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Set macro ExecCommand
-	/Call Debug_Spew "CommandText: [${Commands}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CommandText: [${Commands}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/varset CommandText ${Commands}
 	
 	
 	|: IF Command is more then one Parameter. Then Param1 is Command, Rest is CommandParam.
 	/varset CurrCommand ${CommandText.Arg[1]}
-	/Call Debug_Spew "CurrCommand: [${CurrCommand}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CurrCommand: [${CurrCommand}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/if (${CommandText.Arg[2].Length}) {
 		/varset CommandParam ${CommandText.Right[-${Math.Calc[${CurrCommand.Length}+1].Int}]}
@@ -368,13 +369,13 @@ Sub ExecCommand(string Commands)
 		/varset CommandParam
 	}
 	
-	/Call Debug_Spew "CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"	
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"	
 
 	|: Obey ingame slash commands from Masters only unless dopublic equal on.
 	/if (${CommandText.Left[1].Equal[/]}) {
-		/Call Debug_Spew "doing Slash Command: [${CommandText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "doing Slash Command: [${CommandText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/squelch /nomodkey /docommand ${CommandText}
-		/Call Debug_Spew "Msg Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"		
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Msg Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"		
 		/return
 	}
 
@@ -384,10 +385,10 @@ Sub ExecCommand(string Commands)
 				
 		/if (!${Defined[GenStr]}) /declare GenStr string local |${cmds-Shortcuts.Lower}|
 		
-		/Call Debug_Spew "Shortcut Find: [${CurrCommand.Lower}] in GenStr: [${Bool[${GenStr.Find[|${CurrCommand.Lower}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Shortcut Find: [${CurrCommand.Lower}] in GenStr: [${Bool[${GenStr.Find[|${CurrCommand.Lower}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${Bool[${GenStr.Find[|${CurrCommand.Lower}|]}]}) {
 			
-			/Call Debug_Spew "doing ShortCut: ${CommandText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "doing ShortCut: ${CommandText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (!${Defined[Name]}) /declare Name string local
 			/if (!${Defined[ParseText]}) /declare ParseText string local
 			
@@ -400,25 +401,25 @@ Sub ExecCommand(string Commands)
 				/varset ParseText ${ShortCuts-${Name}-Text}
 			}
 			
-			/Call Debug_Spew "ParseText: [${ParseText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-			/Call Debug_Spew "CommandText: [${CommandText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "ParseText: [${ParseText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CommandText: [${CommandText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			
-			/Call Debug_Spew "Find On Target: [${Bool[${CommandText.Find[on]}]} || ${Bool[${ParseText.Find[on]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find On Target: [${Bool[${CommandText.Find[on]}]} || ${Bool[${ParseText.Find[on]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (${Bool[${CommandText.Find[on]}]} || ${Bool[${ParseText.Find[on]}]}) {
 				
-				/Call Debug_Spew "[${CurrCommand.Count[|]}] Delimiters in ${CurrCommand}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[${CurrCommand.Count[|]}] Delimiters in ${CurrCommand}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 				/if (${CurrCommand.Count[|]} > 0) {
 					|: Do All Commands Given.
 					/if (!${Defined[GenFor]}) /declare GenFor int local
 					/for GenFor 1 to ${Math.Calc[${CurrCommand.Count[|]}+1].Int}
 						/varset Name ${CurrCommand.Arg[${GenFor},|].Lower}
 						/varset ParseText ${ShortCuts-${Name}-Text}
-						/Call Debug_Spew "Name: [${Name}] ParseText: [${ParseText.Replace[ @{NameS},]}] CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+						/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Name: [${Name}] ParseText: [${ParseText.Replace[ @{NameS},]}] CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 						/squelch /nomodkey /docommand /gb ${ParseText.Replace[ @{NameS},]} ${CommandParam}
 					/next GenFor
 					
 				} else {
-					/Call Debug_Spew "Name: [${Name}] ParseText: [${ParseText.Replace[ @{NameS},]}] CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Name: [${Name}] ParseText: [${ParseText.Replace[ @{NameS},]}] CommandParam: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					/squelch /nomodkey /docommand /gb ${ParseText.Replace[ @{NameS},]} ${CommandParam}
 				}
 				
@@ -430,17 +431,17 @@ Sub ExecCommand(string Commands)
 					/for GenFor 1 to ${Math.Calc[${CommandText.Count[|]}+1].Int}
 						/varset Name ${CurrCommand.Arg[${GenFor},|].Lower}
 						/varset ParseText ${ShortCuts-${Name}-Text}
-						/Call Debug_Spew "Name: [${Name}] ShortCuts: [${ParseText.Replace[@{NameS},on]}] Sender: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+						/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Name: [${Name}] ShortCuts: [${ParseText.Replace[@{NameS},on]}] Sender: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 						/squelch /nomodkey /docommand /gb ${ParseText.Replace[@{NameS},on]} ${Sender}
 					/next GenFor
 				} else {
-					/Call Debug_Spew "Name: [${Name}] ShortCuts: [${ParseText.Replace[@{NameS},on]}] Sender: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Name: [${Name}] ShortCuts: [${ParseText.Replace[@{NameS},on]}] Sender: [${Sender}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					/squelch /nomodkey /docommand /gb ${ParseText.Replace[@{NameS},on]} ${Sender}
 				}
 
 			}
 			
-			/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/return
 			
 		}
@@ -451,14 +452,14 @@ Sub ExecCommand(string Commands)
 	/if (${Defined[Toggle-${CurrCommand.Lower}]}) {
 		
 		|: Change Current Command Toggle State: [TRUE/FALSE] Deppending on its current Status.
-		/Call Debug_Spew "Call [SetToggle]: [${CurrCommand}] with Params: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [SetToggle]: [${CurrCommand}] with Params: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call SetToggle "${Macro.CurSub}" "${Macro.CurLine}" ${CurrCommand.Lower} "${CommandParam}"
 		
 		|: Call Command_ SUB if Toggle has one.
 		/if (${Bool[${Toggle-${CurrCommand}-CallSub}]}) {
-			/Call Debug_Spew "Call [Toggle_${CurrCommand.Lower}]: With Params: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [Toggle_${CurrCommand.Lower}]: With Params: [${CommandParam}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call Toggle_${CurrCommand.Lower} ${CommandParam}
-			/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/return
 		}
 	}
@@ -471,14 +472,14 @@ Sub ExecCommand(string Commands)
 		/varset GenStr |${cmds-${SectionsList.Arg[${GenFor}]}}|
 		|:  && !${Defined[Toggle-${CurrCommand.Lower}]}
 		/if (${Bool[${GenStr.Find[|${CurrCommand}|]}]} && !${Defined[Toggle-${CurrCommand.Lower}]}) {
-			/Call Debug_Spew "Call [Command_${CurrCommand.Lower}]: With Params: [${CommandParam}] IF: [${CurrCommand}] is in ${SectionsList.Arg[${GenFor}]} Commands: [${Bool[${GenStr.Find[|${CurrCommand}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [Command_${CurrCommand.Lower}]: With Params: [${CommandParam}] IF: [${CurrCommand}] is in ${SectionsList.Arg[${GenFor}]} Commands: [${Bool[${GenStr.Find[|${CurrCommand}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call Command_${CurrCommand.Lower} ${CommandParam}
-			/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/return
 		}	
 	/next GenFor
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -487,20 +488,20 @@ Sub ExecCommand(string Commands)
 |:-----------------------------------------------------------------------
 Sub Event_EQBCSAY(string line ,string EQBCSender, string EQBCText)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: IF Toggle-pause ON then Cancel all command given unless Toggle-pause.
-	/Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Toggle-pause} && !${Bool[${EQBCText.Find[pause]}]}) /return
 
 	|: Set the ChatType to EQBC
 	/if (!${Defined[ChatType]}) /declare ChatType string local EQBC
 	
 	|: Call Event_Chat with Params to Parse.
-	/Call Debug_Spew "Call [Event_Chat]: ChatType: [${ChatType}] EQBCSender: [${EQBCSender}] EQBCText: [${EQBCText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [Event_Chat]: ChatType: [${ChatType}] EQBCSender: [${EQBCSender}] EQBCText: [${EQBCText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/call Event_Chat "${ChatType}" "${EQBCSender}" "${EQBCText}"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -509,26 +510,26 @@ Sub Event_EQBCSAY(string line ,string EQBCSender, string EQBCText)
 |:-----------------------------------------------------------------------
 Sub Event_SelfEcho(string line, string SelfEchoText)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: IF Toggle-pause ON then Cancel all command given unless Toggle-pause.
-	/Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Pause Status: [${Toggle-pause}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Toggle-pause} && !${Bool[${SelfEchoText.Find[pause]}]}) /return
 
 	|: Set the Senders Name to Self, Set Outer: [EchoText] to be used in Macro for Self only Commands.
 	/varset Sender ${Me.CleanName}
 	/varset EchoText ${SelfEchoText}
 		
-	/Call Debug_Spew "Sender: [${Me.CleanName}] EchoText: [${EchoText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Sender: [${Me.CleanName}] EchoText: [${EchoText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Call [ExecCommand]: [${EchoText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ExecCommand]: [${EchoText}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/call ExecCommand "${EchoText}"
 	
 	|: Clear EchoText Variable we are done using it now.
 	/varset EchoText
-	/Call Debug_Spew "Cleared EchoText: [${Bool[${EchoText.Length} == 0]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Cleared EchoText: [${Bool[${EchoText.Length} == 0]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -537,18 +538,18 @@ Sub Event_SelfEcho(string line, string SelfEchoText)
 |:-----------------------------------------------------------------------
 Sub ChatOut(string Section, string ChatText, int Delay)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: IF ChatOut = Hide Then Cancel ChatOut Output from Displaying.
-	/Call Debug_Spew "ChatOut Hide: [${ChatOut.Upper.Equal[HIDE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "ChatOut Hide: [${ChatOut.Upper.Equal[HIDE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${ChatOut.Upper.Equal[HIDE]}) /return
 	
 	|: IF ChatOut = Show or Current Section Name Calling Chatout Then Display Output.
-	/Call Debug_Spew "ChatOut Show: [${ChatOut.Upper.Equal[SHOW]}] Section: [${Section}] only: [${ChatOut.Upper.Equal[${Section}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "ChatOut Show: [${ChatOut.Upper.Equal[SHOW]}] Section: [${Section}] only: [${ChatOut.Upper.Equal[${Section}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${ChatOut.Upper.Equal[SHOW]} || ${ChatOut.Upper.Equal[${Section}]}) {
 
 		|: Replace any "@"'s with "$"'s in string "${ChatText}", Reset ChatText.
-		/Call Debug_Spew "Replace [@] with [$] Status: [${Bool[${ChatText.Count[@]} > 0]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Replace [@] with [$] Status: [${Bool[${ChatText.Count[@]} > 0]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${Bool[${ChatText.Count[@]} > 0]}) {
 			/call CollapseParams "@" "$" "${ChatText}"
 			/varset ChatText ${Macro.Return}
@@ -556,7 +557,7 @@ Sub ChatOut(string Section, string ChatText, int Delay)
 		}
 		
 		|: Deppending on ChatIn = tell|group|raid|say|channel|guild|eqbc Then Send Chat Message to ChatIn Channel.
-		/Call Debug_Spew "Send Messages in ChatIn: [${ChatIn}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Send Messages in ChatIn: [${ChatIn}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${ChatIn.Lower.Equal[tell]}) {
 				/docommand /timed ${Delay} /tell ${Masters.Arg[1,|]} [ChatOut]-${If[${DebugList.Equal[Chatout]},[${Section}] ,]} ${ChatText}
 		} else /if (${ChatIn.Lower.Equal[group]}) {
@@ -574,7 +575,7 @@ Sub ChatOut(string Section, string ChatText, int Delay)
 		} 
 	}
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -583,19 +584,19 @@ Sub ChatOut(string Section, string ChatText, int Delay)
 |:-----------------------------------------------------------------------
 Sub AddCommands(string Param0, string Param1, string Param2, string Param3, string Param4, string Param5, string Param6, string Param7, string Param8, string Param9, string Param10, string Param11, string Param12)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/if (!${Defined[GenFor]}) /declare GenFor int local 0
 	/if (!${Defined[GenStr]}) /declare GenStr string local |${cmds-${SectionName}}|
 
 	/for GenFor 0 to ${Math.Calc[${Macro.Params}-1]}
 		/if (!${GenStr.Find[|${Param${GenFor}}|]}) {
-			/Call Debug_Spew "Call [ListAppendElement](cmds-${SectionName}): Loop: [${GenFor}] Section: [${SectionName}] Command: [${Param${GenFor}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ListAppendElement](cmds-${SectionName}): Loop: [${GenFor}] Section: [${SectionName}] Command: [${Param${GenFor}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call ListAppendElement cmds-${SectionName} ${Param${GenFor}} "|"
 		}
 	/next GenFor
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -605,7 +606,7 @@ Sub AddCommands(string Param0, string Param1, string Param2, string Param3, stri
 |:----------------------------------------------------------------------
 Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string TogDefault, string TogType, string OffText, string OnText, string CallSub)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/if (!${Defined[Toggle-${Name}]}) {
 		/declare Toggle-${Name} bool outer
@@ -620,12 +621,12 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 	/varset Toggle-${Name}-OffText ${OffText}
 	/varset Toggle-${Name}-OnText ${OnText}
 	/varset Toggle-${Name}-ToggleType ${TogType}
-	/Call Debug_Spew "[${Name}]-[OffText] ${Toggle-${Name}-OffText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-	/Call Debug_Spew "[${Name}]-[OnText] ${Toggle-${Name}-OnText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-	/Call Debug_Spew "[${Name}]-[ToggleType] ${Toggle-${Name}-ToggleType}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[${Name}]-[OffText] ${Toggle-${Name}-OffText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[${Name}]-[OnText] ${Toggle-${Name}-OnText}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[${Name}]-[ToggleType] ${Toggle-${Name}-ToggleType}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: Have Toggles Call a Sub Rountine for Extra Code to perform.
-	/Call Debug_Spew "Toggle Subrountine: [${CallSub.Lower.Equal[callsub]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Toggle Subrountine: [${CallSub.Lower.Equal[callsub]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${CallSub.Lower.Equal[callsub]} || ${CallSub.Lower.Equal[true]} || ${CallSub.Lower.Equal[${Name}]}) {
 		/varset Toggle-${Name}-CallSub TRUE
 	} else {
@@ -635,28 +636,28 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 	|: Set Toggle to FALSE if TogDefault = noini, Else Call LoadSetting for Toggles Ini Setting.
 	/if (${TogDefault.Equal[noini]}) {
 		/varset Toggle-${Name} FALSE
-		/Call Debug_Spew "Toggle State: [${Toggle-${Name}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Toggle State: [${Toggle-${Name}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		|: IF it's a string, set the varname-DefaultValue variable
-		/Call Debug_Spew "Set -DefaultValue: [${Toggle-${Name}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Set -DefaultValue: [${Toggle-${Name}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (!${Defined[Toggle-${Name}-DefaultValue]}) {
 			/declare Toggle-${Name}-DefaultValue string outer
 		}
 		/varset Toggle-${Name}-DefaultValue ${Toggle-${Name}}
 		
 	} else {
-		/Call Debug_Spew "Call [LoadSetting]: [${Name}] [toggle] [${Name}(On/Off)] [${TogDefault}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [LoadSetting]: [${Name}] [toggle] [${Name}(On/Off)] [${TogDefault}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" ${Name} toggle ${Name}(On/Off) ${TogDefault}
 	}
 
 	|: Loop to check if Toggle added to Cmds-SectionName Variable.
 	/if (!${Defined[GenStr]}) /declare GenStr string local |${cmds-${SectionName}}|
 	/if (!${GenStr.Find[|${Name}|]} && ${Bool[${Toggle-${Name}-CallSub}]}) {
-		/Call Debug_Spew "Call [ListAppendElement](cmds-${SectionName}): Section: [${SectionName}] Command: [${Name}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ListAppendElement](cmds-${SectionName}): Section: [${SectionName}] Command: [${Name}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call ListAppendElement cmds-${SectionName} ${Name} "|"
 	}
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -665,13 +666,13 @@ Sub AddToggle(string Subrountine, string SubCurrentLine, string Name, string Tog
 |:----------------------------------------------------------------------
 Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string newValue)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/declare TrueString string local
 	/declare FalseString string local
 
 	|: IF Not Defined [newValue] Then Toggle it.
-	/Call Debug_Spew "Defined NewValue: [${Bool[!${Defined[newValue]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined NewValue: [${Bool[!${Defined[newValue]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Defined[newValue]}) {
 		/if (${Toggle-${Name}-ToggleType.Equal[toggle]}) {
 			/if (${${Toggle-${Name}}}) {
@@ -688,8 +689,8 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 	} else {
 		/varset TrueString true on 1 yes
 		/varset FalseString false off 0 no
-		/Call Debug_Spew "Toggle: [${Name}] TrueString: [${TrueString.Find[${newValue.Arg[1]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/Call Debug_Spew "Toggle: [${Name}] FalseString: [${FalseString.Find[${newValue.Arg[1]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Toggle: [${Name}] TrueString: [${TrueString.Find[${newValue.Arg[1]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Toggle: [${Name}] FalseString: [${FalseString.Find[${newValue.Arg[1]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${TrueString.Find[${newValue.Arg[1]}]}) {
 			/varset Toggle-${Name} 1
 			/varset Toggle-${Name}-DefaultValue 1
@@ -708,7 +709,7 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 		/if (!${Defined[GenStr]}) /declare GenStr string local
 		/varset GenStr |${cmds-${SectionsList.Arg[${GenFor}]}}|
 		/if (${Bool[${GenStr.Find[|${Name}|]}]} && ${Toggle-${Name.Lower}-CallSub}) {
-			/Call Debug_Spew "Call [Toggle_${Name.Lower}]: IF: [${Name}] is in ${SectionsList.Arg[${GenFor}]} Commands: [${Bool[${GenStr.Find[|${Name}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [Toggle_${Name.Lower}]: IF: [${Name}] is in ${SectionsList.Arg[${GenFor}]} Commands: [${Bool[${GenStr.Find[|${Name}|]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call Toggle_${Name.Lower} ${CommandParam}
 			/break
 		}
@@ -728,14 +729,14 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 	|:	/varset ToggleMsg ${Macro.Return}
 		/varset ToggleMsg ${ToggleMsg.Replace[@,$]}
 	}
-	/Call Debug_Spew "Toggle Message: [${Toggle-${Name}}] ToggleMsg: [${ToggleMsg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Toggle Message: [${Toggle-${Name}}] ToggleMsg: [${ToggleMsg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	
 	|: Say what you've come to say. :|
-	/Call Debug_Spew "Call [ChatOut]: ToggleMsg: [${ToggleMsg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.RunTime}" "${Macro.Name}"	
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ChatOut]: ToggleMsg: [${ToggleMsg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.RunTime}" "${Macro.Name}"	
 	/call ChatOut CORE "${ToggleMsg}" "0"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -744,18 +745,18 @@ Sub SetToggle(string Subrountine, string SubCurrentLine, string Name, string new
 |:----------------------------------------------------------------------
 Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, string VarType, string KeyName, string DefaultValue)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Create bot_Masters.ini IF Not Exist.
 	/if (!${Bool[${Ini[${Masters_INI},CORE,Masters]}]}) /ini ${Masters_INI} "CORE" "Masters" "List all of your BOTS Here Seperated by |"
 	
 	|: Set RealSection Loaclly to SectionName for Subrountine Processing.
-	/Call Debug_Spew "Declare RealSection: [${SectionName.Upper}] VarType: [${VarType}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Declare RealSection: [${SectionName.Upper}] VarType: [${VarType}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Defined[RealSection]}) /declare RealSection string local ${SectionName.Upper}
 	/if (${VarType.Lower.Equal[shortcuts]} || ${VarType.Lower.Equal[events]}) /varset RealSection ${VarType.Upper}
 	
 	|: Setup Blank & Line Variable for INIs files.
-	/Call Debug_Spew "INI-Line: [${VarName.Upper.Equal[|**LINE**|]}] INI-Blank: [${VarName.Upper.Equal[|**BLANK**|]}] INI-Header: [${VarName.Upper.Equal[|**HEADER**|]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "INI-Line: [${VarName.Upper.Equal[|**LINE**|]}] INI-Blank: [${VarName.Upper.Equal[|**BLANK**|]}] INI-Header: [${VarName.Upper.Equal[|**HEADER**|]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarName.Upper.Equal[|**LINE**|]} || ${VarName.Upper.Equal[|**BLANK**|]} || ${VarName.Upper.Equal[|**HEADER**|]}) {
 		
 		|: Create Current Blank Line Space Count
@@ -796,7 +797,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	}
 	
 	|:Add Comments to Ini for User Information.
-	/Call Debug_Spew "Comments: [${VarType.Equal[Comments]}] Exisit: [${If[${Bool[${Ini[${BOT_INI},${RealSection},"#${KeyName}"]}]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Comments: [${VarType.Equal[Comments]}] Exisit: [${If[${Bool[${Ini[${BOT_INI},${RealSection},"#${KeyName}"]}]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[Comments]} && !${Bool[${Ini[${BOT_INI},${RealSection},"#${KeyName}"]}]}) {
 		/ini ${BOT_INI} "${RealSection}" "#${KeyName}" "${DefaultValue}"
 		/return
@@ -807,11 +808,11 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	
 	
 	|: Read value from .Ini file :|
-	/Call Debug_Spew "InI-Key Found: [${If[${Ini[${BOT_INI},${RealSection},${KeyName},NOTFOUND].Equal[NOTFOUND]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "InI-Key Found: [${If[${Ini[${BOT_INI},${RealSection},${KeyName},NOTFOUND].Equal[NOTFOUND]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/declare IniValue string local ${Ini[${BOT_INI},${RealSection},${KeyName},NOTFOUND]}
 
 	|: Change Value of Deleted Unused Variables. So user knows they can remove from there Ini File.
-	/Call Debug_Spew "Add DeleteMe: [${If[${VarName.Equal[DeleteMe]} && ${VarType.Equal[DeleteMe]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Add DeleteMe: [${If[${VarName.Equal[DeleteMe]} && ${VarType.Equal[DeleteMe]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarName.Equal[DeleteMe]} && ${VarType.Equal[DeleteMe]}) {
 		/if (!${Defined[DeleteMe]}) /declare DeleteMe string local |** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|
 		/if (${Bool[${Ini[${BOT_INI},${RealSection},"${KeyName}"].NotEqual[${DeleteMe}]}]}) {
@@ -822,7 +823,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	|: Create Ini Entry if IniValue = NOTFOUND
 	} else {
 		
-		/Call Debug_Spew "Create INI Entry: [${If[${IniValue.Equal[NOTFOUND]} && ${Bool[${KeyName}]}==TRUE && ${Bool[${DefaultValue}]}==TRUE,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Create INI Entry: [${If[${IniValue.Equal[NOTFOUND]} && ${Bool[${KeyName}]}==TRUE && ${Bool[${DefaultValue}]}==TRUE,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${IniValue.Equal[NOTFOUND]} && ${Bool[${KeyName}]}==TRUE && ${Bool[${DefaultValue}]}==TRUE) {
 			/ini ${BOT_INI} "${RealSection}" "${KeyName}" "${DefaultValue}"
 			/varset IniValue ${DefaultValue}
@@ -832,7 +833,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 
 
 	|: If it's a array
-	/Call Debug_Spew "is an Array: [${VarType.Equal[array]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "is an Array: [${VarType.Equal[array]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[array]}) {
 
 		/if (!${Defined[TempAryC]}) /declare TempAryC string local 0
@@ -870,7 +871,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 					/varset ${VarName.Left[-3]}[1] ${IniValue.Arg[1,,]}
 				/if (!${Defined[x]}) /declare x int local
 				/for x 2 to ${Math.Calc[${IniValue.Count[,]}]}
-					/Call Debug_Spew "Call [StackArray] Params: [${VarName.Left[-3]}] [${IniValue.Arg[${x},,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [StackArray] Params: [${VarName.Left[-3]}] [${IniValue.Arg[${x},,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					/call StackArray ${VarName.Left[-3]} ${IniValue.Arg[${x},,]}
 				/next x
 			}
@@ -878,7 +879,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	}
 
 	|: IF it's a string, set the varname-DefaultValue variable
-	/Call Debug_Spew "Set -DefaultValue: [${VarType.Equal[string]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Set -DefaultValue: [${VarType.Equal[string]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[string]}) {
 		/if (!${Defined[${VarName}-DefaultValue]}) {
 			/declare ${VarName}-DefaultValue ${VarType} outer
@@ -924,14 +925,14 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 	}
 
 	|: If it's a shortcut, then set the shortcut var and add to the list of shortcuts
-	/Call Debug_Spew "is a ShortCut|Event: [${If[${VarType.Equal[shortcuts]} || ${VarType.Equal[event]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "is a ShortCut|Event: [${If[${VarType.Equal[shortcuts]} || ${VarType.Equal[event]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[shortcuts]} || ${VarType.Equal[event]}) {
 		/if (!${IniValue.Lower.Equal[none]}) {
 			/if (!${Defined[ShortCuts-${VarName.Lower}-Text]}) {
 				/declare ShortCuts-${VarName.Lower}-Text string outer
 			}
 			/varset ShortCuts-${VarName.Lower}-Text ${IniValue}
-			/Call Debug_Spew "Call [ListAppendElement] Params: [cmds-Shortcuts] [${VarName.Lower}] [|]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [ListAppendElement] Params: [cmds-Shortcuts] [${VarName.Lower}] [|]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call ListAppendElement cmds-Shortcuts ${VarName.Lower} "|"
 		}
 		/return
@@ -939,16 +940,16 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 
 
 	|: If it's a toggle, then use SetToggle sub to give the value.
-	/Call Debug_Spew "is a Toggle: [${VarType.Equal[toggle]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "is a Toggle: [${VarType.Equal[toggle]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.Equal[toggle]}) {
-		/Call Debug_Spew "Call [SetToggle] Params: [${Macro.CurSub}] [${Macro.CurLine}] [${VarName.Lower}] [${IniValue}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [SetToggle] Params: [${Macro.CurSub}] [${Macro.CurLine}] [${VarName.Lower}] [${IniValue}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/call SetToggle "${Macro.CurSub}" "${Macro.CurLine}" ${VarName.Lower} ${IniValue}
 		/return
 	}
 
 
 	|: Must be not a shortcut nor a toggle, since not /returned yet.
-	/Call Debug_Spew "Not ShortCut|Toggle" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Not ShortCut|Toggle" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${VarType.NotEqual[array]}) {
 
 		/if (!${Defined[${VarName}]}) {
@@ -976,7 +977,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 
 	}
 		
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "[${Subrountine}]:${Macro.CurSub}" "[${SubCurrentLine}]:${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -987,7 +988,7 @@ Sub LoadSetting(string Subrountine, string SubCurrentLine, string VarName, strin
 |: Will output: My Name is: YourName I Am Level: YourLevel, Class is: YourClass
 Sub CollapseParams(string Delimitator, string ReplaceWith, string Parms)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: IF Delimitator && ReplaceWith are not Set us Defaults.
 	/if (${Defined[Delimitator]} && ${Defined[ReplaceWith]} && ${Defined[Parms]}) {
@@ -995,11 +996,11 @@ Sub CollapseParams(string Delimitator, string ReplaceWith, string Parms)
 		/if (${ReplaceWith.Length} == 0) /varset ReplaceWith $
 	}
 	
-	/Call Debug_Spew "Find Delimitator: [${Delimitator}] ReplaceWith: [${ReplaceWith}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find Delimitator: [${Delimitator}] ReplaceWith: [${ReplaceWith}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
 	
 	/if (!${Defined[sint]}) /declare sint int local
 	/varset sint ${Math.Calc[${Parms.Count[${Delimitator}]}].Int}  
-	/Call Debug_Spew "Found: [${sint}] Replace: [${Delimitator}] With: [${ReplaceWith}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Found: [${sint}] Replace: [${Delimitator}] With: [${ReplaceWith}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
 	
 	/if (${Bool[${sint}]}) {
 		
@@ -1009,7 +1010,7 @@ Sub CollapseParams(string Delimitator, string ReplaceWith, string Parms)
 		|: Loop Through Delimitators Found
 		/if (!${Defined[GenFor]}) /declare GenFor int local
 		/for GenFor ${sint} downto 1
-			/Call Debug_Spew "Parms: [${GenFor}] ${Parms.Arg[${GenFor},${Delimitator}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Parms: [${GenFor}] ${Parms.Arg[${GenFor},${Delimitator}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
 			/if (${Parms.Arg[${GenFor},${Delimitator}].Length}) {
 				/varset stemp ${Parms.Arg[${GenFor},${Delimitator}]}${ReplaceWith}${stemp}
 			} 
@@ -1021,9 +1022,9 @@ Sub CollapseParams(string Delimitator, string ReplaceWith, string Parms)
 		
 	}
 	
-	/Call Debug_Spew "Return Parms: [${Parms}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Return Parms: [${Parms}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "TRUE"
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${Parms}
 
@@ -1034,34 +1035,34 @@ Sub CollapseParams(string Delimitator, string ReplaceWith, string Parms)
 |: Will output: two three four
 Sub ListDelbyArg(string sList, int sArg, string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Check make sure Given [sArg] is Correct Value.
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
 	/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int} || ${sArg} == 0) {
-		/if (${sArg} == 0) /Call Debug_Spew "Param Argument [0] is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int}) /Call Debug_Spew "Param Argument [${sArg}] is out of Bounds, is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${sArg} == 0) /if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Param Argument [0] is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int}) /if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Param Argument [${sArg}] is out of Bounds, is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/return Error Invalid!
 	}
 	
 	|: Get String Value to be Removed.
 	/if (!${Defined[splaceholder]}) /declare splaceholder string local ${sList}
 	/varset splaceholder ${splaceholder.Arg[${sArg},${sDiv}]}
-	/Call Debug_Spew "Remove Arg[${sArg}] Value: [${splaceholder}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Remove Arg[${sArg}] Value: [${splaceholder}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Find String Location to be Remove from Left side.
 	/if (!${Defined[sleft]}) /declare sleft int local
 	/varcalc sleft  ${sList.Find[${sDiv}${splaceholder}${sDiv}]}
 	/varset splaceholder ${splaceholder}${sDiv}
-	/Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Find String Location to be Removed from Right side.
 	/if (!${Defined[sright]}) /declare sright int local
 	/varcalc sright ${sleft}+${splaceholder.Length}
-	/Call Debug_Spew "Go in ${If[${sArg} == ${Math.Calc[${sList.Count[${sDiv}]}+1].Int},Left,Right]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in ${If[${sArg} == ${Math.Calc[${sList.Count[${sDiv}]}+1].Int},Left,Right]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Calculate Correct way to splice string with our 3 Values: [sleft], [sright], [splaceholder]
 	/if (${sleft} == 0) {
@@ -1074,9 +1075,9 @@ Sub ListDelbyArg(string sList, int sArg, string sDiv)
 		/varset sList ${sList.Left[${sleft}]}${sList.Right[-${sright}]}
 	}
 
-	/Call Debug_Spew "New List: [${sList}] Deleted Arg: [${sArg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "New List: [${sList}] Deleted Arg: [${sArg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${sList}
 
@@ -1087,34 +1088,34 @@ Sub ListDelbyArg(string sList, int sArg, string sDiv)
 |: Will output: one Replaced three four
 Sub ListReplacebyArg(string sList, string sElement, string sArg, string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Check make sure Given [sArg] is Correct Value.
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
 	/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int} || ${sArg} == 0) {
-		/if (${sArg} == 0) /Call Debug_Spew "Param Argument [0] is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int}) /Call Debug_Spew "Param Argument [${sArg}] is out of Bounds, is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
-		/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${sArg} == 0) /if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Param Argument [0] is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${sArg} > ${Math.Calc[${sList.Count[${sDiv}]}+1].Int}) /if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Param Argument [${sArg}] is out of Bounds, is Invalid!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/return Error Invalid!
 	}
 	
 	|: Get String Value to be Removed.
 	/if (!${Defined[splaceholder]}) /declare splaceholder string local ${sList}
 	/varset splaceholder ${splaceholder.Arg[${sArg},${sDiv}]}
-	/Call Debug_Spew "Replace Arg[${sArg}] Value: [${splaceholder}] ReplaceWith: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Replace Arg[${sArg}] Value: [${splaceholder}] ReplaceWith: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Find String Location to be Remove from Left side.
 	/if (!${Defined[sleft]}) /declare sleft int local
 	/varcalc sleft  ${sList.Find[${sDiv}${splaceholder}${sDiv}]}
 	/varset splaceholder ${splaceholder}${sDiv}
-	/Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Find String Location to be Removed from Right side.
 	/if (!${Defined[sright]}) /declare sright int local
 	/varcalc sright ${sleft}+${splaceholder.Length}
-	/Call Debug_Spew "Go in ${If[${sArg} == ${Math.Calc[${sList.Count[${sDiv}]}+1].Int},Left,Right]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in ${If[${sArg} == ${Math.Calc[${sList.Count[${sDiv}]}+1].Int},Left,Right]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Calculate Correct way to splice string with our 3 Values: [sleft], [sright], [splaceholder]
 	/if (${sleft} == 0) {
@@ -1127,9 +1128,9 @@ Sub ListReplacebyArg(string sList, string sElement, string sArg, string sDiv)
 		/varset sList ${sList.Left[${sleft}]}${sElement}${sDiv}${sList.Right[-${sright}]}
 	}
 
-	/Call Debug_Spew "List: [${sList}] sElement: [${sElement}] Replaced Arg: [${sArg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "List: [${sList}] sElement: [${sElement}] Replaced Arg: [${sArg}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${sList}
 
@@ -1140,20 +1141,20 @@ Sub ListReplacebyArg(string sList, string sElement, string sArg, string sDiv)
 |: Will output: one Replaced three four
 Sub StringReplaceAll(string sList, string oldElement, string newElement)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	:SearchAgain
 	/if (${sList.Find[${oldElement}]}) {
 
-		/Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "String to Manipulate: [${sList}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		/if (!${Defined[sleft]}) /declare sleft int local
 		/varcalc sleft  ${sList.Find[${oldElement}]}-1
-		/Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in Left: [${sleft}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		/if (!${Defined[sright]}) /declare sright int local
 		/varcalc sright ${sleft}+${oldElement.Length}
-		/Call Debug_Spew "Go in ${If[${sleft} == 0,Right,Left]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Go in ${If[${sleft} == 0,Right,Left]}: [-${sright}] Times." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		/if (${sleft} == 0) {
 			/varset sList ${newElement}${sList.Right[-${sright}]}
@@ -1162,19 +1163,19 @@ Sub StringReplaceAll(string sList, string oldElement, string newElement)
 		}
 		
 	} else {
-		/Call Debug_Spew "List: [${sList}] oldElement: [${oldElement}] Replace newElement: [${newElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "List: [${sList}] oldElement: [${oldElement}] Replace newElement: [${newElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	}
 	
 	/if (${sList.Find[${oldElement}]}) /goto :SearchAgain
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${sList}
 
 |: Need to FIX NOT WORKING
 Sub ListDelbyName(string sList,string sName,string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/echo List [${sList}]  TO Delete: [${sName}]
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
@@ -1215,7 +1216,7 @@ Sub ListDelbyName(string sList,string sName,string sDiv)
 
 	/echo List [${sList}]  Deleted: [${sName}]
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${sList}
 
@@ -1226,7 +1227,7 @@ Sub ListDelbyName(string sList,string sName,string sDiv)
 |: Will output: Variable [ListName] = ListData1|NewElement|
 Sub ListAppendElement(string sList, string sElement, string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|:This adds sElement to End of sList.
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
@@ -1238,9 +1239,9 @@ Sub ListAppendElement(string sList, string sElement, string sDiv)
 		/varset ${sList} ${sElement}
 	}
 
-	/Call Debug_Spew "Variable: [${sList}] List: [${${sList}}]  Added: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Variable: [${sList}] List: [${${sList}}]  Added: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${${sList}}
 
@@ -1251,7 +1252,7 @@ Sub ListAppendElement(string sList, string sElement, string sDiv)
 |: Will output: Variable [ListName] = NewElement|ListData1
 Sub ListPrependElement(string sList, string sElement, string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|:This adds sElement to the Start of sList.
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
@@ -1263,9 +1264,9 @@ Sub ListPrependElement(string sList, string sElement, string sDiv)
 		/varset ${sList} ${sElement}
 	}
 
-	/Call Debug_Spew "Variable: [${sList}] List: [${${sList}}]  Added: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Variable: [${sList}] List: [${${sList}}]  Added: [${sElement}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${${sList}}
 
@@ -1276,15 +1277,15 @@ Sub ListPrependElement(string sList, string sElement, string sDiv)
 |: Will output: [4]
 Sub ListFindStringArg(string sList, string sString, string sDiv)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/if (!${Defined[sDiv]}) /declare sDiv string local |
 	/if (!${Defined[sReturn]}) /declare sReturn int local
 	/varcalc sReturn ${sList.Left[${sList.Find[${sString}]}].Count[${sDiv}]}+1
 	
-	/Call Debug_Spew "List: [${sList}] Found: [${sString}] Arg: [${sReturn}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "List: [${sList}] Found: [${sString}] Arg: [${sReturn}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${sReturn}
 
@@ -1296,7 +1297,7 @@ Sub ListFindStringArg(string sList, string sString, string sDiv)
 |: Will output: ArrayName_str[Delimitator]Array[1] Array[2] Array[3]
 Sub array2String(string ArrayName, string ArrayString, string Delimitator, bool ArrayDelete)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/if (!${Defined[x]}) /declare x int local
 
@@ -1312,10 +1313,10 @@ Sub array2String(string ArrayName, string ArrayString, string Delimitator, bool 
 	/for x 1 to ${${ArrayName}.Size}
 		/if (${x} < ${${ArrayName}.Size}) {
 			/if (${${ArrayName}[${x}].Length} > 0) /varset ${ArrayString} ${${ArrayString}}${${ArrayName}[${x}]}${Delimitator}
-			/Call Debug_Spew "Array[${x}] Length: [${${ArrayName}[${x}].Length} > 0] Varset: [${ArrayString} ${${ArrayString}}${Delimitator}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Array[${x}] Length: [${${ArrayName}[${x}].Length} > 0] Varset: [${ArrayString} ${${ArrayString}}${Delimitator}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		} else {
 			/if (${${ArrayName}[${x}].Length} > 0) /varset ${ArrayString} ${${ArrayString}}${${ArrayName}[${x}]}
-			/Call Debug_Spew "Array[${x}] Length: [${${ArrayName}[${x}].Length} > 0] Varset: [${ArrayString} ${${ArrayString}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Array[${x}] Length: [${${ArrayName}[${x}].Length} > 0] Varset: [${ArrayString} ${${ArrayString}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		}
 	/next x
 	
@@ -1326,10 +1327,10 @@ Sub array2String(string ArrayName, string ArrayString, string Delimitator, bool 
 		/varset ${ArrayString} ${${ArrayString}.Right[-1]}
 	}
 	
-	/Call Debug_Spew "Delete Array: [${ArrayDelete}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Delete Array: [${ArrayDelete}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${ArrayDelete}) /deletevar ${ArrayName}
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${ArrayString}${Delimitator}${${ArrayString}}
 
@@ -1339,14 +1340,14 @@ Sub array2String(string ArrayName, string ArrayString, string Delimitator, bool 
 |: Example: /call IniToArray "${MACRO_INI_LOCATION_PREFIX}/${MACRO_FILE_PREFIX}_doors.ini,${Zone.ShortName},${Zone.ShortName}#" doorList outer
 Sub IniToArray(string IniKey, string ArrayName, string ArrayScope)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
-	/Call Debug_Spew "IniKey: [${IniKey}] ArrayName: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "IniKey: [${IniKey}] ArrayName: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Variable Name: [${ArrayName}] Exisit: [${Defined[${ArrayName}]}] Delete Variable: [${If[${Defined[${ArrayName}]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Variable Name: [${ArrayName}] Exisit: [${Defined[${ArrayName}]}] Delete Variable: [${If[${Defined[${ArrayName}]},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Defined[${ArrayName}]}) /deletevar ${ArrayName}
 	
-	/Call Debug_Spew "Find Ini Setting: [${If[${Ini[${IniKey}1].Length} || ${Ini[${IniKey}1(Spell|Gem|Pct)].Length},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find Ini Setting: [${If[${Ini[${IniKey}1].Length} || ${Ini[${IniKey}1(Spell|Gem|Pct)].Length},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Ini[${IniKey}1].Length} || ${Ini[${IniKey}1(Spell|Gem|Pct)].Length}) {
 		
 		/if (!${Defined[count]}) /declare count int local 0
@@ -1354,7 +1355,7 @@ Sub IniToArray(string IniKey, string ArrayName, string ArrayScope)
 		/if (!${Defined[tmp${ArrayName}]}) /declare tmp${ArrayName} string local
 		
 		:NextKey
-		/Call Debug_Spew "Count Ini: [${count}] Ini Setting Exisit: [${If[${Ini[${IniKey}${i}].Length} || ${Ini[${IniKey}${i}(Spell|Gem|Pct)].Length},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Count Ini: [${count}] Ini Setting Exisit: [${If[${Ini[${IniKey}${i}].Length} || ${Ini[${IniKey}${i}(Spell|Gem|Pct)].Length},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 		/if (${Ini[${IniKey}${i}].Length} || ${Ini[${IniKey}${i}(Spell|Gem|Pct)].Length}) {
 		  /varset count ${i}
 		  /varcalc i ${i}+1
@@ -1362,26 +1363,26 @@ Sub IniToArray(string IniKey, string ArrayName, string ArrayScope)
 		}
 	
 		/declare ${ArrayName}[${count}] string ${ArrayScope}
-		/Call Debug_Spew "Declare [${ArrayName}[${count}]] As [${ArrayScope}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Declare [${ArrayName}[${count}]] As [${ArrayScope}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		/for i 1 to ${count}
 			/if (${Ini[${IniKey}${i}].Length}) {
-				/Call Debug_Spew "Set Variable: [${ArrayName}[${i}]] With Data: [${Ini[${IniKey}${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Set Variable: [${ArrayName}[${i}]] With Data: [${Ini[${IniKey}${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 				/varset ${ArrayName}[${i}] ${Ini[${IniKey}${i}]}
 				/if (${ArrayScope.Upper.Equal[LOCAL]}) /varset tmp${ArrayName} ${tmp${ArrayName}} ${ArrayName}[${i}]|${Ini[${IniKey}${i}]}
 			} else /if (${Ini[${IniKey}${i}(Spell|Gem|Pct)].Length}) {
-				/Call Debug_Spew "Set Variable: [${ArrayName}[${i}]] With Data: [${Ini[${IniKey}${i}(Spell|Gem|Pct)]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Set Variable: [${ArrayName}[${i}]] With Data: [${Ini[${IniKey}${i}(Spell|Gem|Pct)]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 				/varset ${ArrayName}[${i}] ${Ini[${IniKey}${i}(Spell|Gem|Pct)]}
 				/if (${ArrayScope.Upper.Equal[LOCAL]}) /varset tmp${ArrayName} ${tmp${ArrayName}} ${ArrayName}[${i}]|${Ini[${IniKey}${i}]}
 			}
 		/next i
 	
 	} else {
-		/Call Debug_Spew "Set Variable: [${ArrayName}[0]] As [${ArrayScope}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Set Variable: [${ArrayName}[0]] As [${ArrayScope}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/declare ${ArrayName}[0] string ${ArrayScope}
 	}
 	  
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${tmp${ArrayName}}
 
@@ -1391,14 +1392,14 @@ Sub IniToArray(string IniKey, string ArrayName, string ArrayScope)
 |:Example: /call IniToVar "${MACRO_INI_LOCATION_PREFIX}/${MACRO_FILE_PREFIX}_Bot.ini,Core,movetomode" movetomode int outer			
 Sub IniToVar(string Ini_Key, string VarToMake, string VarType, string VarScope)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "IniToVar: [${Ini_Key}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "IniToVar: [${Ini_Key}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: Check for the specified ini key.
 	/if (!${Ini[${Ini_Key}].Length}) {
 	
-		/Call Debug_Spew "[${Ini_Key}] Key not Found!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[${Ini_Key}] Key not Found!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	} else {
 		|: Validate VarType as Bool.
@@ -1407,31 +1408,31 @@ Sub IniToVar(string Ini_Key, string VarToMake, string VarType, string VarScope)
 			/if (${Defined[${VarToMake}]}) /deletevar ${VarToMake}
 			/if (!${Defined[new_VarName]}) /declare new_VarName string outer
 			/declare ${VarToMake} bool ${VarScope} ${If[${Select[${Ini[${Ini_Key}]},TRUE,ON,YES,1]},TRUE,FALSE]}
-			/Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		|: Validate VarType as Int.
 		} else /if (${VarType.Upper.Equal[INT]}) {
 		
 			/if (${Defined[${VarToMake}]}) /deletevar ${VarToMake}
 			/declare ${VarToMake} int ${VarScope} ${Ini[${Ini_Key}]}
-			/Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		|: Validate VarType as Float.
 		} else /if (${VarType.Upper.Equal[FLOAT]}) {
 		
 			/if (${Defined[${VarToMake}]}) /deletevar ${VarToMake}
 			/declare ${VarToMake} float ${VarScope} ${Ini[${Ini_Key}]}
-			/Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		
 		|: Validate VarType as String or Timer.
 		} else {
 			/if (${Defined[${VarToMake}]}) /deletevar ${VarToMake}
 			/declare ${VarToMake} ${VarType} ${VarScope} ${Ini[${Ini_Key}]}
-			/Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined: ${VarToMake} [${${VarToMake}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		}
 	}
 		  
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${VarToMake}|${${VarToMake}}
 
@@ -1441,10 +1442,10 @@ Sub IniToVar(string Ini_Key, string VarToMake, string VarType, string VarScope)
 |:Example  /call BuildArray ArrayName Data
 Sub BuildArray(string ArrayName, string Data)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: IF the array is not defined, declare it.
-	/Call Debug_Spew "Array Defined: [${Defined[${ArrayName}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Array Defined: [${Defined[${ArrayName}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Defined[${ArrayName}]}) {
 	
 		/declare ${ArrayName}[1] string outer
@@ -1454,31 +1455,31 @@ Sub BuildArray(string ArrayName, string Data)
 	} else {
 	
 		|: Create a copy of the existing array.
-		/Call Debug_Spew "Declare Copy: [${ArrayName}Copy[${${ArrayName}.Size}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Declare Copy: [${ArrayName}Copy[${${ArrayName}.Size}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/declare ${ArrayName}Copy[${${ArrayName}.Size}] string local
 		/if (!${Defined[i]}) /declare i int local
 		/for i 1 to ${${ArrayName}.Size}
-			/Call Debug_Spew "Varset ${ArrayName}Copy[${i}]: [${${ArrayName}[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Varset ${ArrayName}Copy[${i}]: [${${ArrayName}[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 			/varset ${ArrayName}Copy[${i}] ${${ArrayName}[${i}]}
 		/next i
 		
 		|: Delete the existing array.
-		/Call Debug_Spew "Delete Current Array: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Delete Current Array: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/deletevar ${ArrayName}
 		
 		|: Build a resized array.
-		/Call Debug_Spew "Declare: [${ArrayName}[${Math.Calc[${${ArrayName}Copy.Size}+1].Int}]] " "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Declare: [${ArrayName}[${Math.Calc[${${ArrayName}Copy.Size}+1].Int}]] " "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/declare ${ArrayName}[${Math.Calc[${${ArrayName}Copy.Size}+1].Int}] string outer
 		
 		/for i 1 to ${${ArrayName}.Size}
 			
-			/Call Debug_Spew "Add New Data: [${If[${i} == ${${ArrayName}.Size},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Add New Data: [${If[${i} == ${${ArrayName}.Size},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 			/if (${i} == ${${ArrayName}.Size}) {
 				|: Insert new data into the array.
-				/Call Debug_Spew "Varset ${ArrayName}[${${ArrayName}.Size}]: [${Data}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Leeop[${i}]"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Varset ${ArrayName}[${${ArrayName}.Size}]: [${Data}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Leeop[${i}]"
 				/varset ${ArrayName}[${${ArrayName}.Size}] ${Data}
 			} else {
-				/Call Debug_Spew "Varset ${ArrayName}[${i}]: [${${ArrayName}Copy[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Leeop[${i}]"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Varset ${ArrayName}[${i}]: [${${ArrayName}Copy[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Leeop[${i}]"
 				/varset ${ArrayName}[${i}] ${${ArrayName}Copy[${i}]}
 			}
 			
@@ -1486,7 +1487,7 @@ Sub BuildArray(string ArrayName, string Data)
 		
 	}
 
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${ArrayName}
 
@@ -1496,20 +1497,20 @@ Sub BuildArray(string ArrayName, string Data)
 |:----------------------------------------------------------------------
 Sub SortArray(string ArrayName, string Data)
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: Create a copy of the existing array.
-	/Call Debug_Spew "Decalre: [${ArrayName}Copy[${${ArrayName}.Size}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Decalre: [${ArrayName}Copy[${${ArrayName}.Size}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/declare ${ArrayName}Copy[${${ArrayName}.Size}] string local
 
 	/if (!${Defined[i]}) /declare i int local
 	/for i 1 to ${${ArrayName}.Size}
-		/Call Debug_Spew "Varset ${ArrayName}Copy[${i}]: [${${ArrayName}[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Varset ${ArrayName}Copy[${i}]: [${${ArrayName}[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 		/varset ${ArrayName}Copy[${i}] ${${ArrayName}[${i}]}
 	/next i
 	
 	|: Delete the existing array.
-	/Call Debug_Spew "Delete Current Array: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Delete Current Array: [${ArrayName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/deletevar ${ArrayName}
 	
 	|: Count array elements that do not match 'Data'.
@@ -1517,25 +1518,25 @@ Sub SortArray(string ArrayName, string Data)
 	/for i 1 to ${${ArrayName}Copy.Size}	
 		/if (${${ArrayName}Copy[${i}].NotEqual[${Data}]}) {
 			/varcalc x ${x} + 1
-			/Call Debug_Spew "Found Elements: [${x}] ${${ArrayName}Copy[${i}]} Not Equal [${Data}]: [${${ArrayName}Copy[${i}].NotEqual[${Data}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Found Elements: [${x}] ${${ArrayName}Copy[${i}]} Not Equal [${Data}]: [${${ArrayName}Copy[${i}].NotEqual[${Data}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 		} else {
-			/Call Debug_Spew "Found Elements: [${x}] ${${ArrayName}Copy[${i}]} Not Equal [${Data}]: [${${ArrayName}Copy[${i}].NotEqual[${Data}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Found Elements: [${x}] ${${ArrayName}Copy[${i}]} Not Equal [${Data}]: [${${ArrayName}Copy[${i}].NotEqual[${Data}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 		}
 	/next i
 	
 	|: If there are elements that do not match 'Data', rebuild the array.
-	/Call Debug_Spew "Total Elements: [${x}] Rebuild Array: [${Bool[${x}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Total Elements: [${x}] Rebuild Array: [${Bool[${x}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Bool[${x}]}) {
 	
 		|: Declare a resized array.
-		/Call Debug_Spew "Declare: [${ArrayName}[${x}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Declare: [${ArrayName}[${x}]]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/declare ${ArrayName}[${x}] string outer
 		
 		|: Copy the old array, skipping elements that match 'Data'.
 		/varset x 1
 		/for i 1 to ${${ArrayName}Copy.Size}
 			/if (${${ArrayName}Copy[${i}].NotEqual[${Data}]}) {
-				/Call Debug_Spew "Element[${x}] ${ArrayName}[${x}]: [${${ArrayName}Copy[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Element[${x}] ${ArrayName}[${x}]: [${${ArrayName}Copy[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 				/varset ${ArrayName}[${x}] ${${ArrayName}Copy[${i}]}
 				/varcalc x ${x} + 1
 			}
@@ -1543,7 +1544,7 @@ Sub SortArray(string ArrayName, string Data)
 	
 	}
 	
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 |:----------------------------------------------------------------------
@@ -1551,16 +1552,16 @@ Sub SortArray(string ArrayName, string Data)
 |:----------------------------------------------------------------------
 Sub StackArray(string ArrayName, string Data, bool Conv2Str)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Stacking: ${Data} onto: ${ArrayName} with Size: ${${ArrayName}.Size}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Stacking: ${Data} onto: ${ArrayName} with Size: ${${ArrayName}.Size}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/declare ${ArrayName}Copy[${${ArrayName}.Size}] string local
 	/if (!${Defined[i]}) /declare i int local
 	
 	|: Copy Old Array to Restack it.
 	/for i 1 to ${${ArrayName}.Size}
-		/Call Debug_Spew "arrayCopy: ${ArrayName}Copy[${i}] Data: ${${ArrayName}[${i}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "arrayCopy: ${ArrayName}Copy[${i}] Data: ${${ArrayName}[${i}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 		/varset ${ArrayName}Copy[${i}] ${${ArrayName}[${i}]}
 	/next i
 	
@@ -1572,23 +1573,23 @@ Sub StackArray(string ArrayName, string Data, bool Conv2Str)
 		/declare ${ArrayName}[${Math.Calc[${${ArrayName}Copy.Size}+1].Int}] string outer
 		
 		/for i 1 to ${Math.Calc[${${ArrayName}.Size}-1]}
-			/Call Debug_Spew "ReCreateArray: ${ArrayName}[${i}] Data: ${${ArrayName}Copy[${i}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "ReCreateArray: ${ArrayName}[${i}] Data: ${${ArrayName}Copy[${i}]}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${i}]"
 			/varset ${ArrayName}[${i}] ${${ArrayName}Copy[${i}]}
 		/next i
 		
-		/Call Debug_Spew "Array: ${ArrayName}[${${ArrayName}.Size}] New Data: [${Data}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Array: ${ArrayName}[${${ArrayName}.Size}] New Data: [${Data}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/varset ${ArrayName}[${${ArrayName}.Size}] ${Data}
 	}
 	
-	/Call Debug_Spew "Final Array: ${ArrayName}[${${ArrayName}.Size}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Final Array: ${ArrayName}[${${ArrayName}.Size}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Call [array2String]: Params: [${ArrayName}] [${ArrayName}_str] [ ]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [array2String]: Params: [${ArrayName}] [${ArrayName}_str] [ ]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/if (${Conv2Str}) /call array2String ${ArrayName} ${ArrayName}_str " "
 	
-	/Call Debug_Spew "[array2String] Return: [${Macro.Return}] String: [${${ArrayName}_str}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[array2String] Return: [${Macro.Return}] String: [${${ArrayName}_str}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return ${ArrayName}
 
@@ -1602,25 +1603,25 @@ Sub StackArray(string ArrayName, string Data, bool Conv2Str)
 |: /call WriteToIni "${MACRO_INI_LOCATION_PREFIX}/${MACRO_FILE_PREFIX}_Loot.ini,B,Bone Chips" "Destroy" TRUE
 Sub WriteToIni(string Ini_Key, string WhatToWrite, bool OverWrite)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Ini_Key: [${Ini_Key}] Data to write: [${WhatToWrite}] OverWrite: [${OverWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Ini_Key: [${Ini_Key}] Data to write: [${WhatToWrite}] OverWrite: [${OverWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: If the Ini_Key does not exist, create it.
-	/Call Debug_Spew "Ini Exist: [${Bool[${Ini[${Ini_Key}].Length}]}] OverWrite Exisiting Entry: [${OverWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Ini Exist: [${Bool[${Ini[${Ini_Key}].Length}]}] OverWrite Exisiting Entry: [${OverWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (!${Bool[${Ini[${Ini_Key}].Length}]}) {
 	
 		|: If there is something to write, write it.
-		/Call Debug_Spew "Defined WhatToWrite: [${Defined[WhatToWrite]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined WhatToWrite: [${Defined[WhatToWrite]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${Defined[WhatToWrite]}) {
 			
-			/Call Debug_Spew "Write: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}] [${WhatToWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Write: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}] [${WhatToWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/ini "${Ini_Key.Arg[1,,]}" "${Ini_Key.Arg[2,,]}" "${Ini_Key.Arg[3,,]}" "${WhatToWrite}"
 		
 		|: Else, create the entry only.
 		} else {
 			
-			/Call Debug_Spew "Create Entry Only: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Create Entry Only: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/ini "${Ini_Key.Arg[1,,]}" "${Ini_Key.Arg[2,,]}" "${Ini_Key.Arg[3,,]}"
 
 		}
@@ -1629,23 +1630,23 @@ Sub WriteToIni(string Ini_Key, string WhatToWrite, bool OverWrite)
 	} else /if (${OverWrite}) {
 	
 		|: If there is something to write, write it.
-		/Call Debug_Spew "Defined WhatToWrite: [${Defined[WhatToWrite]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Defined WhatToWrite: [${Defined[WhatToWrite]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${Defined[WhatToWrite]}) {
 			
-			/Call Debug_Spew "Write: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}] [${WhatToWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Write: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}] [${WhatToWrite}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/ini "${Ini_Key.Arg[1,,]}" "${Ini_Key.Arg[2,,]}" "${Ini_Key.Arg[3,,]}" "${WhatToWrite}"
 		
 		|: Else, create the entry only.
 		} else {
 			
-			/Call Debug_Spew "Create Entry Only: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Create Entry Only: [${Ini_Key.Arg[1,,]}] [${Ini_Key.Arg[2,,]}] [${Ini_Key.Arg[3,,]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/ini "${Ini_Key.Arg[1,,]}" "${Ini_Key.Arg[2,,]}" "${Ini_Key.Arg[3,,]}"
 		
 		}
 		
 	}
 
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -1654,28 +1655,28 @@ Sub WriteToIni(string Ini_Key, string WhatToWrite, bool OverWrite)
 |:----------------------------------------------------------------------
 Sub TrueTarget(string TargetIDs)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Attempting to Target: [${Spawn[${TargetIDs}].ID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Attempting to Target: [${Spawn[${TargetIDs}].ID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: Check if the target is in zone. 
-	/Call Debug_Spew "Target Exisit: [${If[${SpawnCount[id ${Spawn[${TargetIDs}].ID}]} > 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Target Exisit: [${If[${SpawnCount[id ${Spawn[${TargetIDs}].ID}]} > 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${SpawnCount[id ${Spawn[${TargetIDs}].ID}]}) {
 		/declare TargetRetry int local 0
 		:Target_Loop
-		/Call Debug_Spew "Attempt ${TargetRetry} to aquire Target [${Spawn[${TargetIDs}].ID} -- ${Spawn[id ${Spawn[${TargetIDs}].ID}].CleanName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Attempt ${TargetRetry} to aquire Target [${Spawn[${TargetIDs}].ID} -- ${Spawn[id ${Spawn[${TargetIDs}].ID}].CleanName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/squelch /target id ${Spawn[${TargetIDs}].ID}
 		/delay 1 ${Target.ID} == ${Spawn[${TargetIDs}].ID}
 	
 		|:If I don't have the correct target, and I haven't exceeded the limit, try again.
-		/Call Debug_Spew "Max Tries: [${TargetRetry}] Correct Target: [${If[${Target.ID} != ${Spawn[${TargetIDs}].ID},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${TargetRetry}]"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Max Tries: [${TargetRetry}] Correct Target: [${If[${Target.ID} != ${Spawn[${TargetIDs}].ID},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}" "" "Loop[${TargetRetry}]"
 		/if (${Target.ID} != ${Spawn[${TargetIDs}].ID} && ${TargetRetry} < 20) {
 			/varcalc TargetRetry ${TargetRetry} + 1
 			/goto :Target_Loop
 		}
 	}
 
-  	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+  	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -1684,22 +1685,22 @@ Sub TrueTarget(string TargetIDs)
 |:----------------------------------------------------------------------
 Sub createTimer(timerName, timerSetting)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|: Delete old timer.
-	/Call Debug_Spew "Delete Timer: [${Defined[${timerName}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Delete Timer: [${Defined[${timerName}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Defined[${timerName}]}) /deletevar ${timerName}
 
 	|: Declare new timer.
 	/declare ${timerName} timer outer ${timerSetting}
 	
 	|: Add the timer's name to the timerArray.
-	/Call Debug_Spew "Call [BuildArray] Params: [timerArray] [${timerName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [BuildArray] Params: [timerArray] [${timerName}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/call BuildArray timerArray ${timerName}
 
-	/Call Debug_Spew "Created: [${timerName}] [${${timerName}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Created: [${timerName}] [${${timerName}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return ${timerArray[1]}|${timerName}
 
@@ -1708,7 +1709,7 @@ Sub createTimer(timerName, timerSetting)
 |:----------------------------------------------------------------------
 sub check_macroTimers
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/declare SpentTimerCounter int local
 
@@ -1717,49 +1718,49 @@ sub check_macroTimers
 		
 		/if (!${Defined[i]}) /declare i int local
 		/for i 1 to ${timerArray.Size}
-			/Call Debug_Spew "TimerArray: [${${timerArray[${i}]}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "TimerArray: [${${timerArray[${i}]}}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/if (!${${timerArray[${i}]}}) {
 				/varcalc SpentTimerCounter ${SpentTimerCounter} + 1
 				/if (${Defined[${timerArray[${i}]}]}) {
-					/Call Debug_Spew "Deleting timer: [${timerArray[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Deleting timer: [${timerArray[${i}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 					/deletevar ${timerArray[${i}]}
 				}
 			}
 		/next i
 		
 		|: If all the timers listed on timerArray are spent, delete timerArray.
-		/Call Debug_Spew "Clear All Timers: [${If[${SpentTimerCounter} == ${timerArray.Size},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Clear All Timers: [${If[${SpentTimerCounter} == ${timerArray.Size},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		/if (${SpentTimerCounter} == ${timerArray.Size}) {
 			/deletevar timerArray
-			/Call Debug_Spew "Deleted Timers: [${If[${Defined[timerArray]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Deleted Timers: [${If[${Defined[timerArray]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 		}
 		
 	} else {
 	
-		/Call Debug_Spew "timerArray Exisit: [${Defined[timerArray]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "timerArray Exisit: [${Defined[timerArray]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	}
 			
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return
 
 |: Need to FIX Test
 Sub forage_Handle
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Call [BuildForageIni]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [BuildForageIni]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Math.Calc[${Ini[${FORAGE_INI}].Count[|]}-1]} != 26}) /call BuildForageIni
 	
 	/declare check int local 0
 	:checkitem
-	/Call Debug_Spew "Cursor Item: [${Bool[${Cursor.ID}]}] CursorID: [${Cursor.ID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Cursor Item: [${Bool[${Cursor.ID}]}] CursorID: [${Cursor.ID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Cursor.ID}) {
 		/if (!${Ini[${FORAGE_INI},${Cursor.Name.Left[1]},${Cursor.Name}].Length}) {
 			/call ChatOut CORE "You have foraged a new item! [${Cursor.Name}] has been added to your [${FORAGE_INI}] file under Section [${Cursor.Name.Left[1]}] With Default Value [20]." "0"
 			/ini ${FORAGE_INI} ${Cursor.Name.Left[1]} "${Cursor.Name}" 20
-			/Call Debug_Spew "Call [clearCursor]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [clearCursor]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 			/call clearCursor
 		} else /if (${Ini[${FORAGE_INI},${Cursor.Name.Left[1]},${Cursor.Name}].Length}) {
 			/if (!${Ini[${FORAGE_INI},${Cursor.Name.Left[1]},${Cursor.Name}]}) {
@@ -1781,7 +1782,7 @@ Sub forage_Handle
 		/goto :checkitem
 	}
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -1790,9 +1791,9 @@ Sub forage_Handle
 |:----------------------------------------------------------------------
 Sub BuildForageINI
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Building Forage INI file!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Building Forage INI file!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/ini "${FORAGE_INI}" A A NULL
 	/ini "${FORAGE_INI}" B B NULL
@@ -1822,19 +1823,19 @@ Sub BuildForageINI
 	/ini "${FORAGE_INI}" Z Z NULL
 	
 	/if (${Math.Calc[${Ini[${FORAGE_INI}].Count[|]}-1]} == 26}) {
-		/Call Debug_Spew "Finished Building: [${FORAGE_INI}]!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Finished Building: [${FORAGE_INI}]!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	}
 		
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return
 
 |: Need to FIX Test
 Sub pickpocket_Handle
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
-	/Call Debug_Spew "Call [BuildPickPocketINI]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [BuildPickPocketINI]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	/if (${Math.Calc[${Ini[${PICKPOCKET_INI}].Count[|]}-1]} != 26}) /call BuildPickPocketINI
 	
 	/declare check int local 0
@@ -1863,7 +1864,7 @@ Sub pickpocket_Handle
 		/goto :checkitem
 	}
 		
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return
 
@@ -1872,9 +1873,9 @@ Sub pickpocket_Handle
 |:----------------------------------------------------------------------
 Sub BuildPickPocketINI
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
-	/Call Debug_Spew "Building PickPocket INI file!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Building PickPocket INI file!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	/ini "${PICKPOCKET_INI}" A A NULL
 	/ini "${PICKPOCKET_INI}" B B NULL
@@ -1904,10 +1905,10 @@ Sub BuildPickPocketINI
 	/ini "${PICKPOCKET_INI}" Z Z NULL
 	
 	/if (${Math.Calc[${Ini[${PICKPOCKET_INI}].Count[|]}-1]} == 26}) {
-		/Call Debug_Spew "Finished Building: [${PICKPOCKET_INI}]!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Finished Building: [${PICKPOCKET_INI}]!" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	}
 	  
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
   
 /return
 
@@ -1919,7 +1920,7 @@ Sub BuildPickPocketINI
 |: Need to FIX Test
 Sub ClearCursor
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	/declare dumpSlot string local
 	
@@ -1973,7 +1974,7 @@ Sub ClearCursor
 	|: If I still have something on my cursor, try again to clear it.
 	/if (${Cursor.ID}) /goto :auto_inv
 
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 /return
 
@@ -2016,7 +2017,7 @@ Sub CheckCamp
 	:MovetoAnchor
 	
 	:GotoCamp
-	/doevents
+	/call Background_Events
 	|: Check IF Zone Changed && Turn Guard & Anchor OFF
 	/if (${Zone.ID} != ${IsZone} && ${IsCamp}==1) {
 		/if (${Toggle-guard}) /call ExecCommand "guard off"
@@ -2046,4 +2047,12 @@ Sub CheckCamp
 
 }
 /if (${Toggle-puller} && ${Math.Distance[${Ypos},${Xpos}]} <= ${Math.Calc[${GuardRadius}/3]} && ${MoveUtils.Command.Equal[NONE]} && !${Me.Moving} && ${idle} && ${Me.State.NotEqual[FEIGN]} && ${Me.State.NotEqual[BIND]}) /goto :MovetoAnchor
+/return
+
+Sub Background_Events
+	
+	|: Check For Commands
+	/doevents EQBCSAY
+	
+	
 /return

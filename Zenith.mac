@@ -83,7 +83,7 @@ Sub main(string Options)
 	
 	/delay 1
 	/if (!${Defined[Entry_Time]}) /declare Entry_Time string local ${Time.Time12.Replace[:, ]}
-
+	
 	/declare Masters_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_Masters${FILENAME_PREFIX}
 	/declare BOT_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}${FILENAME_PREFIX}
 	/declare NINJALOOT_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${NINJALOOT_FILE_PREFIX}${FILENAME_PREFIX}
@@ -92,8 +92,8 @@ Sub main(string Options)
 	/declare SMOOTHMOVES_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${SMOOTHMOVES_FILE_PREFIX}${FILENAME_PREFIX}
 	/declare SPAWNTRACKER_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${SPAWNTRACKER_FILE_PREFIX}${FILENAME_PREFIX}
 	
+	/if (!${Defined[DebugList]}) /declare DebugList string outer ${Ini[${BOT_INI},CORE,DebugList]}
 	
-		
 	|:----------------------------------------------------------------------
 	|: Force genbot to check if plugin's are loaded.
 	|:----------------------------------------------------------------------
@@ -106,7 +106,7 @@ Sub main(string Options)
 		/squelch /nomodkey /docommand /moveto set TryToJump on
 		/squelch /nomodkey /docommand /moveto set StuckLogic on
 		/squelch /nomodkey /docommand /moveto set TurnHalf on
-		/squelch /nomodkey /docommand /moveto set DistStuck 1
+		|:/squelch /nomodkey /docommand /moveto set DistStuck 0.51
 		/squelch /nomodkey /docommand /moveto set PulseCheck 6
 		/squelch /nomodkey /docommand /moveto set PulseUnstuck 6
 		/squelch /nomodkey /docommand /moveto set Save
@@ -205,7 +205,6 @@ Sub main(string Options)
 /declare Toggle-autoaccept string outer FALSE
 /declare Toggle-autochainnuke string outer FALSE
 /declare Toggle-debuffs string outer FALSE
-/declare Toggle-anchor string outer FALSE
 /declare ChainNukePct-DefaultValue string outer FALSE
 /declare ChainNuke-DefaultValue string outer FALSE
 /declare ChainNuke string outer FALSE
@@ -236,12 +235,19 @@ Sub main(string Options)
 	
 	|: Main Macro Loop
 	/varset Entry_Time ${Time.Time12.Replace[:, ]}
+	
+	/squelch /turbo ${zTurbo}
+	/echo Zenith Loaded - Turbo ${zTurbo}
+	
 	:MainLoop
 	
-		/doevents
+		/call Background_Events
 		
+		|:Set Window Title.
+		/if (!${EverQuest.WinTitle.Equal[<< Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>]}) /SetWinTitle << Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>
+	
 		/call Combatcheck
-		/Call Debug_Spew "CombatTargetID [${CombatTargetID}] Status: [${If[${CombatTargetID} != 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatTargetID [${CombatTargetID}] Status: [${If[${CombatTargetID} != 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 		/if (${Bool[${CombatTargetID}]}) {
 		
@@ -338,25 +344,25 @@ Sub BotTracker
 		
 			/for x 1 to ${Math.Calc[${EQBC.Names.Count[ ]}+1].Int}
 			
-			/doevents
+			/call Background_Events
 			
-			/if (!${Bool[${EQBC.Names.Arg[${x}]}]}) /continue
+			/if (!${Bool[${EQBC.Names.Arg[${x},,].Replace[ ,]}]}) /continue
 			
-			/if (!${Defined[SpamTimer_${EQBC.Names.Arg[${x}, ]}]} && ${Bool[${EQBC.Names.Arg[${x}]}]}) /declare SpamTimer_${EQBC.Names.Arg[${x}, ]} timer outer 0
+			/if (!${Defined[SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]}]} && ${Bool[${EQBC.Names.Arg[${x},,].Replace[ ,]}]}) /declare SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]} timer outer 0
 			
-			/if (${SpamTimer_${EQBC.Names.Arg[${x}, ]}} == 0) {
+			/if (${SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]}} == 0) {
 			
-				/varset SpamTimer_${EQBC.Names.Arg[${x}, ]} 3s
+				/varset SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]} 3s
 			
-				/if (${Spawn[pc ${EQBC.Names.Arg[${x}, ]}].ID} && ${Math.Distance[${Spawn[pc ${EQBC.Names.Arg[${x}, ]}].Loc},${Spawn[pc ${EQBC.Names.Arg[${x}, ]}].Z}]} > ${BotTrackerDistance}) {
-					/if (${Toggle-autofollow} && ${EQBC.Names.Arg[${x}, ].Equal[${Me.CleanName}]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc},${Spawn[pc ${autofollowTarget}].Z}]} > ${FollowLeashSetting.Arg[1,|]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc} ${Spawn[pc ${autofollowTarget}].Z}]} < ${FollowLeashSetting.Arg[2,|]}) {
+				/if (${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].ID} && ${Math.Distance[${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].Loc},${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].Z}]} > ${BotTrackerDistance}) {
+					/if (${Toggle-autofollow} && ${EQBC.Names.Arg[${x},,].Replace[ ,].Equal[${Me.CleanName}]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc},${Spawn[pc ${autofollowTarget}].Z}]} > ${FollowLeashSetting.Arg[1,|]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc} ${Spawn[pc ${autofollowTarget}].Z}]} < ${FollowLeashSetting.Arg[2,|]}) {
 						/popup I [${EQBC.Names.Arg[${x}, ]}] have fallen behind, Trying to Stick Now...
 						/if (!${Stick.Active} && ${Spawn[pc ${autofollowTarget}].LineOfSight}) /stick uw 10 id ${Spawn[pc ${autofollowTarget}].ID}
 					} else {
-						/popup [${EQBC.Names.Arg[${x}, ]}] has fallen behind!!
+						/popup [${EQBC.Names.Arg[${x},,].Replace[ ,]}] has fallen behind!!
 					}
-				} else /if (!${Spawn[pc ${EQBC.Names.Arg[${x}, ]}].ID}) {
-					/popup [${EQBC.Names.Arg[${x}, ]}] Not in my Zone!!
+				} else /if (!${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].ID}) {
+					/popup [${EQBC.Names.Arg[${x},,].Replace[ ,]}] Not in my Zone!!
 				}
 			
 			}		

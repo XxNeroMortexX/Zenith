@@ -44,7 +44,7 @@ Sub Init_Setup_Ini
 **|
 Sub Init_Core_Ini(int i)
 	
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 	|: - To Notifiy User of [CORE] INI Entry Not used Anymore
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe MaxLootRadius "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
@@ -290,7 +290,7 @@ Sub Init_Core_Ini(int i)
 	/varcalc i ${i}+1
 
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments bottracker "Bot will Track other Bots Lost, Not in Zone." |: Ini Comments Line
-	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" bottracker on return "I will not auto track my bots anymore." "I will auto track all my bots."
+	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" bottracker off return "I will not auto track my bots anymore." "I will auto track all my bots."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 
@@ -358,7 +358,21 @@ Sub Init_Core_Ini(int i)
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autorelog "This will Force Bot to Automatically Log back into game when they LD/Crash to Character Select Screen." |: Ini Comments Line
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autorelog off return "I will not Auto Login on LD/Crash." "I will Auto Login on LD/Crash."
 	
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments Turbo "Turbo controls the number of lines per tenth of a second that are executed." |: Ini Comments Line
+	/if (${Select[${Me.Class.ShortName.Upper},CLR,DRU,SHM,ENC,BST]}) {
+		|: Turbo 70
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" zTurbo string zTurbo "70"
+	} else  /if (${Select[${Me.Class.ShortName.Upper},MAG,BRD,WIZ,SHD]}) {
+		|: Turbo 50
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" zTurbo string zTurbo "50"
+	} else  /if (${Select[${Me.Class.ShortName.Upper},WAR,PAL,MNK,ROG,BER,RNG,NEC]}) {
+		|: Turbo 35
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" zTurbo string zTurbo "35"
+	}
+	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
+	/varcalc i ${i}+1
+	
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return ${i}
 
@@ -482,7 +496,7 @@ Sub Init_BoxingSetup_Ini
 
 Sub Init_Combat_Ini
 
-	/Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 
 	|:Add Delete Text [|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|] to unused Ini Settings
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe ProtectList "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
@@ -499,10 +513,20 @@ Sub Init_Combat_Ini
 	/declare RogueStrike string outer
 	/declare i int local 1
 	
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autobehind "Forces the bot to always get behind target on assist." |: Ini Comments Line
-	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autobehind off return "I won't position myself behind the mob." "I will position myself behind the mob."
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	/varcalc i ${i}+1
+	|: BER,MNK,ROG,WAR,CLR,DRU,SHM,ENC,MAG,NEC,WIZ,BRD,BST,PAL,RNG,SHD
+	/if (${Select[${Me.Class.ShortName.Upper},BER,MNK,ROG,CLR,DRU,SHM,ENC,MAG,NEC,WIZ,BRD,BST,PAL,RNG]}) {
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autobehind "Forces the bot to always get behind target on assist." |: Ini Comments Line
+		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autobehind on return "I won't position myself behind the mob." "I will position myself behind the mob."
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
+		/varcalc i ${i}+1
+	} else {
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autobehind "Forces the bot to always get behind target on assist." |: Ini Comments Line
+		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autobehind off return "I won't position myself behind the mob." "I will position myself behind the mob."
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
+		/varcalc i ${i}+1
+	}
+	
+	
 	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments autoengage "The bot will use (MQ2MoveUtils) to stick to assist target." |: Ini Comments Line
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" autoengage on return "I will not Auto Engage when attack is on." "I will Auto Engage when attack is on."
@@ -530,10 +554,19 @@ Sub Init_Combat_Ini
 	/squelch /nomodkey /docommand /stick set BreakOnWarp on
 	/squelch /nomodkey /docommand /stick save
 	
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments melee "This will turn Bot Melee on automatically. When in Combat." |: Ini Comments Line
-	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" melee on return "The Melee is set to off." "The Melee is set to on."
-	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	/varcalc i ${i}+1
+	|: BER,MNK,ROG,WAR,CLR,DRU,SHM,ENC,MAG,NEC,WIZ,BRD,BST,PAL,RNG,SHD
+	/if (${Select[${Me.Class.ShortName.Upper},CLR,DRU,SHM,ENC,MAG,NEC,WIZ]}) {
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments melee "This will turn Bot Melee on automatically. When in Combat." |: Ini Comments Line
+		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" melee off return "The Melee is set to off." "The Melee is set to on."
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
+		/varcalc i ${i}+1
+
+	} else {
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments melee "This will turn Bot Melee on automatically. When in Combat." |: Ini Comments Line
+		/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" melee on return "The Melee is set to off." "The Melee is set to on."
+		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
+		/varcalc i ${i}+1
+	}
 	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments archery "This will turn Bot Archery autofire on automatically. When in Combat." |: Ini Comments Line
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" archery off return "The Archery is set to off." "The Archery is set to on."
@@ -649,7 +682,7 @@ Sub Init_Combat_Ini
 	/call AddToggle "${Macro.CurSub}" "${Macro.CurLine}" manualmode off return "I will Auto Toggle [Combat,Archery] ON!." "I will not Auto Toggle [Combat,Archery] ON!."
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
-	
+		
 	|: BER,MNK,ROG,WAR,CLR,DRU,SHM,ENC,MAG,NEC,WIZ,BRD,BST,PAL,RNG,SHD
 	/if (${Select[${Me.Class.ShortName.Upper},BRD,BST,MNK,SHD,WAR]}) {
 		/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments aggro "This will have Bot Automatically do everything the Bot can to get and hold aggro" |: Ini Comments Line
@@ -839,7 +872,7 @@ Sub Init_Combat_Ini
 	/if (!${Defined[Guard-msg]}) /declare Guard-msg string outer "Intruder alert!  Attacking the trespassing [@{NPCName}]!."
 	/if (!${Defined[Protect-msg]}) /declare Protect-msg string outer "How dare [@{NPCName}] attacks my master [@{ProtectionList.Arg[@{GenFor}, ]}]?!  I must punish this insolence!"
 		
-	/Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
 	
 /return
 
