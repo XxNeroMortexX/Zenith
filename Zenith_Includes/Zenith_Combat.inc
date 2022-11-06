@@ -102,19 +102,19 @@ Sub AutoCombatDistance
 |:-----------------------------------------------------------------------
 Sub Combatcheck(string CombatID)
 	
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Version: [1.00]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 	|: No Need for combat Then Return
 	/if (!${Toggle-melee} && !${Toggle-archery} && !${Toggle-autochainnuke} && !${Toggle-debuffs}) /return
 	
 	|: Set CombatTargetID to Target.ID  (AcceptableTargetTypes)
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatTargetID: [${Bool[${CombatTargetID}]}] TargetID: [${Target.ID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (!${Bool[${CombatTargetID}]} && ${Bool[${Target.ID}]}) {
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] EQ Attack Modes: [${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		/if (${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}) {
-			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] Bot Modes: [${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			
 			/if (${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}) {
-				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] PVP-Mode: [${Toggle-pvpmode}] Target Type: [${Spawn[${Target.ID}].Type}] Pets Master: [${If[${Spawn[${Target.ID}].Type.Equal[Pet]},${Spawn[${Target.ID}].Master.Type}],Not A Pet]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				
 				/if (${Toggle-pvpmode}) {
 					/if (${CombatTargetID} && ${Select[${Spawn[${Target.ID}].State},DEAD,UNKNOWN,NULL]} && ${Select[${Spawn[${Target.ID}].Type},Untargetable,Mount,Corpse,Chest,Trigger,Trap,Timer,Item,Mercenary,Aura,Object,Banner,Campfire,Flyer,NULL]}) {
 						/varset CombatTargetID 0
@@ -137,11 +137,11 @@ Sub Combatcheck(string CombatID)
 		
 	} else /if (${Bool[${CombatTargetID}]}) {
 		
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] EQ Attack Modes: [${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		/if (${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}) {
-			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] Bot Modes: [${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			
 			/if (${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}) {
-				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "[Combatcheck] PVP-Mode: [${Toggle-pvpmode}] CombatTargetID Type: [${Spawn[${CombatTargetID}].Type}] Pets Master: [${If[${Spawn[${CombatTargetID}].Type.Equal[Pet]},${Spawn[${CombatTargetID}].Master.Type}],Not A Pet]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				
 				|: [Type] ACCEPTED: PC,NPC,Pet
 				|: [Type] NOT ACCEPTED: Untargetable,Mount,Corpse,Chest,Trigger,Trap,Timer,Item,Mercenary,Aura,Object,Banner,Campfire,Flyer
 				|: [State] STAND, SIT, DUCK, BIND, FEIGN, DEAD, STUN, HOVER, MOUNT, UNKNOWN
@@ -164,14 +164,14 @@ Sub Combatcheck(string CombatID)
 	}
 	
 	:EndCombat
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatTargetID: [${CombatTargetID}] CombatTargetID Cleared: [${If[${Bool[${CombatTargetID}]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (!${Bool[${CombatTargetID}]} || !${Bool[${CombatTargetID}]} && ${Bool[${Target.ID}]}) {
 		/if (${Select[${Spawn[${CombatTargetID}].State},DEAD,UNKNOWN,NULL]} && ${Select[${Spawn[${CombatTargetID}].Type},Untargetable,Mount,Corpse,Chest,Trigger,Trap,Timer,Item,Mercenary,Aura,Object,Banner,Campfire,Flyer,NULL]}) {
 			/if (${Toggle-autotargetclear}) /squelch /nomodkey /docommand /Target clear
 		}
 		/if (${Me.Combat} || ${Me.AutoFire} || ${Bool[${Me.Casting.ID}]}) {
 			
-			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Shutting Combat Down." "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			
 			
 			|: Clear Combat Variables.
 			/varset CombatTargetID 0
@@ -185,26 +185,26 @@ Sub Combatcheck(string CombatID)
 			/if (${Me.Combat} && ${Toggle-archery}) /squelch /nomodkey /docommand /attack off
 			/if (${Me.AutoFire} && ${Toggle-archery}) /squelch /nomodkey /docommand /autofire off
 			/if (${Me.Casting.ID} && ${Toggle-debuffs} || ${Me.Casting.ID} && ${Toggle-autochainnuke}) /squelch /nomodkey /docommand /interrupt
-			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Stick Status: [${Stick.Active}] Combat Status: [${Me.Combat} && ${Toggle-melee}] Archery Status: [${Me.AutoFire} && ${Toggle-archery}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			
 			
 			|: IF AutoFollow = On, Then Reaquire Follow Target after Combat.
 			/if (!${Bool[${CombatTargetID}]}) {
 				|:Autofollow Leashing if Distance Less then ${FollowLeashSetting.Arg[2,|]} and > then ${FollowLeashSetting.Arg[1,|]}.
-				/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "AutoFollowTarget: [${If[${Bool[${autofollowTarget}]},${autofollowTarget},NONE]}] Dead: [${Spawn[${autofollowTarget}].State.Equal[DEAD]}] Corpse: [${Spawn[${autofollowTarget}].Type.Equal[Corpse]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+				
 				/if (${Spawn[${autofollowTarget}].State.NotEqual[DEAD]} && ${Spawn[${autofollowTarget}].Type.NotEqual[Corpse]}) {
-					/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "${Spawn[${autofollowTarget}].Distance.Int} > ${FollowLeashSetting.Arg[1,|]} && ${Spawn[${autofollowTarget}].Distance.Int} < ${FollowLeashSetting.Arg[2,|]} && ${Toggle-autofollow}" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+					
 					/if (${Spawn[${autofollowTarget}].Distance.Int} > ${FollowLeashSetting.Arg[1,|]} && ${Spawn[${autofollowTarget}].Distance.Int} < ${FollowLeashSetting.Arg[2,|]} && ${Toggle-autofollow}) /call FollowReAquire
 				}
 			}
 	
 		} else {
-			/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+			
 			/return
 		}
 	}
 	
 	|: Turn Attack OFF IF Melee & Archery OFF
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Turn Melee/Archery OFF: [${If[${Me.Combat} && !${Toggle-melee},TRUE,FALSE]}/${If[${Me.AutoFire} && !${Toggle-archery},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Bool[${CombatTargetID}]}) {
 		/if (${Me.Combat} && !${Toggle-melee}) /attack off
 		/if (${Me.Combat} && ${Toggle-archery}) /attack off
@@ -212,7 +212,7 @@ Sub Combatcheck(string CombatID)
 	}
 
 	|: Target CombatTargetID
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "TargetID: [${Target.ID}] CombatTargetID: [${CombatTargetID}] CombatTargetID In Zone: [${If[${SpawnCount[id ${CombatTargetID}]} > 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Bool[${CombatTargetID}]}) {
 		/if (${Target.ID} != ${CombatTargetID} && ${SpawnCount[id ${CombatTargetID}]} > 0) {
 			/if (${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}) {
@@ -230,7 +230,7 @@ Sub Combatcheck(string CombatID)
 
 			
 	|: Turn Attack on [IF] CombatTargetID
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Turn Melee/Archery ON: [${If[!${Me.Combat} && ${Toggle-melee} && !${Toggle-manualmode},TRUE,FALSE]}/${If[!${Me.AutoFire} && ${Toggle-archery} && !${Toggle-manualmode},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Bool[${CombatTargetID}]}) {
 		/if (!${Me.AutoFire} || !${Me.Combat}) {
 			/if (!${Window[SpellBookWnd].Open} && ${Me.State.NotEqual[FEIGN]}) {
@@ -241,13 +241,13 @@ Sub Combatcheck(string CombatID)
 	}
 
 	|: Face Target [IF] AutoSnap == ON
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Auto Face Target: [${If[${Toggle-autosnap},TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Bool[${CombatTargetID}]}) {
 		/if (${Toggle-autosnap}) /squelch /Face fast
 	}
 	
 	|: Stand IF CombatTargetID
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Auto Stand: []" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Bool[${CombatTargetID}]}) {
 			/if (${Toggle-melee} || ${Toggle-archery} || ${Toggle-autochainnuke} || ${Toggle-debuffs}) {
 				/if (${Toggle-autostand} && ${Me.State.NotEqual[STAND]} && !${Window[SpellBookWnd].Open}) /squelch /stand
@@ -255,21 +255,21 @@ Sub Combatcheck(string CombatID)
 	}
 	
 	|: Check Targets to Never Attack Name/ID
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Call [CheckNeverKill] Params: [${CombatTargetID}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${CombatTargetID}) /call CheckNeverKill
 	
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Return [CheckNeverKill] End Combat: [${If[${Bool[${CombatTargetID}]},FALSE,TRUE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (!${Bool[${CombatTargetID}]}) /goto :EndCombat
 	
 	|: Check IF [CombatTargetID].Distance > [MaxTargetRange].
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatID: [${CombatTargetID}] Distance Check: [${Spawn[${CombatTargetID}].Distance.Int} > ${MaxTargetRange}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Spawn[${CombatTargetID}].Distance.Int} > ${MaxTargetRange}) {
 		/call ChatOut COMBAT "The Target [${Target.CleanName}] is outside MaxTargetRange of ${MaxTargetRange}, He is at Distance [${Spawn[${CombatTargetID}].Distance.Int}]" "0"
 		/varset CombatTargetID 0
 		/if (!${Bool[${CombatTargetID}]}) /goto :EndCombat
 	}
 
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 /return
 
@@ -278,14 +278,14 @@ Sub Combatcheck(string CombatID)
 |:-----------------------------------------------------------------------
 Sub CheckNeverKill(string CheckID)
 
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}] Version: [1.00]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 	/if (${CheckID.Length} == 0 && ${Bool[${CombatTargetID}]}) /varset CheckID ${CombatTargetID}
 	
 	|: IF NeverKill Not Set THEN Return TRUE
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Check NeverKill Not Set: [${NeverKill.Equal[${NeverKill-DefaultValue}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${NeverKill.Equal[${NeverKill-DefaultValue}]}) {
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		/return TRUE
 	}
 	
@@ -293,21 +293,21 @@ Sub CheckNeverKill(string CheckID)
 	/if (${NeverKill.Find[ ]}) /varset NeverKill ${NeverKill.Replace[ ,_]}
 	
 	|: IF Find CHECKID.Name in NeverKill List Return FALSE
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find: [${CheckID}] IN NeverKill: [${Select[${Spawn[${CheckID}].CleanName.Replace[ ,_]},${NeverKill.Replace[|,,]}]}]  " "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Select[${Spawn[${CheckID}].CleanName.Replace[ ,_]},${NeverKill.Replace[|,,]}]}) {
 		/varset CombatTargetID 0
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		/return FALSE
 	}
 
 	|: IF Find CHECKID.ID in NeverKill List Return FALSE
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Find: [${CheckID}] IN NeverKill: [${Select[${Spawn[${CheckID}].ID},${NeverKill.Replace[|,,]}]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${Select[${Spawn[${CheckID}].ID},${NeverKill.Replace[|,,]}]}) {
 		/varset CombatTargetID 0
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		/return FALSE
 	}
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 		
 /return TRUE
 
@@ -387,7 +387,7 @@ Sub RaidEvade(string EvadeDelay)
 	
 	|: Combatcheck Used to check if attack is on and should not be
 	/call Combatcheck ${CombatTargetID}
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatTargetID [${CombatTargetID}] Status: [${If[${CombatTargetID} != 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	/if (${CombatTargetID} == 0) /return
 	
 	/squelch /nomodkey /docommand /Target id ${CombatTargetID}

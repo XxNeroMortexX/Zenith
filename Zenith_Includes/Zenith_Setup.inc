@@ -44,7 +44,7 @@ Sub Init_Setup_Ini
 **|
 Sub Init_Core_Ini(int i)
 	
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 	|: - To Notifiy User of [CORE] INI Entry Not used Anymore
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe MaxLootRadius "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
@@ -372,7 +372,7 @@ Sub Init_Core_Ini(int i)
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
 	/varcalc i ${i}+1
 	
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 /return ${i}
 
@@ -496,7 +496,7 @@ Sub Init_BoxingSetup_Ini
 
 Sub Init_Combat_Ini
 
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Entering Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 
 	|:Add Delete Text [|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|] to unused Ini Settings
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe ProtectList "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
@@ -872,7 +872,7 @@ Sub Init_Combat_Ini
 	/if (!${Defined[Guard-msg]}) /declare Guard-msg string outer "Intruder alert!  Attacking the trespassing [@{NPCName}]!."
 	/if (!${Defined[Protect-msg]}) /declare Protect-msg string outer "How dare [@{NPCName}] attacks my master [@{ProtectionList.Arg[@{GenFor}, ]}]?!  I must punish this insolence!"
 		
-	/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "Leaving Subroutine. [${Macro.CurSub.Arg[1,(]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+	
 	
 /return
 

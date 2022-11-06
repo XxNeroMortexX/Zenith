@@ -247,7 +247,7 @@ Sub main(string Options)
 		/if (!${EverQuest.WinTitle.Equal[<< Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>]}) /SetWinTitle << Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>
 	
 		/call Combatcheck
-		/if (${DebugList.Upper.NotEqual[NONE]} || ${DebugList.Length} != 0) /Call Debug_Spew "CombatTargetID [${CombatTargetID}] Status: [${If[${CombatTargetID} != 0,TRUE,FALSE]}]" "ALL,CORE,${Macro.CurSub.Arg[1,(]}" "${Macro.Params}" "${Macro.CurSub}" "${Macro.CurLine}" "${Macro.MemUse}" "${Macro.RunTime}" "${Macro.Name}"
+		
 	
 		/if (${Bool[${CombatTargetID}]}) {
 		
