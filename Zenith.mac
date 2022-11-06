@@ -23,7 +23,6 @@
 #
 #----------------------# Created for SERVER: [PEQ] The Grand Creation - Omens of War #-------------------------------
 **|
-
 #define ${INI_LOCATION_PREFIX} Morte/BOT_INIS
 #define ${MACRO_INI_LOCATION_PREFIX} Morte/Zenith_INIS
 #define ${ERRORLOG_LOCATION_PREFIX} Morte/Zenith_Logs
@@ -38,16 +37,13 @@
 #define ${FILENAME_PREFIX} .ini
 #define ${DebugError} (@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 #define ${DebugErrorFull} Macro[@{MacroName}]:Memory[@{MemoryUsage}mb]:RunTime[@{RunTime}]:(@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
-
 #warning
 #turbo 240
-
 |**
 -------------------------------------------------------------------------
 Macro Include Files
 -------------------------------------------------------------------------
 **|
-
 #include Morte/Zenith_Includes/Zenith_Setup.inc
 #include Morte/Zenith_Includes/Zenith_Core.inc
 #include Morte/Zenith_Includes/Zenith_Commands.inc
@@ -56,7 +52,6 @@ Macro Include Files
 #include Morte/Zenith_Includes/Zenith_Basic.inc
 #include Morte/Zenith_Includes/Zenith_Events.inc
 #include Morte/Zenith_Includes/Zenith_Aliases.inc
-
 |:#include Morte/Zenith_main.inc
 |:#include Morte/Zenith_settings_messages.inc
 |:#include Morte/Zenith_events.inc
@@ -78,12 +73,9 @@ Macro Include Files
 |:
 |:|:Spawn Track by Database.
 |:#include Morte/Zenith_spawn_tracker.inc
-
 Sub main(string Options)
-	
 	/delay 1
 	/if (!${Defined[Entry_Time]}) /declare Entry_Time string local ${Time.Time12.Replace[:, ]}
-	
 	/declare Masters_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_Masters${FILENAME_PREFIX}
 	/declare BOT_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}${FILENAME_PREFIX}
 	/declare NINJALOOT_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${NINJALOOT_FILE_PREFIX}${FILENAME_PREFIX}
@@ -91,9 +83,7 @@ Sub main(string Options)
 	/declare PICKPOCKET_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${PICKPOCKET_FILE_PREFIX}${FILENAME_PREFIX}
 	/declare SMOOTHMOVES_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${SMOOTHMOVES_FILE_PREFIX}${FILENAME_PREFIX}
 	/declare SPAWNTRACKER_INI string outer ${INI_LOCATION_PREFIX}/${INI_FILE_PREFIX}_${BOT_FILE_PREFIX}_${Me.Class.Name.Replace[ ,_]}_${SPAWNTRACKER_FILE_PREFIX}${FILENAME_PREFIX}
-	
 	/if (!${Defined[DebugList]}) /declare DebugList string outer ${Ini[${BOT_INI},CORE,DebugList]}
-	
 	|:----------------------------------------------------------------------
 	|: Force genbot to check if plugin's are loaded.
 	|:----------------------------------------------------------------------
@@ -113,84 +103,60 @@ Sub main(string Options)
 	}
 	/if (!${Plugin[MQ2Exchange].Name.Length}) /echo Loading MQ2Exchange Plugin...
 	/if (!${Plugin[MQ2Exchange].Name.Length}) /plugin MQ2Exchange load
-
 	/if (!${Plugin[MQ2Cast].Name.Length}) /echo Loading MQ2Cast Plugin...
 	/if (!${Plugin[MQ2Cast].Name.Length}) /plugin MQ2Cast load
-
 	/if (!${Plugin[MQ2Turbo].Name.Length}) /echo Loading MQ2Turbo Plugin...
 	/if (!${Plugin[MQ2Turbo].Name.Length}) /plugin MQ2Turbo load
-
-
 	/if (!${Plugin[MQ2Twist].Name.Length}) /echo Loading MQ2Twist Plugin...
 	/if (!${Plugin[MQ2Twist].Name.Length}) /plugin MQ2Twist load
-
 	/if (${Me.Class.Name.Equal[Bard]}) {
 		/if (!${Plugin[MQ2BardSwap].Name.Length}) /echo Loading MQ2BardSwap Plugin...
 		/if (!${Plugin[MQ2BardSwap].Name.Length}) /plugin MQ2BardSwap load
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /echo Turning On BardSwap Ability...	
 		/if (${Plugin[MQ2BardSwap].Name.Length} && !${BardSwap}) /bardswap
 	}
-
-	
 	|:----------------------------------------------------------------------
 	|:Call the Initialize Sub of each include file
 	|:----------------------------------------------------------------------
 	/if (!${Defined[GenFor]}) /declare GenFor int local
 	/if (!${Defined[SectionName]}) /declare SectionName string outer
 	/if (!${Defined[i]}) /declare i int local 1
-	
 	|: INI Sections
 	/declare SectionsList string outer Core Shortcuts Combat
 	|:Core Settings Wait4Rez BoxingSetup Combat AutoCombat Spell CHRotation Cures Debuffs ClassSpec Pets Healer cParams SpawnTracker NinjaLoot Shortcuts SmoothMoves
 	/for GenFor 1 to ${Math.Calc[${SectionsList.Count[ ]}+1]}
 		|:${Ini[${IniFile},Core,DebugList]}
 		|:/if (${Select[${DebugList.Upper},MAIN]}) /echo Initialize Section [Init_${SectionsList.Arg[${GenFor}]}_Ini].
-		
 		/declare cmds-${SectionsList.Arg[${GenFor}]} string outer
-
-		
 		|:Load Settings based on each Section.
 		/varset SectionName ${SectionsList.Arg[${GenFor}]}
 		/call Init_${SectionsList.Arg[${GenFor}]}_Ini ${i}
-		
 		|: Return Blank Line Space Amount.
 		/varset i ${Macro.Return}
-		
 	/next GenFor
-	
 	|:----------------------------------------------------------------------
 	|: Setting SectionName to EQBCSettings, Applying Defualt Values.
 	|:----------------------------------------------------------------------
 	/varset SectionName EQBCSettings
-	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCStatus "Force Bot to join EQBC when Booting." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCStatus string EQBCStatus(On/Off) "on"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCServer "This is the Sercver Address the BOT will Connect to." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCServer string EQBCServer "127.0.0.1"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" INFO Comments EQBCPort "This is the Server Port used to Connect to server." |: Ini Comments Line
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" EQBCPort string EQBCPort "2112"
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" "|**BLANK**|" "=" "=" "${i}" |: Ini Blank Line
-	
 	|: EQBCSettings Unused INI Variables Marked for DELETION
 	/call LoadSetting "${Macro.CurSub}" "${Macro.CurLine}" DeleteMe DeleteMe EQBCGenbotMaster "|** NOT USED DELETE ME ]--[ NOT USED DELETE ME **|"
 	|: --
-	
 	|:Clear SectionName/Line Count Variable.
 	/varset SectionName
 	/varset i
-	
 	|: Join Local EQBC Server.
 	/if (${EQBCStatus.Upper.Equal[ON]}) /call JoinEQBC	
-	
 	|: Setup Zenith Aliases 
 	/call Alias_Setup
-	
-
-
 |:Delete THESE! \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 	|:----------------------------------------------------------------------
 	|:ListFindStringArg(string sList,string sString,string sDiv)
@@ -198,8 +164,6 @@ Sub main(string Options)
 	|:/call ListFindStringArg "one two three four" "four" " "
 	|:/next GenFor
 	|:/call ListDelbyName "one two three four" "one" " "
-
-
 /declare Toggle-autouninvis string outer FALSE
 /declare Toggle-petona string outer FALSE
 /declare Toggle-autoaccept string outer FALSE
@@ -215,65 +179,41 @@ Sub main(string Options)
 /declare TwitchStop string outer 0
 /varset CombatTargetID 0
 |:Delete THESE! /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
-
 |: Replace: IniFile With: BOT_INI
-
-
 	|: Calculate Time taken to load Macro Setup.
 	/if (!${Defined[Exit_Time]}) /declare Exit_Time string local ${Time.Time12.Replace[:, ]}
 	/echo Load Time: [${Math.Calc[${Exit_Time}-${Entry_Time}].Int}s]
-		
 	|: IF Macro Loaded with Params and Param is Equal to [Reloaded].
 	/if (${Macro.Params} > 0 && ${Options.Equal[Reloaded]}) {
 		:Wait4Reload
 		/delay 5
 		/if (${Macro.RunTime} <= 2) /goto :Wait4Reload
-
 		/call ChatOut 3 "Finished Reloading [${Macro.Name.Upper.Left[-4]}]." "0"
 	}
-	
 	|: Main Macro Loop
 	/varset Entry_Time ${Time.Time12.Replace[:, ]}
-	
 	/squelch /turbo ${zTurbo}
 	/echo Zenith Loaded - Turbo ${zTurbo}
-	
 	:MainLoop
-	
 		/call Background_Events
-		
 		|:Set Window Title.
 		/if (!${EverQuest.WinTitle.Equal[<< Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>]}) /SetWinTitle << Class: ${Me.Class} - Character: [${Me.Name}] - Account: [${EverQuest.LoginName}] - Zone: [${Zone} - ${Zone.ID}] >>
-	
 		/call Combatcheck
-		
-	
 		/if (${Bool[${CombatTargetID}]}) {
-		
 			/if (${Toggle-autochainnuke}) {
 				/if (${ChainNukePct.NotEqual[${ChainNukePct-DefaultValue}]} && ${ChainNuke.NotEqual[${ChainNuke-DefaultValue}]}) {
 					/if (${Spawn[${CombatTargetID}].PctHPs} < ${ChainNukePct}) /call AutoChainNuke
 				}
 			}
-			
 			/if (${Toggle-debuffs} && ${DebuffSpell#1.NotEqual[${DebuffSpell#1-DefaultValue}]}) /call AssistDebuffs
-			
 			/if (${Toggle-melee} || ${Toggle-archery} || ${Me.Combat} || ${Me.AutoFire}) /call CombatMain
-
 		}
-		
 		|: Sets Pet to Hold Automatically.
 		/if (${Bool[${Me.AltAbility[Pet Discipline].ID}]} && ${Bool[${Me.Pet.ID}]} && !${Me.Pet.Hold}) /squelch /nomodkey /docommand /Pet Hold
-		
 		/if (${Toggle-guard}) /call AutoGuard
-		
 		/if (${Toggle-protect}) /call AutoProtect
-
 		/call DialogWindows		
-
 		/call BotTracker
-	
 		|: Fix Desync Issue Automatically [YouPlayer], [LOGIN]
 		/if (${Plugin[MQ2EQBC].Name.Length}) {	
 			/if (${EQBC.Connected} && !${Bool[${Select[${Me.CleanName},${EQBC.Names.Replace[ ,,]}]}]} && ${Desync} == 0) {
@@ -283,27 +223,19 @@ Sub main(string Options)
 				/varset Desync 10s
 			}
 		}
-		
 		/varset Exit_Time ${Time.Time12.Replace[:, ]}
 		|:/echo Complete Loop RunTime: [${Math.Calc[${Exit_Time}-${Entry_Time}].Int}s]
 	/goto :MainLoop
-
 /return
-
 Sub DialogWindows
-
 	|: Display Dialog Box Message to [ChatIn] Channel, Automatically Accept IF [GUILDIE||autoaccept].
 	/if (!${Bool[${DialogMsgTimer}]}) {
-
 		|:Check IF Tradewindow is open, Send to chat if one is.
 		/if (${Window[TradeWnd].Open}) {
-			
 			/varset DialogMsgTimer 90s
 			/call ChatOut 1 "[Timer-${DialogMsgTimer}] I Detected a [+r+]Trade Window [+w+]open Should I [+r+][[+y+]accept[+r+]] [+w+]or [+r+][[+y+]reject[+r+]] [+r+][[+y+]${Window[TradeWnd].Child[TRDW_HisName].Text}'s[+r+]][+w+] Offer." "0"
-
 		|:Check IF Dialog Box is open, Send to chat if one is.
 		} else /if (${Window[ConfirmationDialogBox].Open}) {
-			
 			|:Raid Invite Window
 			/if (${Window[ConfirmationDialogBox].Child[CD_TextOutput].Text.Find[invites you to join a raid.  Would you like to join?]}) {
 				/if (${Spawn[pc ${Window[ConfirmationDialogBox].Child[CD_TextOutput].Text.Arg[1, ]}].Guild.Equal[${Me.Guild}]} || ${Toggle-autoaccept}) {
@@ -317,43 +249,26 @@ Sub DialogWindows
 					/return
 				}
 			}
-			
 			/varset DialogMsgTimer 90s
 			/call ChatOut 1 "[Timer-${DialogMsgTimer}] I Detected a [+r+]Dialog Window [+w+]open Should I [+r+][[+y+]accept[+r+]] [+w+]or [+r+][[+y+]reject[+r+]] [+r+][[+y+]${Window[ConfirmationDialogBox].Child[CD_TextOutput].Text}[+r+]][+w+] Offer." "0"
-
 		|:Check if GuildHall Teleport Window Open	
 		} else /if (${Window[LargeDialogWindow].Open} && ${Window[LargeDialogWindow].Child[LDW_TextBox].Text.Find[Teleport to]}) {
-
 			/varset DialogMsgTimer 90s
 			/call ChatOut 1 "[Timer-${DialogMsgTimer}] I Detected a [+r+]Large Dialog Window [+w+]open Should I [+r+][[+y+]accept[+r+]] [+w+]or [+r+][[+y+]reject[+r+]] [+r+][[+y+]${Window[LargeDialogWindow].Child[LDW_TextBox].Text}[+r+]][+w+] Offer." "0"
-			
 		}
-		
 	}
-	
 /return
-
 Sub BotTracker
-
 	|: Bot-Tracker
 	/if (${Toggle-bottracker}) {
-	
 		/if (!${Defined[x]}) /declare x int local
-
 		/if (${EQBC.Names.Length}) {
-		
 			/for x 1 to ${Math.Calc[${EQBC.Names.Count[ ]}+1].Int}
-			
 			/call Background_Events
-			
 			/if (!${Bool[${EQBC.Names.Arg[${x},,].Replace[ ,]}]}) /continue
-			
 			/if (!${Defined[SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]}]} && ${Bool[${EQBC.Names.Arg[${x},,].Replace[ ,]}]}) /declare SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]} timer outer 0
-			
 			/if (${SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]}} == 0) {
-			
 				/varset SpamTimer_${EQBC.Names.Arg[${x},,].Replace[ ,]} 3s
-			
 				/if (${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].ID} && ${Math.Distance[${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].Loc},${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].Z}]} > ${BotTrackerDistance}) {
 					/if (${Toggle-autofollow} && ${EQBC.Names.Arg[${x},,].Replace[ ,].Equal[${Me.CleanName}]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc},${Spawn[pc ${autofollowTarget}].Z}]} > ${FollowLeashSetting.Arg[1,|]} && ${Math.Distance[${Spawn[pc ${autofollowTarget}].Loc} ${Spawn[pc ${autofollowTarget}].Z}]} < ${FollowLeashSetting.Arg[2,|]}) {
 						/popup I [${EQBC.Names.Arg[${x}, ]}] have fallen behind, Trying to Stick Now...
@@ -364,36 +279,25 @@ Sub BotTracker
 				} else /if (!${Spawn[pc ${EQBC.Names.Arg[${x},,].Replace[ ,]}].ID}) {
 					/popup [${EQBC.Names.Arg[${x},,].Replace[ ,]}] Not in my Zone!!
 				}
-			
 			}		
-			
 			/next x
 		}
 	}
-	
 /return
-
 Sub JoinEQBC
-
 	/if (!${Plugin[MQ2EQBC].Name.Length}) /echo Loading MQ2EQBC Plugin...
 	/if (!${Plugin[MQ2EQBC].Name.Length}) /plugin MQ2EQBC load
 	/if (${Plugin[MQ2IRC].Name.Length}) /echo UnLoading MQ2IRC Plugin...
 	/if (${Plugin[MQ2IRC].Name.Length}) /plugin MQ2IRC unload
-
 	/if (!${Plugin[MQ2NetBots].Name.Length}) /echo Loading MQ2NetBots Plugin...
 	/if (!${Plugin[MQ2NetBots].Name.Length}) /plugin MQ2NetBots load
-	
 	/delay 5 ${NetBots}
-	
 	/if (${Plugin[MQ2NetBots].Name.Length}) /netbots on grab=on send=on ext=on
- 
 	/echo The EQBC Status is turned on.
-
 	/if (!${EQBC.Connected}) {
 		/bccmd quit
 		/delay 5
 		/bccmd connect ${EQBCServer} ${EQBCPort}
 		/delay 15 ${EQBC.Connected}
 	}
-
 /return
