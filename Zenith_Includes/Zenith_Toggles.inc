@@ -1,4 +1,3 @@
-
 |:-----------------------------------------------------------------------
 |: 
 |:-----------------------------------------------------------------------
@@ -6,9 +5,7 @@ Sub Toggle_checkname(Param0, Param1, Param2, Param3)
 /echo Toggle Set First Then Subroutine is called.
 /echo My Params are: ${Param0} ${Param1} ${Param2} ${Param3}
 /return
-
 Sub Toggle_aggro
-
 /if (!${Toggle-aggro}) {
 	|: Reset to Default Tant Setting
 	/if (${Toggle-taunt} != ${Toggle-taunt-DefaultValue}) /varset Toggle-taunt ${Toggle-autobehind-DefaultValue}
@@ -19,5 +16,4 @@ Sub Toggle_aggro
 	|: Reset to Default MeleeRange Setting
 	/if (${MeleeRange} != ${MeleeRange-DefaultValue} && !${Toggle-autodistance}) /varset MeleeRange ${MeleeRange-DefaultValue}
 }
-
 /return
