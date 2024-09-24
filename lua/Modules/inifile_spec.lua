@@ -8,6 +8,7 @@ local function save(data)
 	return inifile.save("dummy", data, "memory")
 end
 
+
 describe("Parsing", function()
 	it("returns data per section", function()
 		local data = parse[==[
