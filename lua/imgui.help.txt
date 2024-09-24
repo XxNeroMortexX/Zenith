@@ -1,0 +1,155 @@
+Common ImGui Functions and Widgets
+Windows and Layout
+
+imgui.Begin(name): Starts a new window with the specified name.
+imgui.End(): Ends the current window.
+imgui.BeginChild(id): Creates a child window within the current window.
+imgui.EndChild(): Ends the child window.
+imgui.SetNextWindowPos(position): Sets the position of the next window.
+imgui.SetNextWindowSize(size): Sets the size of the next window.
+Text and Labels
+
+imgui.Text(text): Displays simple text.
+imgui.TextColored(color, text): Displays colored text.
+imgui.TextWrapped(text): Displays wrapped text (automatically wraps long text).
+imgui.LabelText(label, text): Displays a label followed by text.
+imgui.BulletText(text): Displays text with a bullet point.
+Buttons
+
+imgui.Button(label): Creates a clickable button.
+imgui.SmallButton(label): Creates a smaller clickable button.
+imgui.ImageButton(texture_id, size): Creates a button with an image.
+Inputs
+
+imgui.InputText(label, buffer): Creates a single-line text input.
+imgui.InputTextMultiline(label, buffer): Creates a multi-line text input.
+imgui.InputFloat(label, value): Creates an input for floating-point numbers.
+imgui.InputInt(label, value): Creates an input for integers.
+imgui.InputDouble(label, value): Creates an input for double-precision floating-point numbers.
+Sliders
+
+imgui.SliderFloat(label, value, min, max): Creates a slider for floating-point numbers.
+imgui.SliderInt(label, value, min, max): Creates a slider for integers.
+imgui.SliderFloat3(label, values): Creates a slider for a 3-component vector of floats.
+Checkboxes
+
+imgui.Checkbox(label, value): Creates a checkbox that can be toggled on or off.
+imgui.CheckboxFlags(label, flags, flag_value): Creates a checkbox for a specific flag in a set of flags.
+Radio Buttons
+
+imgui.RadioButton(label, active): Creates a radio button.
+imgui.RadioButton(label, value, active_value): Creates a radio button and assigns a value when active.
+Combo Boxes
+
+imgui.Combo(label, current_item, items): Creates a dropdown combo box.
+imgui.BeginCombo(label, preview_value): Begins a combo box with custom content.
+imgui.EndCombo(): Ends the combo box.
+Lists
+
+imgui.ListBox(label, current_item, items): Creates a list box.
+imgui.BeginListBox(label): Begins a custom list box.
+imgui.EndListBox(): Ends the list box.
+Progress Bars
+
+imgui.ProgressBar(fraction): Creates a simple progress bar.
+imgui.ProgressBar(fraction, size): Creates a progress bar with a specific size.
+Tabs
+
+imgui.BeginTabBar(str_id): Begins a tab bar.
+imgui.EndTabBar(): Ends the tab bar.
+imgui.BeginTabItem(label): Creates a tab within a tab bar.
+imgui.EndTabItem(): Ends the tab item.
+Trees
+
+imgui.TreeNode(label): Creates a tree node that can be expanded or collapsed.
+imgui.TreePop(): Ends the tree node.
+imgui.TreePush(): Advances the tree node stack (used to create nested trees).
+imgui.TreeAdvanceToLabelPos(): Moves to the label position for subsequent TreeNode calls.
+Collapsing Headers
+
+imgui.CollapsingHeader(label): Creates a collapsible header.
+Tables
+
+imgui.BeginTable(str_id, column): Begins a table with a specific number of columns.
+imgui.EndTable(): Ends the table.
+imgui.TableNextRow(): Advances to the next row in the table.
+imgui.TableNextColumn(): Advances to the next column in the table.
+imgui.TableSetColumnIndex(column_index): Sets the current column index.
+Colors and Styles
+
+imgui.PushStyleColor(idx, color): Changes the color of an element.
+imgui.PopStyleColor(count): Reverts the color changes.
+imgui.PushStyleVar(idx, value): Changes a style variable (e.g., item spacing, padding).
+imgui.PopStyleVar(count): Reverts the style variable changes.
+Tooltips
+
+imgui.BeginTooltip(): Begins a tooltip.
+imgui.EndTooltip(): Ends the tooltip.
+imgui.SetTooltip(text): Sets the text for a tooltip.
+Menus
+
+imgui.BeginMenuBar(): Begins a menu bar.
+imgui.EndMenuBar(): Ends the menu bar.
+imgui.BeginMenu(label): Begins a menu.
+imgui.EndMenu(): Ends the menu.
+imgui.MenuItem(label): Creates a menu item.
+Drag and Drop
+
+imgui.BeginDragDropSource(): Begins a drag-and-drop source.
+imgui.EndDragDropSource(): Ends the drag-and-drop source.
+imgui.BeginDragDropTarget(): Begins a drag-and-drop target.
+imgui.EndDragDropTarget(): Ends the drag-and-drop target.
+Miscellaneous
+
+imgui.Separator(): Draws a horizontal line to separate sections.
+imgui.SameLine(offset_from_start, spacing): Positions elements on the same line.
+imgui.NewLine(): Inserts a new line.
+imgui.Spacing(): Inserts a vertical spacing.
+imgui.Indent(indent_w): Indents the current line.
+imgui.Unindent(indent_w): Reverts the indentation.
+How to Use Them
+Here are some basic examples:
+
+Creating a Button:
+
+lua
+Copy code
+if imgui.Button("Click Me") then
+    print("Button was clicked!")
+end
+Input a Float Value:
+
+lua
+Copy code
+local value = 0.5
+local changed, new_value = imgui.SliderFloat("Adjust Value", value, 0.0, 1.0)
+if changed then
+    value = new_value
+end
+Creating a Tab Bar:
+
+lua
+Copy code
+if imgui.BeginTabBar("MyTabs") then
+    if imgui.BeginTabItem("Tab 1") then
+        imgui.Text("This is Tab 1")
+        imgui.EndTabItem()
+    end
+    if imgui.BeginTabItem("Tab 2") then
+        imgui.Text("This is Tab 2")
+        imgui.EndTabItem()
+    end
+    imgui.EndTabBar()
+end
+Checkbox:
+
+lua
+Copy code
+local checked = true
+if imgui.Checkbox("Enable Feature", checked) then
+    checked = not checked
+end
+
+https://github.com/ocornut/imgui/wiki
+https://github.com/ocornut/imgui/tree/master/examples
+For a full list and more advanced usage, I recommend looking at ImGui's official repository, especially the Wiki and Example code sections. These resources provide in-depth explanations and examples for each function.
