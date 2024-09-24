@@ -234,6 +234,7 @@ GOTO :Mainloop
     IF /I !GitHub_Account_%Loopnumber%_Type! EQU Pull GOTO :GitPull
     IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
         :GitPull
+        ECHO Pulling changes from remote
         git pull --quiet
     )
     
@@ -241,6 +242,7 @@ GOTO :Mainloop
     IF /I !GitHub_Account_%Loopnumber%_Type! EQU Push GOTO :GitAdd
     IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
         :GitAdd
+        ECHO Adding all files
         git add --all
     )
     
@@ -301,9 +303,11 @@ GOTO :Mainloop
             :GitPush
             :: AutoCommit: Wed [ 08/10/2022 Time: 19:04:49 ]
             SET AutoCommit=AutoCommit:_%date:~0,3%_[_%date:~4,2%/%date:~7,2%/%date:~-4%_Time:_%time:~0,2%:%time:~3,2%:%time:~6,2%_]
+            ECHO Committing changes
             git commit -m "!AutoCommit:_= !"
 
             :: Push all changes to GitHub 
+            ECHO Pushing changes to remote
             git push --quiet
         )
         
@@ -323,7 +327,6 @@ GOTO :Mainloop
     
 EXIT /B
 ::Return
-
 
 ::Sub
 :RemoveWhiteSpace
