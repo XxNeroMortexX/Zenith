@@ -203,7 +203,12 @@ GOTO :Mainloop
 	IF NOT EXIST "%Param0%" MKDIR %Param0%
 	
 	:: Navigate to the directory you wish to push to GitHub
-	CD /D %Param0%
+	IF EXIST "%Param0%" (
+        CD /D %Param0%
+    ) ELSE (
+        ECHO Directory %Param0% does not exist.
+        EXIT /B 1
+    )
 	
 	:: Clone GitHub Repository
 	IF NOT EXIST "%Param0%\.git" (
