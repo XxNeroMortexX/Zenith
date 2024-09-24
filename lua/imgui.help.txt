@@ -1,5 +1,5 @@
 Common ImGui Functions and Widgets
-Windows and Layout
+Windows and Layout 
 
 imgui.Begin(name): Starts a new window with the specified name.
 imgui.End(): Ends the current window.
