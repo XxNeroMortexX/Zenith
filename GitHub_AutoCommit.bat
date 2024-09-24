@@ -192,125 +192,138 @@ GOTO :Mainloop
 
 ::Sub
 :GitHub_Repository
-	SET Param0=%1
-	SET Param1=%2
-	SET Param2=%3
+    SET Param0=%1
+    SET Param1=%2
+    SET Param2=%3
 
-	git config --global user.email "%GitEmail%"
-	git config --global user.name "%UserName%"
+    ECHO Param0: %Param0%
+    ECHO Param1: %Param1%
+    ECHO Param2: %Param2%
+
+    git config --global user.email "%GitEmail%"
+    git config --global user.name "%UserName%"
   
-	:: Create Directory IF Missing
-	IF NOT EXIST "%Param0%" MKDIR %Param0%
-	
-	:: Navigate to the directory you wish to push to GitHub
-	IF EXIST "%Param0%" (
+    :: Create Directory IF Missing
+    IF NOT EXIST "%Param0%" (
+        ECHO Creating directory %Param0%
+        MKDIR %Param0%
+    )
+    
+    :: Check if the directory exists
+    IF EXIST "%Param0%" (
+        ECHO Navigating to directory %Param0%
         CD /D %Param0%
     ) ELSE (
         ECHO Directory %Param0% does not exist.
         EXIT /B 1
     )
-	
-	:: Clone GitHub Repository
-	IF NOT EXIST "%Param0%\.git" (
-		git clone %Param2% .
-	)
+    
+    :: Print current directory
+    ECHO Current directory: %CD%
+    
+    :: Clone GitHub Repository
+    IF NOT EXIST "%Param0%\.git" (
+        ECHO Cloning repository %Param2%
+        git clone %Param2% .
+    )
 
-	:: Initialize GitHub
-	git init --quiet
-	
-	:: Pull any external changes (maybe you deleted a file from your repo?)
-	IF /I !GitHub_Account_%Loopnumber%_Type! EQU Pull GOTO :GitPull
-	IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
-		:GitPull
-		git pull --quiet
-	)
-	
-	:: Add all files in the directory
-	IF /I !GitHub_Account_%Loopnumber%_Type! EQU Push GOTO :GitAdd
-	IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
-		:GitAdd
-		git add --all
-	)
-	
-	:: SET errorlevel based on IF Changes was made. git diff-index --cached --quiet HEAD
-	:: ' ' = unmodified
-	:: M = modified
-	:: T = file type changed (regular file, symbolic link or submodule)
-	:: A = added
-	:: D = deleted
-	:: R = renamed
-	:: C = copied (if config option status.renames is set to "copies")
-	:: U = updated but unmerged
+    :: Initialize GitHub
+    git init --quiet
+    
+    :: Pull any external changes (maybe you deleted a file from your repo?)
+    IF /I !GitHub_Account_%Loopnumber%_Type! EQU Pull GOTO :GitPull
+    IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
+        :GitPull
+        git pull --quiet
+    )
+    
+    :: Add all files in the directory
+    IF /I !GitHub_Account_%Loopnumber%_Type! EQU Push GOTO :GitAdd
+    IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
+        :GitAdd
+        git add --all
+    )
+    
+    :: SET errorlevel based on IF Changes was made. git diff-index --cached --quiet HEAD
+    :: ' ' = unmodified
+    :: M = modified
+    :: T = file type changed (regular file, symbolic link or submodule)
+    :: A = added
+    :: D = deleted
+    :: R = renamed
+    :: C = copied (if config option status.renames is set to "copies")
+    :: U = updated but unmerged
 
-	IF %Files_Debug% EQU 1 (
-		
-		git status --porcelain | FINDSTR . > NUL && SET "Git_ErrorLevel=True" || SET "Git_ErrorLevel=False"
-		Echo Account [!GitHub_Account_%Loopnumber%_Name!] Changes IN Status: [!Git_ErrorLevel!]
-		
-		CALL :String_Length "Account [!GitHub_Account_%Loopnumber%_Name!] Status:" "AccountStatus" "False"
-		CALL :Write "-" !AccountStatus!
-		
-		SET /A "INDEX=0"
-		FOR /F "tokens=*" %%a IN ('git status --porcelain ^| FINDSTR .') DO (
-			SET /A "INDEX+=1"
-			IF !INDEX! NEQ 0 ( CALL SET "_Status[!INDEX!]=%%a" )
-		)
-		FOR /L %%n IN (1,1,!INDEX!) DO (
-			SET _Status[%%n]=!_Status[%%n]:M  =[Modified]   !
-			SET _Status[%%n]=!_Status[%%n]:T  =[File Type Changed]   !
-			SET _Status[%%n]=!_Status[%%n]:A  =[Added]   !
-			SET _Status[%%n]=!_Status[%%n]:D  =[Deleted]   !
-			SET _Status[%%n]=!_Status[%%n]:R  =[Renamed]   !
-			SET _Status[%%n]=!_Status[%%n]:C  =[Copied]   !
-			SET _Status[%%n]=!_Status[%%n]:U  =[Updated]   !
-			Echo File: [%%n] !_Status[%%n]!
-		)
-		
-		SET lastline=0
-		FOR /F "delims==" %%a IN ('git status --porcelain ^| FINDSTR .') DO SET lastline=%%a
-		IF !lastline! EQU 0 ( Echo No Files have Changed ... )
-		
-		IF !INDEX! NEQ 0 ( Echo Files Found: [!INDEX!] )
-				
-		CALL :String_Length "!lastline:"=!" "LLAccountStatus" "False"
-		CALL :Write "-" !LLAccountStatus!
-		
-		@Echo.
-		
-	) ELSE (
-		git status --porcelain | FINDSTR . > NUL && SET "Git_ErrorLevel=True" || SET "Git_ErrorLevel=False"
-		IF %Debug% EQU 1 Echo Account [!GitHub_Account_%Loopnumber%_Name!] Changes IN Status: [!Git_ErrorLevel!]
-	)
+    IF %Files_Debug% EQU 1 (
+        
+        git status --porcelain | FINDSTR . > NUL && SET "Git_ErrorLevel=True" || SET "Git_ErrorLevel=False"
+        Echo Account [!GitHub_Account_%Loopnumber%_Name!] Changes IN Status: [!Git_ErrorLevel!]
+        
+        CALL :String_Length "Account [!GitHub_Account_%Loopnumber%_Name!] Status:" "AccountStatus" "False"
+        CALL :Write "-" !AccountStatus!
+        
+        SET /A "INDEX=0"
+        FOR /F "tokens=*" %%a IN ('git status --porcelain ^| FINDSTR .') DO (
+            SET /A "INDEX+=1"
+            IF !INDEX! NEQ 0 ( CALL SET "_Status[!INDEX!]=%%a" )
+        )
+        FOR /L %%n IN (1,1,!INDEX!) DO (
+            SET _Status[%%n]=!_Status[%%n]:M  =[Modified]   !
+            SET _Status[%%n]=!_Status[%%n]:T  =[File Type Changed]   !
+            SET _Status[%%n]=!_Status[%%n]:A  =[Added]   !
+            SET _Status[%%n]=!_Status[%%n]:D  =[Deleted]   !
+            SET _Status[%%n]=!_Status[%%n]:R  =[Renamed]   !
+            SET _Status[%%n]=!_Status[%%n]:C  =[Copied]   !
+            SET _Status[%%n]=!_Status[%%n]:U  =[Updated]   !
+            Echo File: [%%n] !_Status[%%n]!
+        )
+        
+        SET lastline=0
+        FOR /F "delims==" %%a IN ('git status --porcelain ^| FINDSTR .') DO SET lastline=%%a
+        IF !lastline! EQU 0 ( Echo No Files have Changed ... )
+        
+        IF !INDEX! NEQ 0 ( Echo Files Found: [!INDEX!] )
+                
+        CALL :String_Length "!lastline:"=!" "LLAccountStatus" "False"
+        CALL :Write "-" !LLAccountStatus!
+        
+        @Echo.
+        
+    ) ELSE (
+        git status --porcelain | FINDSTR . > NUL && SET "Git_ErrorLevel=True" || SET "Git_ErrorLevel=False"
+        IF %Debug% EQU 1 Echo Account [!GitHub_Account_%Loopnumber%_Name!] Changes IN Status: [!Git_ErrorLevel!]
+    )
 
-	IF %Git_ErrorLevel% EQU True ( 
-		
-		IF /I !GitHub_Account_%Loopnumber%_Type! EQU Push GOTO :GitPush
-		IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
-			:GitPush
-			:: AutoCommit: Wed [ 08/10/2022 Time: 19:04:49 ]
-			SET AutoCommit=AutoCommit:_%date:~0,3%_[_%date:~4,2%/%date:~7,2%/%date:~-4%_Time:_%time:~0,2%:%time:~3,2%:%time:~6,2%_]
-			git commit -m "!AutoCommit:_= !"
+    IF %Git_ErrorLevel% EQU True ( 
+        
+        IF /I !GitHub_Account_%Loopnumber%_Type! EQU Push GOTO :GitPush
+        IF /I !GitHub_Account_%Loopnumber%_Type! EQU Both (
+            :GitPush
+            :: AutoCommit: Wed [ 08/10/2022 Time: 19:04:49 ]
+            SET AutoCommit=AutoCommit:_%date:~0,3%_[_%date:~4,2%/%date:~7,2%/%date:~-4%_Time:_%time:~0,2%:%time:~3,2%:%time:~6,2%_]
+            git commit -m "!AutoCommit:_= !"
 
-			:: Push all changes to GitHub 
-			git push --quiet
-		)
-		
-		:: Alert user to script completion and relaunch.
-		SET ReturnMessage=New Uploads Completed: %Param1:_= %
-		
-		@Echo.
-		
-	) ELSE IF %Git_ErrorLevel% EQU False (
-		
-		SET AutoCommit=None
-		
-		:: Alert user to script completion and relaunch.
-		SET ReturnMessage=Nothing to Upload
-	
-	)
-	
+            :: Push all changes to GitHub 
+            git push --quiet
+        )
+        
+        :: Alert user to script completion and relaunch.
+        SET ReturnMessage=New Uploads Completed: %Param1:_= %
+        
+        @Echo.
+        
+    ) ELSE IF %Git_ErrorLevel% EQU False (
+        
+        SET AutoCommit=None
+        
+        :: Alert user to script completion and relaunch.
+        SET ReturnMessage=Nothing to Upload
+    
+    )
+    
 EXIT /B
 ::Return
+
 
 ::Sub
 :RemoveWhiteSpace
