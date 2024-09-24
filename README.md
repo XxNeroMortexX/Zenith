@@ -1,7 +1,7 @@
 **Zenith v1.0.0 Bot**
 -----------------------------------------------------------------
 
-Thanks for Using NeroMorte Macro Zenith 
+Thanks for Using NeroMorte Macro Zenith
 * **Guild:** Blades of Discord
 * **Created By:** NeroMorte
 * **Discord:** NeroMorte#8786
