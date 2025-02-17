@@ -225,27 +225,26 @@ function update_ini(default_config)
         return
     end
 
-    if not scriptDir then 
-        local scriptDir = getScriptDir("inifile.lua") 
+    if not scriptDir then
+        scriptDir = getScriptDir("inifile.lua")
     end
     if not scriptDir then
         Debug("Error: Unable to determine script directory")
         return
     end
 
-    if not iniDir then 
-        local iniDir = scriptDir:gsub(FindStrings, ReplaceWith) 
+    if not iniDir then
+        iniDir = scriptDir:gsub(FindStrings, ReplaceWith)
     end
-    if not filename then 
-        local filename = string.format("Bot_%s_%s.ini", className, cleanName)
+    if not filename then
+        filename = string.format("Bot_%s_%s.ini", className, cleanName)
     end
     Debug("INI File: ", filename)  -- Debug print to check the file path
     local file = io.open(iniDir .. filename, "r")
     local iniData = {}
-	
-	
+
     local config = inifile.parse(iniDir .. filename)
-    
+
     -- Function to recursively update config with default values
     local function update_section(default_section, config_section)
         if not config_section then
@@ -260,13 +259,23 @@ function update_ini(default_config)
         end
         return config_section
     end
-    
+
     for section, keys in pairs(default_config) do
         config[section] = update_section(keys, config[section])
     end
-    
-    inifile.save(iniDir .. filename, config)
+
+    -- Create new INI structure with ordered sections and keys
+    local ordered_config = {}
+    for _, section in ipairs(default_config.__inifile.sectionorder) do
+        ordered_config[section] = config[section]
+    end
+
+    -- Attach comments metadata
+    setmetatable(ordered_config, { __inifile = { comments = default_config.__inifile.comments, sectionorder = default_config.__inifile.sectionorder } })
+
+    inifile.save(iniDir .. filename, ordered_config)
 end
+
 
 -- Function to get the directory of the current script
 function getScriptDir(INIFile)
