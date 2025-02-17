@@ -141,6 +141,7 @@ local default_config = {
             ["Header2"] = { "key3", "key4" }
         }
     }
+}
 
 -- Update the INI file with the default configuration
 update_ini(default_config)
