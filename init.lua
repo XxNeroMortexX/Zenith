@@ -196,7 +196,7 @@ local spellNames = {
     "Anarchy",
     "Cloud",
     "Color Slant",
-    "Forceful Mind",
+    "Choke",
     "Glamorous Visage",
     "Gravity Flux",
     "Mana Flare",
