@@ -1,4 +1,4 @@
--- Provides access to MacroQuest2 functions and commands 
+-- Provides access to MacroQuest2 functions and commands
 mq = require('mq');
 ImGui = require('ImGui');
 
@@ -59,10 +59,12 @@ local moduleNames = {
     "Commands",        		-- This is for BOT Control Commands.
     "Utility_Functions",	-- This module contains utility functions.
     "GUI"					-- This is Zenith GUI in game for settings/Information.
+   --"BushBot"			    -- This is Bushman Mod.
 }
 
 function CheckModules(modules)
 	for _, moduleName in ipairs(modules) do
+		print("Checking Module: " .. moduleName)
 		local status, result = pcall(require, "Modules." .. moduleName)
 		if status then
 			_G[moduleName] = result
@@ -73,6 +75,12 @@ function CheckModules(modules)
 		else
 			print("Failed to load module: " .. moduleName)
 			print("Error: " .. result)
+			-- Additional logging for debugging
+            if result:find("module 'Modules." .. moduleName .. "' not found") then
+                print("Module not found: " .. moduleName)
+            else
+                print("Error details: " .. result)
+            end
 		end
 	end
 end

@@ -58,7 +58,7 @@ SET GitHub_Account_1_Name=Zenith
 SET GitHub_Account_1_CloneLink=https://github.com/XxNeroMortexX/Zenith.git
 
 :~[ Your GitHub Directory for you GitHub Clone]
-SET GitHub_Account_1_Directory=E:\Github\Zenith
+SET GitHub_Account_1_Directory=E:\MQ2Next\macroquest\build\bin\release\lua\Zenith
 
 :~[ Delay between Rechecking Each GitHub ] (Default: 0)
 SET GitHub_Account_1_Display_OutPut=1

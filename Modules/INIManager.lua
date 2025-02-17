@@ -2,7 +2,7 @@ local mq = require("mq")
 
 Debug("INIManager Script");
 
--- Function to get the directory of the current script 
+-- Function to get the directory of the current script
 function getScriptDir()
     local str = debug.getinfo(1, "S").source:sub(2);
 	Debug("Debug: script source path: ", str);  -- Debug print to check the script source path

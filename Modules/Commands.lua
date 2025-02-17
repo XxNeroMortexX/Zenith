@@ -1,4 +1,4 @@
--- Provides access to MacroQuest2 functions and commands 
+-- Provides access to MacroQuest2 functions and commands
 mq = require('mq');
 ImGui = require('ImGui');
 
