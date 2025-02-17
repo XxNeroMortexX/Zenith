@@ -189,8 +189,8 @@ local spells = {
 }
 
 -- Memorize each spell if not already memorized
-for _, spellName in ipairs(spellNames) do
-    memorizeSpellIfNeeded(spellName)
+for _, spellName in ipairs(spells) do
+    memorizeSpellIfNeeded(spells)
 end
 
 -- Update the INI file with the default configuration
