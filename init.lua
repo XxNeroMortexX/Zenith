@@ -143,6 +143,39 @@ local default_config = {
     }
 }
 
+-- Function to check if a spell is memorized
+local function isSpellMemorized(spell)
+    for i = 1, 12 do
+        if mq.TLO.Me.Gem(i).Name() == spell then
+            return true
+        end
+    end
+    return false
+end
+
+-- Function to memorize a spell if not already memorized
+local function memorizeSpellIfNeeded(spell)
+    if not isSpellMemorized(spell) then
+        for i = 1, 12 do
+            if mq.TLO.Me.Gem(i).Name() == nil then
+                mq.cmd("/memspell " .. i .. " \"" .. spell .. "\"")
+                print("Memorizing " .. spell .. " in gem slot " .. i)
+                return true
+            end
+        end
+        print("No empty gem slots available to memorize " .. spell)
+        return false
+    else
+        print(spell .. " is already memorized.")
+        return true
+    end
+end
+
+-- Example usage
+local spell = {}
+local spell[1] = ""
+memorizeSpellIfNeeded(spellName)
+
 -- Update the INI file with the default configuration
 --update_ini(default_config)
 
