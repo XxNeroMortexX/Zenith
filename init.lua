@@ -187,7 +187,11 @@ local spells = {
     "Strangle",
     "Ward of Bedazzlement"
 }
-memorizeSpellIfNeeded(spells)
+
+-- Memorize each spell if not already memorized
+for _, spellName in ipairs(spellNames) do
+    memorizeSpellIfNeeded(spellName)
+end
 
 -- Update the INI file with the default configuration
 --update_ini(default_config)
