@@ -194,7 +194,7 @@ end
 -- List of level 65 enchanter spells in the desired order for gem slots
 local spellNames = {
     "Anarchy",
-    "Chromatic Chaos",
+    "Cloud",
     "Color Slant",
     "Forceful Mind",
     "Glamorous Visage",
