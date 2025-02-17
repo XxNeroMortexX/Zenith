@@ -205,8 +205,7 @@ local spellNames = {
     "Glamorous Visage",
     "Gravity Flux",
     "Mana Flare",
-    "Mind Wipe",
-	"Gate"
+    "Mind Wipe"
 }
 
 -- Memorize each spell in the corresponding gem slot
