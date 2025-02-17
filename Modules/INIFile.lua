@@ -276,6 +276,7 @@ function update_ini(default_config)
     -- Attach comments metadata
     setmetatable(ordered_config, { __inifile = { comments = default_config.__inifile.comments, sectionorder = default_config.__inifile.sectionorder, keyorder = default_config.__inifile.keyorder } })
 
+    -- Save ordered INI structure
     inifile.save(iniDir .. filename, ordered_config)
 end
 
