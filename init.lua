@@ -180,8 +180,10 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
 		while not isSpellReadyInSlot(spell, slot) do
             mq.delay(100)  -- Wait for 100 milliseconds before checking again
         end
-        print(spell .. " is now memorized in gem slot " .. slot)
-        return true
+		if isSpellMemorizedInSlot(spell, slot) then
+			print(spell .. " is now memorized in gem slot " .. slot)
+			return true
+		end
     else
         print(spell .. " is already memorized in gem slot " .. slot)
         return true
