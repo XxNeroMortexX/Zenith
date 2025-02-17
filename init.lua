@@ -147,7 +147,8 @@ local default_config = {
 
 -- Function to check if a spell is memorized in a specific gem slot
 local function isSpellMemorizedInSlot(spell, slot)
-    return mq.TLO.Me.Gem(slot).Name() == spell
+    printf(Checking %s = %s,mq.TLO.Me.Gem(slot).Name(), spell)
+	return mq.TLO.Me.Gem(slot).Name() == spell
 end
 
 -- Function to check if a spell in a specific gem slot is ready to cast
