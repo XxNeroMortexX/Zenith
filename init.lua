@@ -190,7 +190,7 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
 			--print(spell .. " is already memorized in gem slot " .. slot)
 			return true
 		else
-			--print(spell .. "Out of Gem Slots")
+			print(spell .. "Out of Gem Slots")
 			return
 		end
     end
@@ -205,7 +205,8 @@ local spellNames = {
     "Glamorous Visage",
     "Gravity Flux",
     "Mana Flare",
-    "Mind Wipe"
+    "Mind Wipe",
+	"Gate"
 }
 
 -- Memorize each spell in the corresponding gem slot
