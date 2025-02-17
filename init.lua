@@ -185,8 +185,13 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
 			return true
 		end
     else
-        print(spell .. " is already memorized in gem slot " .. slot)
-        return true
+		if slot <= 8 then
+			print(spell .. " is already memorized in gem slot " .. slot)
+			return true
+		else
+			print(spell .. "Out of Gem Slots")
+			return
+		end
     end
 end
 
