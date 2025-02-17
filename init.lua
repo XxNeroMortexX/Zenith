@@ -144,67 +144,67 @@ local default_config = {
     }
 }
 
+local Function MemorizeSpells
+	-- Function to check if a spell is memorized in a specific gem slot
+	local function isSpellMemorizedInSlot(spell, slot)
+		--printf("Checking %s = %s",mq.TLO.Me.Gem(slot).Name(), spell)
+		--print(mq.TLO.Me.Gem(slot).Name() == spell)
+		mq.delay(100)
+		return mq.TLO.Me.Gem(slot).Name() == spell
+	end
 
--- Function to check if a spell is memorized in a specific gem slot
-local function isSpellMemorizedInSlot(spell, slot)
-    --printf("Checking %s = %s",mq.TLO.Me.Gem(slot).Name(), spell)
-	--print(mq.TLO.Me.Gem(slot).Name() == spell)
-	mq.delay(100)
-	return mq.TLO.Me.Gem(slot).Name() == spell
-end
-
--- Function to memorize a spell in a specific gem slot if not already memorized
-local function memorizeSpellInSlotIfNeeded(spell, slot)
-    if slot <= 8 and not isSpellMemorizedInSlot(spell, slot) then
-		mq.cmdf('/memorize "%s" %d', spell, slot)
-		--print("Memorizing " .. spell .. " in gem slot " .. slot)
-		-- Wait until the spell is fully memorized.
-		while not isSpellMemorizedInSlot(spell, slot) do
-            mq.delay(100)  -- Wait for 100 milliseconds before checking again
-        end
-		if isSpellMemorizedInSlot(spell, slot) then
-			--print(spell .. " is now memorized in gem slot " .. slot)
-			return true
-		end
-    else
-		if slot <= 8 then
-			--print(spell .. " is already memorized in gem slot " .. slot)
-			return true
+	-- Function to memorize a spell in a specific gem slot if not already memorized
+	local function memorizeSpellInSlotIfNeeded(spell, slot)
+		if slot <= 8 and not isSpellMemorizedInSlot(spell, slot) then
+			mq.cmdf('/memorize "%s" %d', spell, slot)
+			--print("Memorizing " .. spell .. " in gem slot " .. slot)
+			-- Wait until the spell is fully memorized.
+			while not isSpellMemorizedInSlot(spell, slot) do
+				mq.delay(100)  -- Wait for 100 milliseconds before checking again
+			end
+			if isSpellMemorizedInSlot(spell, slot) then
+				--print(spell .. " is now memorized in gem slot " .. slot)
+				return true
+			end
 		else
-			--print(spell .. "Out of Gem Slots")
-			return
+			if slot <= 8 then
+				--print(spell .. " is already memorized in gem slot " .. slot)
+				return true
+			else
+				--print(spell .. "Out of Gem Slots")
+				return
+			end
 		end
-    end
-end
+	end
 
--- List of Spells to Memorize.
-local spellNames = {
-    "Anarchy",
-    "Cloud",
-    "Color Slant",
-    "Choke",
-    "Glamorous Visage",
-    "Gravity Flux",
-    "Mana Flare",
-    "Mind Wipe"
-}
+	-- List of Spells to Memorize.
+	local spellNames = {
+		"Anarchy",
+		"Cloud",
+		"Color Slant",
+		"Choke",
+		"Glamorous Visage",
+		"Gravity Flux",
+		"Mana Flare",
+		"Mind Wipe"
+	}
 
--- Calculate the total number of elements in the table
-local totalElements = #spellNames
+	-- Calculate the total number of elements in the table
+	local totalElements = #spellNames
 
--- Memorize each spell in the corresponding gem slot
-for slot, spellName in ipairs(spellNames) do
-	--printf("Checking Spell: [%s] in slot: [%d]", spellName, slot)
-    memorizeSpellInSlotIfNeeded(spellName, slot)
-	
-	if slot == totalElements then
-		-- Print all spells now memorized.
-		print("Spells now memorized.")
+	-- Memorize each spell in the corresponding gem slot
+	for slot, spellName in ipairs(spellNames) do
+		--printf("Checking Spell: [%s] in slot: [%d]", spellName, slot)
+		memorizeSpellInSlotIfNeeded(spellName, slot)
+		
+		if slot == totalElements then
+			-- Print all spells now memorized.
+			print("Spells now memorized.")
+		end
 	end
 end
 
-
-
+MemorizeSpells
 -- Update the INI file with the default configuration
 --update_ini(default_config)
 
