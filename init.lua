@@ -5,6 +5,7 @@ ImGui = require('ImGui');
 inifile = require("Modules.Core_Functions");	-- This module handles INI file operations.
 inifile = require("Modules.inifile");	-- This module handles INI file operations.
 
+local Me = mq.TLO.Me
 
 -- Create a new INI file with comments and blank lines
 config = {
