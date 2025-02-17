@@ -163,10 +163,7 @@ local function isSpellReadyInSlot(spell, slot)
 			print(isReady)
 			if isReady then
 				print("spell ready: " .. tostring(isReady))
-				return true
-			else 
-				print("spell Not ready: " .. tostring(isReady))
-				return false
+				return isReady
 			end
         end
     end
