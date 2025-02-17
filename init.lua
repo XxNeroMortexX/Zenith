@@ -152,6 +152,7 @@ end
 -- Function to check if a spell in a specific gem slot is ready to cast
 local function isSpellReadyInSlot(spell, slot)
     local gemSpell = mq.TLO.Me.Gem(slot).Spell()
+	print gemSpell
     if gemSpell and gemSpell.Name() == spell then
         return gemSpell.IsReady()
     end
