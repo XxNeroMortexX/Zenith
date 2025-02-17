@@ -217,7 +217,34 @@ end
 
 -- Function to check and update INI file
 function update_ini(file_path, default_config)
-    local config = inifile.parse(file_path)
+    local className = mq.TLO.Me.Class.Name()
+    local cleanName = mq.TLO.Me.CleanName()
+
+    if not className or not cleanName then
+        Debug("Error: ClassName or CleanName is nil")
+        return
+    end
+
+    if not scriptDir then 
+        local scriptDir = getScriptDir("inifile.lua") 
+    end
+    if not scriptDir then
+        Debug("Error: Unable to determine script directory")
+        return
+    end
+
+    if not iniDir then 
+        local iniDir = scriptDir:gsub(FindStrings, ReplaceWith) 
+    end
+    if not filename then 
+        local filename = string.format("Bot_%s_%s.ini", className, cleanName)
+    end
+    Debug("INI File: ", filename)  -- Debug print to check the file path
+    local file = io.open(iniDir .. filename, "r")
+    local iniData = {}
+	
+	
+    local config = inifile.parse(iniDir .. filename)
     
     -- Function to recursively update config with default values
     local function update_section(default_section, config_section)
@@ -238,7 +265,7 @@ function update_ini(file_path, default_config)
         config[section] = update_section(keys, config[section])
     end
     
-    inifile.save(file_path, config)
+    inifile.save(iniDir .. filename, config)
 end
 
 -- Function to get the directory of the current script
