@@ -198,8 +198,8 @@ for slot, spellName in ipairs(spellNames) do
     memorizeSpellInSlotIfNeeded(spellName, slot)
 	
 	if slot == totalElements then
-		-- Print all spells now memorized in their corresponding slots
-		print("Spells now memorized in their corresponding slots:"
+		-- Print all spells now memorized.
+		print("Spells now memorized.")
 	end
 end
 
