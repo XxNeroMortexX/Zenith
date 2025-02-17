@@ -143,6 +143,7 @@ local default_config = {
     }
 }
 
+
 -- Function to check if a spell is memorized in a specific gem slot
 local function isSpellMemorizedInSlot(spell, slot)
     return mq.TLO.Me.Gem(slot).Name() == spell
@@ -150,7 +151,7 @@ end
 
 -- Function to memorize a spell in a specific gem slot if not already memorized
 local function memorizeSpellInSlotIfNeeded(spell, slot)
-    if not isSpellMemorizedInSlot(spell, slot) then
+    if slot <= 8 and not isSpellMemorizedInSlot(spell, slot) then
         mq.cmd("/memspell " .. slot .. " \"" .. spell .. "\"")
         print("Memorizing " .. spell .. " in gem slot " .. slot)
         return true
@@ -169,17 +170,14 @@ local spellNames = {
     "Glamorous Visage",
     "Gravity Flux",
     "Mana Flare",
-    "Mind Wipe",
-    "Polychaotic Rune",
-    "Recant Magic",
-    "Strangle",
-    "Ward of Bedazzlement"
+    "Mind Wipe"
 }
 
 -- Memorize each spell in the corresponding gem slot
 for slot, spellName in ipairs(spellNames) do
     memorizeSpellInSlotIfNeeded(spellName, slot)
 end
+
 
 
 -- Update the INI file with the default configuration
