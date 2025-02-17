@@ -146,7 +146,7 @@ local default_config = {
 
 local Function MemorizeSpells
 	-- Function to check if a spell is memorized in a specific gem slot
-	function isSpellMemorizedInSlot(spell, slot)
+	local function isSpellMemorizedInSlot(spell, slot)
 		--printf("Checking %s = %s",mq.TLO.Me.Gem(slot).Name(), spell)
 		--print(mq.TLO.Me.Gem(slot).Name() == spell)
 		mq.delay(100)
