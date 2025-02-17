@@ -116,7 +116,7 @@ end
 -- Example default configuration
 local default_config = {
     ["General"] = {
-        debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
+        Debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
     },
     ["Header1"] = {
         key1 = "value1",
@@ -125,6 +125,16 @@ local default_config = {
     ["Header2"] = {
         key3 = "value3",
         key4 = "value4"
+    },
+    __inifile = {
+        comments = {
+            ["General"] = { "This is a comment for General section" },
+            ["Header1"] = { "This is a comment for Header1" },
+            ["Header2"] = { "This is a comment for Header2" },
+            ["key1"] = { "Comment for key1" },
+            ["key3"] = { "Comment for key3" }
+        },
+        sectionorder = { "General", "Header1", "Header2" }
     }
 }
 
