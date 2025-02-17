@@ -112,6 +112,26 @@ function background_ChatMonitor()
 
 end
 
+
+-- Example default configuration
+local default_config = {
+    ["General"] = {
+        Debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
+    },
+    ["Header1"] = {
+        key1 = "value1",
+        key2 = "value2"
+    },
+    ["Header2"] = {
+        key3 = "value3",
+        key4 = "value4"
+    }
+}
+
+-- Update the INI file with the default configuration
+update_ini(default_config)
+
+
 --updateKeyValue("Header1", "Key1", "NewValue1")
 --InsertKeyValue("Header2", "Key4", "Key3", "NewKey", "NewValues")
 --deleteKeyValue("Header1", "Key2")
