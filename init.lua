@@ -156,7 +156,7 @@ local function isSpellReadyInSlot(spell, slot)
     --print("Checking gem slot " .. slot)
     --print("Gem name: " .. tostring(gemName))
 
-    if gemSpell then
+    if gemName then
         print("Gem spell name: " .. gemSpell.Name())
         if gemSpell.Name() == spell then
             print("Is spell ready: " .. tostring(gemSpell.IsReady()))
