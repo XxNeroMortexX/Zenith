@@ -153,7 +153,7 @@ end
 local function memorizeSpellInSlotIfNeeded(spell, slot)
     if slot <= 8 and not isSpellMemorizedInSlot(spell, slot) then
         mq.cmd("/memspell " .. slot .. " \"" .. spell .. "\"")
-		mq.delay(100)  -- Wait for 100 milliseconds before checking again
+		mq.delay(200)  -- Wait for 100 milliseconds before checking agai2
         print("Memorizing " .. spell .. " in gem slot " .. slot)
 		 -- Wait until the spell is fully memorized
 		print(mq.TLO.Cast.Status())
