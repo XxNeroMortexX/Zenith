@@ -143,35 +143,26 @@ local default_config = {
     }
 }
 
--- Function to check if a spell is memorized
-local function isSpellMemorized(spell)
-    for i = 1, 12 do
-        if mq.TLO.Me.Gem(i).Name() == spell then
-            return true
-        end
-    end
-    return false
+)
+
+-- Function to check if a spell is memorized in a specific gem slot
+local function isSpellMemorizedInSlot(spell, slot)
+    return mq.TLO.Me.Gem(slot).Name() == spell
 end
 
--- Function to memorize a spell if not already memorized
-local function memorizeSpellIfNeeded(spell)
-    if not isSpellMemorized(spell) then
-        for i = 1, 12 do
-            if mq.TLO.Me.Gem(i).Name() == nil then
-                mq.cmd("/memspell " .. i .. " \"" .. spell .. "\"")
-                print("Memorizing " .. spell .. " in gem slot " .. i)
-                return true
-            end
-        end
-        print("No empty gem slots available to memorize " .. spell)
-        return false
+-- Function to memorize a spell in a specific gem slot if not already memorized
+local function memorizeSpellInSlotIfNeeded(spell, slot)
+    if not isSpellMemorizedInSlot(spell, slot) then
+        mq.cmd("/memspell " .. slot .. " \"" .. spell .. "\"")
+        print("Memorizing " .. spell .. " in gem slot " .. slot)
+        return true
     else
-        print(spell .. " is already memorized.")
+        print(spell .. " is already memorized in gem slot " .. slot)
         return true
     end
 end
 
--- Example usage
+-- List of level 65 enchanter spells in the desired order for gem slots
 local spellNames = {
     "Anarchy",
     "Chromatic Chaos",
@@ -187,9 +178,9 @@ local spellNames = {
     "Ward of Bedazzlement"
 }
 
--- Memorize each spell if not already memorized
-for _, spellName in ipairs(spellNames) do
-    memorizeSpellIfNeeded(spellName)
+-- Memorize each spell in the corresponding gem slot
+for slot, spellName in ipairs(spellNames) do
+    memorizeSpellInSlotIfNeeded(spellName, slot)
 end
 
 -- Update the INI file with the default configuration
