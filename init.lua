@@ -155,8 +155,8 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
         mq.cmd("/memspell " .. slot .. " \"" .. spell .. "\"")
         print("Memorizing " .. spell .. " in gem slot " .. slot)
 		 -- Wait until the spell is fully memorized
-        while not isSpellMemorizedInSlot(spell, slot) do
-            mq.delay(500)  -- Wait for 500 milliseconds before checking again
+        while mq.TLO.Cast.Status() == "M Memorize in progress" do
+            mq.delay(100)  -- Wait for 100 milliseconds before checking again
         end
         print(spell .. " is now memorized in gem slot " .. slot)
         return true
