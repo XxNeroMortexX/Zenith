@@ -151,12 +151,12 @@ end
 
 -- Function to check if a spell in a specific gem slot is ready to cast
 local function isSpellReadyInSlot(spell, slot)
-    local gemName = mq.TLO.Me.Gem(slot).Name()
-    --print("Checking gem slot " .. slot)
-    --print("Gem name: " .. tostring(gemName))
-	print(gemName .."-".. spell)
-    if gemName == spell then
-        local isReady = mq.TLO.Me.Gem(slot).Spell.IsReady()
+   local gemName = mq.TLO.Me.Gem(slot).Name()
+    print("Checking gem slot " .. slot)
+    print("Gem name: " .. tostring(gemName))
+
+    if gemName and gemName == spell then
+        local isReady = mq.TLO.Me.Gem(slot).Spell().IsReady()
         print("Is spell ready: " .. tostring(isReady))
         return isReady
     end
