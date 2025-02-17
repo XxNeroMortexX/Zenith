@@ -189,10 +189,18 @@ local spellNames = {
     "Mind Wipe"
 }
 
+-- Calculate the total number of elements in the table
+local totalElements = #spellNames
+
 -- Memorize each spell in the corresponding gem slot
 for slot, spellName in ipairs(spellNames) do
 	--printf("Checking Spell: [%s] in slot: [%d]", spellName, slot)
     memorizeSpellInSlotIfNeeded(spellName, slot)
+	
+	if slot == totalElements then
+		-- Print all spells now memorized in their corresponding slots
+		print("Spells now memorized in their corresponding slots:"
+	end
 end
 
 
