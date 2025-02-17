@@ -216,7 +216,7 @@ end
 --NeroMorte Added Features.
 
 -- Function to check and update INI file
-function update_ini(file_path, default_config)
+function update_ini(default_config)
     local className = mq.TLO.Me.Class.Name()
     local cleanName = mq.TLO.Me.CleanName()
 
