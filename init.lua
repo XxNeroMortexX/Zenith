@@ -148,7 +148,7 @@ local default_config = {
 -- Function to check if a spell is memorized in a specific gem slot
 local function isSpellMemorizedInSlot(spell, slot)
     --printf("Checking %s = %s",mq.TLO.Me.Gem(slot).Name(), spell)
-	--print(mq.TLO.Me.Gem(slot).Name() == spell)
+	print(mq.TLO.Me.Gem(slot).Name() == spell)
 	return mq.TLO.Me.Gem(slot).Name() == spell
 end
 
@@ -177,7 +177,6 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
 		mq.cmdf('/memorize "%s" %d', spell, slot)
 		print("Memorizing " .. spell .. " in gem slot " .. slot)
 		-- Wait until the spell is fully memorized and ready to cast
-		print(spell.."--"..slot)
 		while not isSpellMemorizedInSlot(spell, slot) do
             mq.delay(100)  -- Wait for 100 milliseconds before checking again
         end
