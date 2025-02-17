@@ -143,8 +143,6 @@ local default_config = {
     }
 }
 
-)
-
 -- Function to check if a spell is memorized in a specific gem slot
 local function isSpellMemorizedInSlot(spell, slot)
     return mq.TLO.Me.Gem(slot).Name() == spell
@@ -182,6 +180,7 @@ local spellNames = {
 for slot, spellName in ipairs(spellNames) do
     memorizeSpellInSlotIfNeeded(spellName, slot)
 end
+
 
 -- Update the INI file with the default configuration
 --update_ini(default_config)
