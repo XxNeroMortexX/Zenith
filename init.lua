@@ -154,7 +154,7 @@ local function isSpellReadyInSlot(spell, slot)
     print("Spell:[" .. spell .. "] Slot:[" .. slot .."]")
 	local gemName = mq.TLO.Me.Gem(slot).Name()
     print("Checking gem slot " .. slot)
-    print(tostring(gemName))
+    print("Gem name: " .. tostring(gemName))
 
     if gemSpell then
         print("Gem spell name: " .. gemSpell.Name())
