@@ -190,7 +190,7 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
 			--print(spell .. " is already memorized in gem slot " .. slot)
 			return true
 		else
-			print(spell .. "Out of Gem Slots")
+			--print(spell .. "Out of Gem Slots")
 			return
 		end
     end
