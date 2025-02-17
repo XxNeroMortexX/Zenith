@@ -177,7 +177,7 @@ local function memorizeSpellInSlotIfNeeded(spell, slot)
     end
 end
 
--- List of level 65 enchanter spells in the desired order for gem slots
+-- List of Spells to Memorize.
 local spellNames = {
     "Anarchy",
     "Cloud",
