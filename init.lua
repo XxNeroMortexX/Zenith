@@ -172,9 +172,22 @@ local function memorizeSpellIfNeeded(spell)
 end
 
 -- Example usage
-local spell = {}
-local spell[1] = ""
-memorizeSpellIfNeeded(spellName)
+local spells = {}
+local spells = {
+    "Anarchy",
+    "Chromatic Chaos",
+    "Color Slant",
+    "Forceful Mind",
+    "Glamorous Visage",
+    "Gravity Flux",
+    "Mana Flare",
+    "Mind Wipe",
+    "Polychaotic Rune",
+    "Recant Magic",
+    "Strangle",
+    "Ward of Bedazzlement"
+}
+memorizeSpellIfNeeded(spells)
 
 -- Update the INI file with the default configuration
 --update_ini(default_config)
