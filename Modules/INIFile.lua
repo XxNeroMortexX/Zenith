@@ -215,6 +215,32 @@ end
 
 --NeroMorte Added Features.
 
+-- Function to check and update INI file
+function update_ini(file_path, default_config)
+    local config = inifile.parse(file_path)
+    
+    -- Function to recursively update config with default values
+    local function update_section(default_section, config_section)
+        if not config_section then
+            return default_section
+        end
+        for key, value in pairs(default_section) do
+            if type(value) == "table" then
+                config_section[key] = update_section(value, config_section[key])
+            else
+                config_section[key] = config_section[key] or value
+            end
+        end
+        return config_section
+    end
+    
+    for section, keys in pairs(default_config) do
+        config[section] = update_section(keys, config[section])
+    end
+    
+    inifile.save(file_path, config)
+end
+
 -- Function to get the directory of the current script
 function getScriptDir(INIFile)
     local str = debug.getinfo(1, "S").source:sub(2);
