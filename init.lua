@@ -172,7 +172,7 @@ local function memorizeSpellIfNeeded(spell)
 end
 
 -- Example usage
-local  = {
+local spellNames = {
     "Anarchy",
     "Chromatic Chaos",
     "Color Slant",
@@ -188,8 +188,8 @@ local  = {
 }
 
 -- Memorize each spell if not already memorized
-for _, spellName in ipairs(spells) do
-    memorizeSpellIfNeeded(spells)
+for _, spellName in ipairs(spellNames) do
+    memorizeSpellIfNeeded(spellName)
 end
 
 -- Update the INI file with the default configuration
