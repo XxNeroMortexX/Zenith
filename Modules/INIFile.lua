@@ -276,7 +276,6 @@ function update_ini(default_config)
     inifile.save(iniDir .. filename, ordered_config)
 end
 
-
 -- Function to get the directory of the current script
 function getScriptDir(INIFile)
     local str = debug.getinfo(1, "S").source:sub(2);
