@@ -195,6 +195,7 @@ local spellNames = {
 
 -- Memorize each spell in the corresponding gem slot
 for slot, spellName in ipairs(spellNames) do
+	print("Checking %s in slot %d", spellName, slot)
     memorizeSpellInSlotIfNeeded(spellName, slot)
 end
 
