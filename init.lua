@@ -162,7 +162,7 @@ local function isSpellReadyInSlot(spell, slot)
             local isReady = mq.TLO.Me.SpellReady(gemSpell)
 			if isReady then
 				print("Is spell ready: " .. tostring(isReady))
-				return isReady
+				return true
 			else 
 				print("Is spell ready: " .. tostring(isReady))
 				return false
