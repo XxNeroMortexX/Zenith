@@ -150,9 +150,12 @@ local function isSpellMemorizedInSlot(spell, slot)
 end
 
 -- Function to check if a spell in a specific gem slot is ready to cast
-local function isSpellReadyInSlot(slot)
+local function isSpellReadyInSlot(spell, slot)
     local gemSpell = mq.TLO.Me.Gem(slot).Spell()
-    return gemSpell and gemSpell.IsReady()
+    if gemSpell and gemSpell.Name() == spell then
+        return gemSpell.IsReady()
+    end
+    return false
 end
 
 -- Function to memorize a spell in a specific gem slot if not already memorized
