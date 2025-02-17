@@ -137,7 +137,7 @@ local default_config = {
         sectionorder = { "General", "Header1", "Header2" },
         keyorder = {
             ["General"] = { "Debugs" },
-            ["Header1"] = { "key1", "key2" },
+            ["Header1"] = { "key2", "key1" },
             ["Header2"] = { "key3", "key4" }
         }
     }
