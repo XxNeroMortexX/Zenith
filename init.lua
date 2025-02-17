@@ -144,7 +144,7 @@ local default_config = {
 }
 
 -- Update the INI file with the default configuration
-update_ini(default_config)
+--update_ini(default_config)
 
 
 --updateKeyValue("Header1", "Key1", "NewValue1")
