@@ -116,7 +116,7 @@ end
 -- Example default configuration
 local default_config = {
     ["General"] = {
-        Debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
+        debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
     },
     ["Header1"] = {
         key1 = "value1",
