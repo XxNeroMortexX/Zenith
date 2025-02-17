@@ -174,6 +174,7 @@ end
 -- Function to memorize a spell in a specific gem slot if not already memorized
 local function memorizeSpellInSlotIfNeeded(spell, slot)
     if slot <= 8 and not isSpellMemorizedInSlot(spell, slot) then
+		print(spell .. slot)
 		mq.cmdf('/memorize "%s" %d', spell, slot)
 		print("Memorizing " .. spell .. " in gem slot " .. slot)
 		-- Wait until the spell is fully memorized and ready to cast
