@@ -172,8 +172,7 @@ local function memorizeSpellIfNeeded(spell)
 end
 
 -- Example usage
-local spells = {}
-local spells = {
+local  = {
     "Anarchy",
     "Chromatic Chaos",
     "Color Slant",
