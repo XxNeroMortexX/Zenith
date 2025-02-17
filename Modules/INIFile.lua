@@ -267,11 +267,14 @@ function update_ini(default_config)
     -- Create new INI structure with ordered sections and keys
     local ordered_config = {}
     for _, section in ipairs(default_config.__inifile.sectionorder) do
-        ordered_config[section] = config[section]
+        ordered_config[section] = {}
+        for _, key in ipairs(default_config.__inifile.keyorder[section] or {}) do
+            ordered_config[section][key] = config[section][key]
+        end
     end
 
     -- Attach comments metadata
-    setmetatable(ordered_config, { __inifile = { comments = default_config.__inifile.comments, sectionorder = default_config.__inifile.sectionorder } })
+    setmetatable(ordered_config, { __inifile = { comments = default_config.__inifile.comments, sectionorder = default_config.__inifile.sectionorder, keyorder = default_config.__inifile.keyorder } })
 
     inifile.save(iniDir .. filename, ordered_config)
 end
