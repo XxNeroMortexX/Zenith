@@ -116,7 +116,7 @@ end
 -- Example default configuration
 local default_config = {
     ["General"] = {
-        debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
+        Debugs = "Init|Events|Commands|Utility_Functions|inifile|Core_Functions"
     },
     ["Header1"] = {
         key1 = "value1",
@@ -134,9 +134,13 @@ local default_config = {
             ["key1"] = { "Comment for key1" },
             ["key3"] = { "Comment for key3" }
         },
-        sectionorder = { "General", "Header1", "Header2" }
+        sectionorder = { "General", "Header1", "Header2" },
+        keyorder = {
+            ["General"] = { "Debugs" },
+            ["Header1"] = { "key1", "key2" },
+            ["Header2"] = { "key3", "key4" }
+        }
     }
-}
 
 -- Update the INI file with the default configuration
 update_ini(default_config)
