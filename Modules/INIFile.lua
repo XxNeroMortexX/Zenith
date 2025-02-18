@@ -370,7 +370,8 @@ function readIniKeys(FindStrings, ReplaceWith)
             --print("Debug: value:", value)
             if type(key) == "string" and type(value) == "string" then
 				Debug("Creating Global Variable [ " .. key:lower() .. " = " .. value:lower() .. " ]")
-				ini[key:lower()] = value:lower() --this creates print(ini.key)
+				--ini[key:lower()] = value:lower() --this creates print(ini.key)
+				ini[key:lower()] = value --this creates print(ini.key)
 				--print("Key:" .. key .. " - " .. "Value:" .. value)
 			else
 				-- Convert key and value to strings, handling tables appropriately
