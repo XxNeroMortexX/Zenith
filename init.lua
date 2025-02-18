@@ -189,7 +189,7 @@ local function MemorizeSpells()
 		"Mana Flare",
 		"Mind Wipe"
 	}
-
+	print(Spell1)
 	-- Calculate the total number of elements in the table
 	local totalElements = #spellNames
 
