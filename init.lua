@@ -205,7 +205,7 @@ local function MemorizeSpells()
 	end
 end
 
-print(ini["spell1"])
+print(ini["Spell1"])
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
