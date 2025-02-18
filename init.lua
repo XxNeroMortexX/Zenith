@@ -213,7 +213,7 @@ if ini then
     else
         print("The ini table is empty or not initialized.")
     end
-print(ini[debugs])
+print(ini[Debugs])
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
