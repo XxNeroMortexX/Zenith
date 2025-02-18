@@ -205,13 +205,14 @@ local function MemorizeSpells()
 	end
 end
 
-  -- Accessing variables from the ini table
-    local spell1 = ini["spell1"]
-    local spell2 = ini["spell2"]
-    
-    -- Print the accessed values
-    print("Spell1: " .. tostring(spell1))
-    print("Spell2: " .. tostring(spell2))
+if ini then
+        print("Contents of the ini table:")
+        for key, value in pairs(ini) do
+            print(key .. " = " .. value)
+        end
+    else
+        print("The ini table is empty or not initialized.")
+    end
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
