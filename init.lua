@@ -215,7 +215,7 @@ end
 --end
 print(ini.debugs)
 print(ini.spell5)
---MemorizeSpells()
+MemorizeSpells()
 
 -- Update the INI file with the default configuration
 --update_ini(default_config)
