@@ -205,8 +205,8 @@ local function MemorizeSpells()
 	end
 end
 
- local spell1 = ini["spell1"]
-    local spell2 = ini["spell2"]
+ local spell1 = ini["Spell1"]
+    local spell2 = ini["Spell2"]
     
     -- Print the accessed values
     print("Spell1: " .. tostring(spell1))
