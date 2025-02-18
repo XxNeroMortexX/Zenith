@@ -326,7 +326,6 @@ end
 
 -- Function to read all INI keys and set them as global variables
 --usage: readIniKeys("Modules\\inifile.lua", "BOT_INIS\\")
-local ini = {}
 function readIniKeys(FindStrings, ReplaceWith)
     local className = mq.TLO.Me.Class.Name()
     local cleanName = mq.TLO.Me.CleanName()
@@ -359,7 +358,7 @@ function readIniKeys(FindStrings, ReplaceWith)
         file:close()
     end
     -- Create a table to store the variables
-    --ini = {}
+    ini = {}
     
 	
     for section, keys in pairs(iniData) do
