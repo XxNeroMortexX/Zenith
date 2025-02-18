@@ -189,7 +189,7 @@ local function MemorizeSpells()
 		"Mana Flare",
 		"Mind Wipe"
 	}
-	print(Spell1)
+	
 	-- Calculate the total number of elements in the table
 	local totalElements = #spellNames
 
@@ -205,6 +205,7 @@ local function MemorizeSpells()
 	end
 end
 
+print(Spell1)
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
