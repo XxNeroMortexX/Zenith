@@ -5,7 +5,7 @@ ImGui = require('ImGui');
 -- Function to check if a file name is in the Debug variable
 function isDebugEnabled(fileName)
 	-- Create a table to store the variables
-	ini = {} 
+	--ini = {} 
 	
 	-- Generate parts of ini filename.
 	local className = mq.TLO.Me.Class.Name();
