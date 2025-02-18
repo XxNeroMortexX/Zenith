@@ -383,6 +383,11 @@ function readIniKeys(FindStrings, ReplaceWith)
 			end
         end
     end
+	-- Print the contents of the ini table for debugging
+    print("Contents of the ini table:")
+    for k, v in pairs(ini) do
+        print(k .. " = " .. v)
+    end
 end
 
 -- Function to update a key=value pair
