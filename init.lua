@@ -180,14 +180,14 @@ local function MemorizeSpells()
 
 	-- List of Spells to Memorize.
 	local spellNames = {
-		"Anarchy",
-		"Cloud",
-		"Color Slant",
-		"Choke",
-		"Glamorous Visage",
-		"Gravity Flux",
-		"Mana Flare",
-		"Mind Wipe"
+		ini.spell1,
+		ini.spell2,
+		ini.spell3,
+		ini.spell4,
+		ini.spell5,
+		ini.spell6,
+		ini.spell7,
+		ini.spell8
 	}
 	
 	-- Calculate the total number of elements in the table
