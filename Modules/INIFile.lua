@@ -375,11 +375,11 @@ function readIniKeys(FindStrings, ReplaceWith)
 				--print("Key:" .. key .. " - " .. "Value:" .. value)
 			else
 				-- Convert key and value to strings, handling tables appropriately
-				--local keyStr = type(key) == "table" and tableToString(key) or tostring(key)
-				--local valueStr = type(value) == "table" and tableToString(value) or tostring(value)
+				local keyStr = type(key) == "table" and tableToString(key) or tostring(key)
+				local valueStr = type(value) == "table" and tableToString(value) or tostring(value)
 
 				-- Print the actual text from the INI file with the desired format
-				--Debug(string.format("Warning - Section: [%s] Key: [%s] Text: [%s] Type: [%s]", section, keyStr, value.text, value.type))
+				Debug(string.format("Warning - Section: [%s] Key: [%s] Text: [%s] Type: [%s]", section, keyStr, value.text, value.type))
 			end
         end
     end
