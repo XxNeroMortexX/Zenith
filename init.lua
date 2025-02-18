@@ -214,7 +214,7 @@ if ini then
         print("The ini table is empty or not initialized.")
     end
 print(ini.debugs)
-print(ini.spells5)
+print(ini.spell5)
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
