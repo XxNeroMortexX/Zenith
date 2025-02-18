@@ -5,45 +5,7 @@ ImGui = require('ImGui');
 -- Function to check if a file name is in the Debug variable
 function isDebugEnabled(fileName)
 	-- Create a table to store the variables
-	ini = {} 
 	
-	-- Generate parts of ini filename.
-	local className = mq.TLO.Me.Class.Name();
-	local cleanName = mq.TLO.Me.CleanName();
-	
-	-- Calculate iniDie & full filename.
-	local str = debug.getinfo(1, "S").source:sub(2);
-    local dir = str:gsub("Core_Functions.lua", "")
-	local iniDir = dir:gsub("Modules\\", "BOT_INIS\\");
-	local filename = string.format("Bot_%s_%s.ini", className, cleanName);
-	
-	-- Read debugs Specific Key only.
-	local file = io.open(iniDir .. filename, "r")
-	if not file then
-		ini.debugs = "all"  -- Set ini.debugs if file does not exist
-	else
-		local content = file:read("*a")
-		file:close()
-		ini.debugs = content:match("%[General%].-[dD][eE][bB][uU][gG][sS]%s-=%s-(.-)\n")
-	end
-	
-	if not ini.debugs then
-		if ini_Core_Debug then
-		
-		else
-		ini.debugs = ''
-		end
-	end
-    if ini.debugs == "all" then
-        return true
-    end
-    for file in ini.debugs:lower():gmatch("[^|]+") do
-
-        if fileName:lower():find(file) then
-            return true
-        end
-    end
-    return false
 end
 
 -- This function takes a string as input and replaces custom color tags with the corresponding MQ2 color codes.
