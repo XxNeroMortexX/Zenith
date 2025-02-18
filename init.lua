@@ -205,6 +205,7 @@ local function MemorizeSpells()
 end
 
 --MemorizeSpells()
+
 -- Update the INI file with the default configuration
 --update_ini(default_config)
 
