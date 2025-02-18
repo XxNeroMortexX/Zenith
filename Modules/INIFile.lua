@@ -358,14 +358,7 @@ function readIniKeys(FindStrings, ReplaceWith)
         file:close()
     end
     -- Create a table to store the variables
-    --ini = {}
-	-- Create a table to store the variables with a metatable
     ini = {}
-    setmetatable(ini, {
-        __index = function(t, k)
-            return rawget(t, k:lower())
-        end
-    })
     
 	
     for section, keys in pairs(iniData) do
