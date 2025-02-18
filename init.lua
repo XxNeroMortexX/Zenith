@@ -205,7 +205,7 @@ local function MemorizeSpells()
 	end
 end
 
-print(ini.key1)
+print(ini.Header1.key1)
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
