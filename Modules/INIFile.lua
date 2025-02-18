@@ -358,8 +358,7 @@ function readIniKeys(FindStrings, ReplaceWith)
         file:close()
     end
     -- Create a table to store the variables
-    ini = {}
-    
+	ini = {}    
 	
     for section, keys in pairs(iniData) do
         -- Debug print to check the section and keys
