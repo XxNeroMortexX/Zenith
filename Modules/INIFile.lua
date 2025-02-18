@@ -367,8 +367,8 @@ function readIniKeys(FindStrings, ReplaceWith)
         --print("Debug: keys:", keys)
         for key, value in pairs(keys) do
             -- Debug print to check the key and value
-            print("Debug: key:", key)
-            print("Debug: value:", value)
+            --print("Debug: key:", key)
+            --print("Debug: value:", value)
             if type(key) == "string" and type(value) == "string" then
 				Debug("Creating Global Variable [ " .. key:lower() .. " = " .. value:lower() .. " ]")
 				ini[key:lower()] = value:lower() --this creates print(ini.key)
