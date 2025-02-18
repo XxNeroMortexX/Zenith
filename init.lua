@@ -205,12 +205,7 @@ local function MemorizeSpells()
 	end
 end
 
- local spell1 = ini["Spell1"]
-    local spell2 = ini["Spell2"]
-    
-    -- Print the accessed values
-    print("Spell1: " .. tostring(spell1))
-    print("Spell2: " .. tostring(spell2))
+print(ini.spell1)
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
