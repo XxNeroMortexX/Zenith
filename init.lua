@@ -205,14 +205,14 @@ local function MemorizeSpells()
 	end
 end
 
-if ini then
-        print("Contents of the ini table:")
-        for key, value in pairs(ini) do
-            print(key .. " = " .. value)
-        end
-    else
-        print("The ini table is empty or not initialized.")
-    end
+--if ini then
+--	print("Contents of the ini table:")
+--	for key, value in pairs(ini) do
+--		print(key .. " = " .. value)
+--	end
+--else
+--	print("The ini table is empty or not initialized.")
+--end
 print(ini.debugs)
 print(ini.spell5)
 --MemorizeSpells()
