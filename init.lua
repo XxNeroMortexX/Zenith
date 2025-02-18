@@ -205,7 +205,13 @@ local function MemorizeSpells()
 	end
 end
 
-print(ini.spell1)
+  -- Accessing variables from the ini table
+    local spell1 = ini["spell1"]
+    local spell2 = ini["spell2"]
+    
+    -- Print the accessed values
+    print("Spell1: " .. tostring(spell1))
+    print("Spell2: " .. tostring(spell2))
 --MemorizeSpells()
 
 -- Update the INI file with the default configuration
