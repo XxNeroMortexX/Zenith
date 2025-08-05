@@ -1,0 +1,10 @@
+|: Zenith.mac - Super Basic
+Sub Main
+    /echo Zenith.mac started
+    
+    :MainLoop
+    /doevents
+    
+    /delay 1
+    /goto :MainLoop
+/return
