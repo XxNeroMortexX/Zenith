@@ -1,5 +1,5 @@
 |: ========================================
-|: Zenith.mac - With Improved Settings
+|: Zenith.mac - Clean Hard-Coded Structure
 |: ========================================
 
 |: New Defines (Updated to Zenith)
@@ -25,8 +25,8 @@
 #define ${DebugError} (@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 #define ${DebugErrorFull} Macro[@{MacroName}]:Memory[@{MemoryUsage}mb]:RunTime[@{RunTime}]:(@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 
-|: Includes (Using the define)
-#include ${MACRO_INC_LOCATION_PREFIX}/zenith_settings_manager.inc
+|: Includes (Hard coded like your original Genbot)
+#include Zenith_Includes/zenith_settings_manager.inc
 
 Sub Main
     /echo Zenith.mac started
