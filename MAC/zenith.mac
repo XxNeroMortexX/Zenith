@@ -2,12 +2,12 @@
 |: Zenith.mac - With Improved Settings
 |: ========================================
 
-|: New Defines
-#define ${INI_LOCATION_PREFIX} Genbot_BOT_INIS
-#define ${MACRO_INI_LOCATION_PREFIX} Genbot_INIS
-#define ${MACRO_INC_LOCATION_PREFIX} Genbot_Includes
-#define ${ERRORLOG_LOCATION_PREFIX} Genbot_Logs
-#define ${INI_FILE_PREFIX} bot
+|: New Defines (Updated to Zenith)
+#define ${INI_LOCATION_PREFIX} Zenith_BOT_INIS
+#define ${MACRO_INI_LOCATION_PREFIX} Zenith_INIS
+#define ${MACRO_INC_LOCATION_PREFIX} Zenith_Includes
+#define ${ERRORLOG_LOCATION_PREFIX} Zenith_Logs
+#define ${INI_FILE_PREFIX} zenith
 #define ${BOT_FILE_PREFIX} ${Me.CleanName}
 #define ${NINJALOOT_FILE_PREFIX} NinjaLoot
 #define ${FORAGE_FILE_PREFIX} Forage
@@ -18,15 +18,15 @@
 #define ${SPELL_ALIASES_FILE_PREFIX} Spell_Aliases
 #define ${DOORS_FILE_PREFIX} Doors
 #define ${LOOTS_FILE_PREFIX} Loots
-#define ${MACRO_FILE_PREFIX} robot
+#define ${MACRO_FILE_PREFIX} zenith
 #define ${GlobalSettings_FILE_PREFIX} GlobalSettings
-#define ${MACRO_NAME_PREFIX} Genbot
+#define ${MACRO_NAME_PREFIX} Zenith
 #define ${FILENAME_PREFIX} .ini
 #define ${DebugError} (@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 #define ${DebugErrorFull} Macro[@{MacroName}]:Memory[@{MemoryUsage}mb]:RunTime[@{RunTime}]:(@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 
-|: Includes
-#include ${MACRO_INC_LOCATION_PREFIX}/zenith_settings_manager.inc
+|: Includes (Updated path)
+#include zenith_settings_manager.inc
 
 Sub Main
     /echo Zenith.mac started
