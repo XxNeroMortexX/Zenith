@@ -9,7 +9,7 @@
 
 Sub LoadSetting(string varName, string varType, string iniKey, string defaultValue)
     |: Load a setting from INI file with default value
-    /declare ${varName} ${varType} outer ${Ini[${configFile},${SectionName},${iniKey},${defaultValue}]}
+    /if (!${Defined[${varName}]}) /declare ${varName} ${varType} outer ${Ini[${configFile},${SectionName},${iniKey},${defaultValue}]}
     |: If setting doesn't exist, create it with default
     /if (${Ini[${configFile},${SectionName},${iniKey}].Length} == 0) {
         /call WriteSetting ${iniKey} ${defaultValue}
@@ -42,9 +42,9 @@ Sub GlobalLoadSetting(string sectionType, string separator, string sectionName, 
 |: ========================================
 
 Sub InitializeBotSettings
-    |: Initialize bot-specific configuration
-    /declare configFile string outer Zenith_${Me.CleanName}.ini
-    /declare SectionName string outer General
+    |: Initialize bot-specific configuration with correct path
+    /if (!${Defined[configFile]}) /declare configFile string outer ${INI_LOCATION_PREFIX}/Zenith_${Me.CleanName}.ini
+    /if (!${Defined[SectionName]}) /declare SectionName string outer General
     
     |: Create basic sections
     /call CreateSection "General" "General Zenith Bot Settings"
@@ -206,7 +206,7 @@ Sub ValidateSettings
 
 Sub BackupSettings
     |: Create backup of current settings
-    /declare backupFile string local Zenith_${Me.CleanName}_backup_${Time.YYYYMMDD_HHMMSS}.ini
+    /declare backupFile string local ${INI_LOCATION_PREFIX}/Zenith_${Me.CleanName}_backup_${Time.YYYYMMDD_HHMMSS}.ini
     /copy "${configFile}" "${backupFile}"
     /echo Settings backed up to: ${backupFile}
 /return

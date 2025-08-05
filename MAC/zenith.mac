@@ -35,8 +35,8 @@ Sub Main
     /call InitializeBotSettings
     /call ValidateSettings
     
-    |: Initialize core variables
-    /declare isRunning bool outer TRUE
+    |: Initialize core variables (with proper checks)
+    /if (!${Defined[isRunning]}) /declare isRunning bool outer TRUE
     
     :MainLoop
     /if (!${isRunning}) /goto :EndLoop
@@ -83,15 +83,15 @@ Sub DebugOutput
 /return
 
 |: Follow command
-#event FollowCommand "#*# tells you, '${followCommand} #1#'"
-Sub Event_FollowCommand(string line, string targetName)
+#event FollowCommand "#2# tells you, '${followCommand} #1#'"
+Sub Event_FollowCommand(string line, string targetName, string Sender)
     /call UpdateSetting "Follow" "FollowTarget" "${targetName}"
     /call UpdateSetting "Follow" "IsFollowing" "TRUE"
     /echo Following ${targetName}
 /return
 
 |: Stop follow command
-#event StopFollowCommand "#*# tells you, '${stopFollowCommand}'"
+#event StopFollowCommand "#2# tells you, '${stopFollowCommand}'"
 Sub Event_StopFollowCommand
     /call UpdateSetting "Follow" "IsFollowing" "FALSE"
     /moveto off
@@ -99,7 +99,7 @@ Sub Event_StopFollowCommand
 /return
 
 |: Settings commands
-#event SettingsCommand "#*# tells you, 'settings #1#'"
+#event SettingsCommand "#2# tells you, 'settings #1#'"
 Sub Event_SettingsCommand(string line, string command)
     /if (${command.Equal[backup]}) {
         /call BackupSettings
