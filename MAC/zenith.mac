@@ -1,10 +1,113 @@
-|: Zenith.mac - Super Basic
+|: ========================================
+|: Zenith.mac - With Improved Settings
+|: ========================================
+
+|: New Defines
+#define ${INI_LOCATION_PREFIX} Genbot_BOT_INIS
+#define ${MACRO_INI_LOCATION_PREFIX} Genbot_INIS
+#define ${MACRO_INC_LOCATION_PREFIX} Genbot_Includes
+#define ${ERRORLOG_LOCATION_PREFIX} Genbot_Logs
+#define ${INI_FILE_PREFIX} bot
+#define ${BOT_FILE_PREFIX} ${Me.CleanName}
+#define ${NINJALOOT_FILE_PREFIX} NinjaLoot
+#define ${FORAGE_FILE_PREFIX} Forage
+#define ${PICKPOCKET_FILE_PREFIX} PickPocket
+#define ${SMOOTHMOVES_FILE_PREFIX} SmoothMoves
+#define ${SPAWNTRACKER_FILE_PREFIX} SpawnTracker
+#define ${BUYSELL_FILE_PREFIX} BuySell
+#define ${SPELL_ALIASES_FILE_PREFIX} Spell_Aliases
+#define ${DOORS_FILE_PREFIX} Doors
+#define ${LOOTS_FILE_PREFIX} Loots
+#define ${MACRO_FILE_PREFIX} robot
+#define ${GlobalSettings_FILE_PREFIX} GlobalSettings
+#define ${MACRO_NAME_PREFIX} Genbot
+#define ${FILENAME_PREFIX} .ini
+#define ${DebugError} (@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
+#define ${DebugErrorFull} Macro[@{MacroName}]:Memory[@{MemoryUsage}mb]:RunTime[@{RunTime}]:(@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
+
+|: Includes
+#include ${MACRO_INC_LOCATION_PREFIX}/zenith_settings_manager.inc
+
 Sub Main
     /echo Zenith.mac started
     
+    |: Initialize settings
+    /call InitializeBotSettings
+    /call ValidateSettings
+    
+    |: Initialize core variables
+    /declare isRunning bool outer TRUE
+    
     :MainLoop
+    /if (!${isRunning}) /goto :EndLoop
+    
+    |: Process events
     /doevents
     
-    /delay 1
+    |: Follow logic
+    /if (${isFollowing}) {
+        /call FollowTarget
+    }
+    
+    |: Debug output
+    /if (${debugMode}) {
+        /call DebugOutput
+    }
+    
+    /delay ${loopDelay}
     /goto :MainLoop
+    
+    :EndLoop
+    /echo Zenith.mac stopped
+/return
+
+Sub FollowTarget
+    |: Check if follow target exists
+    /if (${Spawn[${followTarget}].ID}) {
+        |: Move to follow target
+        /squelch /moveto ${followDistance} id ${Spawn[${followTarget}].ID}
+    } else {
+        /echo Follow target not found: ${followTarget}
+        /call UpdateSetting "Follow" "IsFollowing" "FALSE"
+    }
+/return
+
+Sub DebugOutput
+    |: Output debug information
+    /if (${performanceDebug}) {
+        /echo Performance: ${Me.PctHPs}% HP, ${Me.PctMana}% Mana, ${Me.PctEndurance}% Endurance
+    }
+    /if (${combatDebug}) {
+        /echo Combat: Target=${Target.ID}, Following=${isFollowing}, FollowTarget=${followTarget}
+    }
+/return
+
+|: Follow command
+#event FollowCommand "#*# tells you, '${followCommand} #1#'"
+Sub Event_FollowCommand(string line, string targetName)
+    /call UpdateSetting "Follow" "FollowTarget" "${targetName}"
+    /call UpdateSetting "Follow" "IsFollowing" "TRUE"
+    /echo Following ${targetName}
+/return
+
+|: Stop follow command
+#event StopFollowCommand "#*# tells you, '${stopFollowCommand}'"
+Sub Event_StopFollowCommand
+    /call UpdateSetting "Follow" "IsFollowing" "FALSE"
+    /moveto off
+    /echo Stopped following
+/return
+
+|: Settings commands
+#event SettingsCommand "#*# tells you, 'settings #1#'"
+Sub Event_SettingsCommand(string line, string command)
+    /if (${command.Equal[backup]}) {
+        /call BackupSettings
+    } else /if (${command.Equal[validate]}) {
+        /call ValidateSettings
+        /echo Settings validated
+    } else /if (${command.Equal[reload]}) {
+        /call InitializeBotSettings
+        /echo Settings reloaded
+    }
 /return
