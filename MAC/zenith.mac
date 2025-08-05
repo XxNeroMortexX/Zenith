@@ -24,12 +24,12 @@
 #define ${FILENAME_PREFIX} .ini
 #define ${DebugError} (@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
 #define ${DebugErrorFull} Macro[@{MacroName}]:Memory[@{MemoryUsage}mb]:RunTime[@{RunTime}]:(@{Subrountine.Arg[1,(]}):(@{SubCurrentLine})
-/echo ${MACRO_INC_LOCATION_PREFIX}
+
 |: Includes (Using the define)
-#include ${MACRO_INC_LOCATION_PREFIX}/zenith_settings_manager.inc
+|:#include ${MACRO_INC_LOCATION_PREFIX}/zenith_settings_manager.inc
 
 Sub Main
-    /echo Zenith.mac started
+    /echo Zenith.mac started - ${MACRO_INC_LOCATION_PREFIX}
     
     |: Initialize settings
     /call InitializeBotSettings
